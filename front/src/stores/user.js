@@ -48,31 +48,28 @@ export const useUserStore = defineStore('user', {
       this.user = {};
       router.push('/login');
     },
-    forgetPassword(email){
+    async forgetPassword(email){
       try {
-        const data = userService.forgetPassword(email);
+        console.log('a')
+        const data = await userService.forgetPassword(email);
         console.log(data)
         this.userId = data.id
         this.tokenResetPassword = data.token
+        console.log(this.userId)
       } catch(e) {
         console.log(e)
       }
       
     },
-    changePassword(password){
+    async changePassword(password){
       try {
+        console.log(this.userId)
         let values = {
           new_password: password,
           user_id: this.userId,
         };
-    
-        axios.post('http://127.0.0.1:8000/api/change_password/', values)
-          .then(response => {
-            console.log(response.data); // Exibir a resposta do servidor
-          })
-          .catch(error => {
-            console.log(error); // Lidar com erros de solicitação
-          });
+        console.log(values)
+        const data = await userService.changePassword(values)
       } catch (error) {
         console.log(error); // Lidar com exceções
       }

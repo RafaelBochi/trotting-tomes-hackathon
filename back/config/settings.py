@@ -1,4 +1,4 @@
-
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-tkrz*f((b%fb+-#26153kcm6kbx=6=+ed37mwnsbcg9_ut+84^
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1'] 
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -157,3 +157,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'trottingtomes@gmail.com'
 EMAIL_HOST_PASSWORD = 'trottingtomes1?'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

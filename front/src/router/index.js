@@ -17,6 +17,15 @@ const router = createRouter({
           },
           component: () => import('../views/Full/HomeView.vue'),
           exact: true
+        },
+        {
+          path: '/products',
+          name: 'products',
+          meta: {
+            requiresAuth: true
+          },
+          component: () => import('../views/Full/ProductsView.vue'),
+          exact: true
         }
       ]
     },
@@ -46,17 +55,6 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  const store = useUserStore()
-  const loggedIn = store.loggedIn
-  const requiresAuth = to.meta && to.meta.requiresAuth
-
-  if (requiresAuth && !loggedIn) {
-    next('/login')
-  } else {
-    next()
-  }
-})
 
 
 export default router

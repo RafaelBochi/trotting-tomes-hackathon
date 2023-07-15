@@ -99,6 +99,7 @@ function login() {
         outline: none;
         font-size: 1.2rem;
         border-radius: 10px;
+        background-color: var(--cinza);
     }
 
     .input label {

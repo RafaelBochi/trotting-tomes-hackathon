@@ -35,13 +35,13 @@ import FormLoginComponent from './FormLoginComponent.vue';
 
 <style scoped>
     main {
-        height: 100%;
-        width: 100%;
         display: flex;
         align-items: center;
-        justify-content: center;
-        background-color: var(--white);
+        background-color: #fff;
         animation: main 1s ease forwards;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
     }
 
     @keyframes main {
@@ -61,12 +61,12 @@ import FormLoginComponent from './FormLoginComponent.vue';
     }
 
     .banner {
-        position: absolute;
+        position: relative;
+        left: 60%;
         padding-left: 7%;
         background-color: #344734;
-        top: -5%;
         width: 40%;
-        height: 110vh;
+        height: 110%;
         border-radius: 9% 0% 0% 9% / 50% 50% 50% 50%;
         display: flex;
         flex-direction: column;
@@ -78,9 +78,9 @@ import FormLoginComponent from './FormLoginComponent.vue';
 
     @keyframes banner {
         0% {
-            left: 0;
-            width: 150%;
-            border-radius: 0% 9% 9% 0% / 50% 50% 50% 50%;
+            left: 0%;
+            width: 100%;
+            border-radius: 0% 0% 0% 0% / 50% 50% 50% 50%;
         }
 
         100% {

@@ -11,6 +11,10 @@ const register = ref(true);
     <LoginComponent v-else @change-auth="register = true"/>
 </template>
 
-<style>
-    
+<style scoped>
+    template {
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+    }
 </style>

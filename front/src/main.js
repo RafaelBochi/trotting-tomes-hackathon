@@ -13,12 +13,17 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import { faEyeSlash, faEye, faLock } from '@fortawesome/free-solid-svg-icons'
+import { faEyeSlash, faEye, faLock, faUser, faCartShopping, faCartArrowDown, faHeart, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
-library.add(faEyeSlash, faEye, faLock)
+library.add(faEyeSlash, faEye, faLock, faUser, faCartShopping, faCartArrowDown, faHeart, faChevronLeft, faChevronRight )
+
+import VueAwesomePaginate from "vue-awesome-paginate";
+
+import "vue-awesome-paginate/dist/style.css";
 
 app.use(createPinia())
 app.use(router)
+app.use(VueAwesomePaginate)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')

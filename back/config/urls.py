@@ -4,6 +4,9 @@ from django.urls import path, include
 from usuario.router import router as usuario_router
 from rest_framework.routers import DefaultRouter
 from app.views import LivroViewSet, AutorViewSet, GeneroViewSet, CarrinhoViewSet, CarrinhoLivroViewSet, CompraViewSet, CompraLivroViewSet
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 router = DefaultRouter()
 router.register(r"livros", LivroViewSet)
@@ -26,6 +29,7 @@ from drf_spectacular.views import (
 )
 
 from usuario.views import login, register, forget_password, change_password
+from app.views.livro import getBooksOfGenres
 
 urlpatterns = [
     path("api/", include(usuario_router.urls)),
@@ -37,6 +41,7 @@ urlpatterns = [
     path('api/register/', register, name='register'),
     path('api/forget_password/', forget_password, name='forget_password'),
     path('api/change_password/', change_password, name='change_password'),
+    path('api/get_books_of_genre/', getBooksOfGenres, name='getBooksOfGenres'),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/swagger/",
@@ -49,5 +54,4 @@ urlpatterns = [
         name="redoc",
     ),
     path("api/", include(router.urls)),
-]
-
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

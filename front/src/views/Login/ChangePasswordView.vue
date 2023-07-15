@@ -22,7 +22,7 @@ function changePassword() {
             <h2>Forget Password</h2>
 
             <div class="inputPassword">
-                <input type="text" required v-model="emailInput">
+                <input type="text" required v-model="passwordInput">
                 <label>Senha</label>
                 <i></i>
             </div>

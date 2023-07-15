@@ -34,11 +34,10 @@ import FormRegisterComponent from './FormRegisterComponent.vue'
 
 <style scoped>
     main {
-        height: 100%;
-        width: 100%;
+        height: 100vh;
+        width: 100vw;
         display: flex;
         align-items: center;
-        justify-content: center;
         background-color: var(--white);
         animation: main 1s ease forwards;
         overflow: hidden;
@@ -61,12 +60,12 @@ import FormRegisterComponent from './FormRegisterComponent.vue'
     }
 
     .banner {
-        position: absolute;
+        position: relative;
+        right: 0%;
         padding-right: 6%;
         background-color: #344734;
-        top: -5%;
         width: 40%;
-        height: 110vh;
+        height: 110%;
         border-radius: 9% 0% 0% 9% / 50% 50% 50% 50%;
         display: flex;
         flex-direction: column;
@@ -78,13 +77,13 @@ import FormRegisterComponent from './FormRegisterComponent.vue'
 
     @keyframes banner {
         0% {
-            right: 0;
-            width: 150%;
-            border-radius: 9% 0% 0% 9% / 50% 50% 50% 50%;
+            left: 0%;
+            width: 100%;
+            border-radius: 0% 0% 0% 0% / 50% 50% 50% 50%;
         }
 
         100% {
-            right: 60%;
+            left: 0%;
             border-radius: 0% 9% 9% 0% / 50% 50% 50% 50%;
         }
     }

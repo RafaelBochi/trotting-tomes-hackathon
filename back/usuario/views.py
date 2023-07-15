@@ -163,10 +163,10 @@ def forget_password(request):
 @permission_classes([])
 def change_password(request):
     # Procurar usuário com base no token
-    user_id = request.data.get("user_id")
+    id = request.data.get("user_id")
 
     try:
-        user = User.objects.get(id=user_id)  # Alterar para 'id=usuario_id'
+        user = User.objects.get(id=id)  # Alterar para 'id=usuario_id'
     except User.DoesNotExist:
         return Response(
             {"message": "Usuário não encontrado."}, status=status.HTTP_404_NOT_FOUND

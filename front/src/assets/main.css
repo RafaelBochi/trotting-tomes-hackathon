@@ -3,8 +3,10 @@
 :root{
     --background-color: #e7e3c0;
     --primary-color: #344734;
-    --secundary-color: #AAB8A8;
+    --secondary-color: #AAB8A8;
+    --lime-green: #90C36A;
     --white: #EDEDED;
+    --cinza: #cbced365;
 }
 
 * {
@@ -21,7 +23,7 @@ html {
 
 body {
     height: 100%;
-    overflow: hidden;
+    overflow-x: hidden; 
 }
 
 #app {
