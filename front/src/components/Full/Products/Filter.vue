@@ -235,13 +235,13 @@ function cleanFilters() {
 <style scoped>
 section {
   position: relative;
-  width: 100%;
+  width: 94%;
 }
 
 .btnFilters {
   position: absolute;
   right: 0%;
-  width: 150px;
+  width: 200px;
   height: 30px;
   display: flex;
   justify-content: center;

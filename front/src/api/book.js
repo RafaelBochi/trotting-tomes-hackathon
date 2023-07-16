@@ -10,6 +10,10 @@ class BookService {
         console.log(data);
         return data;
     }
+    async getSearchBooks(search) {
+        const { data } = await axios.get("/api/search_books/", { params: search });
+        return data;
+    }
 }
 
 export default new BookService();

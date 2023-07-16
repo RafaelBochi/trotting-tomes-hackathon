@@ -24,11 +24,22 @@ export const useBookStore = defineStore('book', {
                 for (let livros of data) {
                     livros.capa = "http://127.0.0.1:8000/" + livros.capa;
                 }
-                this.searchBooks = data;
-                this.books = this.searchBooks;
+                this.books = data;
             } catch (e) {
                 console.log(e);
             }
         },
+        async getSearchBooks(search) {
+            try {
+                const data = await bookService.getSearchBooks(search);
+                for (let livros of data) {
+                    livros.capa = "http://127.0.0.1:8000/" + livros.capa;
+                }
+                this.searchBooks = data;
+                console.log(data)
+            } catch (e) {
+                console.log(e);
+            }
+        }
     }
 });

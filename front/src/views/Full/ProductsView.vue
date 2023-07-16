@@ -9,8 +9,6 @@ import Filter from "../../components/Full/Products/Filter.vue";
 const bookStore = useBookStore();
 const othersStore = useOthersStore();
 
-const genres = computed(() => othersStore.genres);
-
 const books = computed(() => bookStore.books);
 const currentPage = ref(1);
 const itemsPerPage = 15;

@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import BookPage from "./BookPage.vue";
 
 const props = defineProps({
   book: {
@@ -10,19 +11,31 @@ const props = defineProps({
 
 const favorite = ref(false);
 
+const showBookPage = ref(false);
+
 function addFavorite() {
   favorite.value = !favorite.value;
+}
+
+function toggleBookPage() {
+  showBookPage.value = !showBookPage.value;
+
+  if(showBookPage.value) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
 }
 </script>
 
 <template>
       <span>
         <div class="produto">
-          <div>
-            <span class="favorite" @click="addFavorite">
+          <span class="favorite" @click="addFavorite">
               <font-awesome-icon v-if="favorite" :icon="['fas', 'heart']" style="color: var(--lime-green);" class="icon" />
               <font-awesome-icon v-else :icon="['fas', 'heart']"/>
-            </span>
+          </span>
+          <div  @click="toggleBookPage">
             <img :src="book.capa" alt="" />
             <span class="info">
               <p class="title">{{ book.title }}</p>
@@ -44,6 +57,8 @@ function addFavorite() {
           </div>
         </div>
       </span>
+
+      <BookPage v-if="showBookPage" :book="book" @close="toggleBookPage"/>
 </template>
 
 <style scoped>
@@ -61,8 +76,34 @@ function addFavorite() {
   box-shadow: var(--primary-color) 0px 0px 5px;
 }
 
+.favorite {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  right: 4%;
+  background-color: var(--white);
+  border-radius: 50%;
+  z-index: 4;
+  cursor: pointer;
+}
 
-.produto div:nth-child(1) {
+.favorite .fa-heart {
+  transition: all 0.2s;
+  color: #bac2cf;
+  font-size: 20px;
+}
+
+ .favorite:hover .fa-heart {
+  color: var(--lime-green)
+}
+
+
+.produto div:nth-child(2) {
   position: absolute;
   top: 0;
   width: 100%;
@@ -71,11 +112,11 @@ function addFavorite() {
   flex-direction: column;
   gap: 10px;
   padding: 5%;
-  cursor: pointer;
   background-color: transparent;
+  cursor: pointer;
 }
 
-.produto div:nth-child(1) i {
+.produto div:nth-child(2) i {
   position: absolute;
   left: 0;
   top: 0;
@@ -87,33 +128,10 @@ function addFavorite() {
   transition: all .2s;
 }
 
-.produto div:nth-child(1):hover i {
+.produto div:nth-child(2):hover i {
   width: 100%;
   height: 100%;
   border-radius: 0;
-}
-
-.produto .favorite {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 35px;
-  height: 35px;
-  right: 4%;
-  background-color: var(--white);
-  border-radius: 50%;
-  z-index: 8;
-}
-
-.produto .favorite .fa-heart {
-  transition: all 0.2s;
-  color: #bac2cf;
-  
-}
-
-.produto .favorite:hover .fa-heart {
-  color: var(--lime-green)
 }
 
 .produto img {
@@ -151,7 +169,7 @@ function addFavorite() {
   font-weight: bolder;
 }
 
-.produto div:nth-child(2) {
+.produto div:nth-child(3) {
   position: absolute;
   bottom: 0;
   width: 100%;

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import Search from "./Search.vue";
 
 const activeRoute = ref(null);
 const router = useRouter();
@@ -49,9 +50,7 @@ onMounted(
                 </router-link>
         </div>
 
-        <div class="search">
-            <input type="text" placeholder="Busque aqui seu produto...">
-        </div>
+        <Search/>
 
         <div class="auth">
             <router-link to="/login">
@@ -137,16 +136,7 @@ onMounted(
         background: var(--primary-color);
     }
 
-    .search input {
-        outline: none;
-        border-radius: 10px;
-        border: none;
-        box-shadow: var(--primary-color) 0px 0px 5px;
-        padding: 2%;
-        padding-left: 3%;
-        width: 300px;
-        height: 32px;
-    }
+    
 
     .auth {
         position: relative;
@@ -156,22 +146,27 @@ onMounted(
     }
     .auth button {
         border: none;
-        background-color: var(--primary-color);
-        color: var(--white);
+        background-color: var(--lime-green);
+        color: #fff;
         width: 150px;
         padding: 0.7rem 2rem;
-        border-radius: 10px;
+        border-radius: 5px;
         display: flex;
         gap: 10px;
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        text-decoration: none;
     }
 
     .auth button p {
         font-size: 1.2rem;
         font-weight: bolder;
         text-align: center;
+        text-transform: none;
     }
 
+    a {
+        text-decoration: none;
+    }
 </style>

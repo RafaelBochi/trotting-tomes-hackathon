@@ -104,3 +104,31 @@ def getBooksOfFilters(request):
 
     serializer = LivroSerializer(data, many=True)
     return Response(serializer.data, status=200)
+
+@api_view(["GET"])
+@authentication_classes([])
+@permission_classes([])
+def searchBooks(request):
+    name = request.GET.get("name")
+
+    livros = Livro.objects.filter(title__icontains=name)
+
+    if len(livros) == 0:
+        return Response({"message": "Nenhum livro encontrado!"}, status=404)
+    
+    data = []
+    for livro in livros:
+        livro_data = {
+            'id': livro.id,
+            'title': livro.title,
+            'price': livro.price,
+            'stock': livro.stock,
+            'isbn': livro.isbn,
+            'author': livro.author,
+            'genre': livro.genre.all(),
+            'capa': livro.capa,
+        }
+        data.append(livro_data)
+
+    serializer = LivroSerializer(data, many=True)
+    return Response(serializer.data, status=200)
