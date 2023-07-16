@@ -64,7 +64,7 @@ import FormLoginComponent from './FormLoginComponent.vue';
         position: relative;
         left: 60%;
         padding-left: 7%;
-        background-color: #344734;
+        background-color: var(--primary-color);
         width: 40%;
         height: 110%;
         border-radius: 9% 0% 0% 9% / 50% 50% 50% 50%;
@@ -118,7 +118,7 @@ import FormLoginComponent from './FormLoginComponent.vue';
     .changeToLogin p:nth-child(2) {
         cursor: pointer;
         text-decoration: underline;
-        color: #344734;
+        color: var(--primary-color);
         font-weight: 700;
     }
 

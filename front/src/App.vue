@@ -10,6 +10,7 @@ onMounted(
     console.log("mounted")
     bookStore.getBooks();
     othersStore.getGenres();
+    othersStore.getAuthors();
   }
 )
 </script>

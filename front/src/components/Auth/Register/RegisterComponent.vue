@@ -63,7 +63,7 @@ import FormRegisterComponent from './FormRegisterComponent.vue'
         position: relative;
         right: 0%;
         padding-right: 6%;
-        background-color: #344734;
+        background-color: var(--primary-color);
         width: 40%;
         height: 110%;
         border-radius: 9% 0% 0% 9% / 50% 50% 50% 50%;
@@ -116,7 +116,7 @@ import FormRegisterComponent from './FormRegisterComponent.vue'
     .changeToLogin p:nth-child(2) {
         cursor: pointer;
         text-decoration: underline;
-        color: #344734;
+        color: var(--primary-color);
         font-weight: 700;
     }
 

@@ -5,6 +5,11 @@ class BookService {
         const { data } = await axios.get("/api/livros/");
         return data;
     }
+    async getBooksFilter(filters) {
+        const { data } = await axios.get("/api/get_books_of_filters/", { params: filters });
+        console.log(data);
+        return data;
+    }
 }
 
 export default new BookService();

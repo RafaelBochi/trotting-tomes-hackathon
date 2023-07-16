@@ -1,5 +1,21 @@
 <script setup>
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
+const activeRoute = ref(null);
+const router = useRouter();
+
+function updateActiveRoute() {
+    const currentRoute = router.currentRoute.value.name;
+    activeRoute.value = currentRoute;
+}
+
+onMounted(
+    () => {
+        updateActiveRoute();
+        router.afterEach(updateActiveRoute);
+    }
+) 
 </script>
 
 <template>
@@ -10,14 +26,14 @@
 
         <div class="actions">
             <div class="links">
-                <router-link to="/">
+                <router-link to="/" :class="{ 'active-link': activeRoute === 'home' }">
                     <a href="">
                         <p>
                             Home
                         </p>
                     </a>
                 </router-link>
-                <router-link to="/products">
+                <router-link to="/products" :class="{ 'active-link': activeRoute === 'products' }">
                     <a href="">
                         <p>
                             Produtos
@@ -109,12 +125,12 @@
         justify-content: center;
     }
 
-    a.router-link-active p {
+    .active-link p {
         color: var(--primary-color);
 
     }
 
-    a.router-link-active::after {
+    .active-link::after {
         content: '';
         width: 120%;
         height: 3px;

@@ -4,6 +4,7 @@ import Pagination from "../../components/Full/Products/Pagination.vue";
 import { useBookStore } from "@/stores/book.js";
 import { useOthersStore } from "@/stores/others.js";
 import { computed, ref } from "vue";
+import Filter from "../../components/Full/Products/Filter.vue";
 
 const bookStore = useBookStore();
 const othersStore = useOthersStore();
@@ -12,7 +13,7 @@ const genres = computed(() => othersStore.genres);
 
 const books = computed(() => bookStore.books);
 const currentPage = ref(1);
-const itemsPerPage = 12;
+const itemsPerPage = 15;
 
 const displayedItems = computed(() => {
   const startIndex = (currentPage.value - 1) * itemsPerPage;
@@ -28,39 +29,13 @@ const changePage = (page) => {
   currentPage.value = page;
 };
 
-function getBooksGenre() {
-  let selectedGenres = [];
-  genres.value.forEach(
-    (genre) => {
-      const checkbox = document.getElementById(`checkbox_genre${genre.id}`);
 
-      if (checkbox.checked) {
-        selectedGenres.push(genre.id);
-      }
-    }
-  )
-  console.log(selectedGenres)
-  othersStore.getBooksGenre(selectedGenres);
-}
 </script>
 
 <template>
   <main>
-    <aside>
-      <div @click="getBooksGenre">
-        <h3>Filtrar por Generos</h3>
-        <button>Filtrar</button>
-      </div>
-      <div>
-        <span v-for="genre in genres" :key="genre.id" >
-          <input type="checkbox" :id="`checkbox_genre${genre.id}`">
-          <p>
-            {{ genre.name }} ({{ genre.qntLivros }})
-          </p>
-        </span>
-      </div>
-    </aside>
-    <section>
+      <Filter />
+
       <div class="books">
         <Book v-for="book in displayedItems" :key="book.id" :book="book" />
       </div>
@@ -70,7 +45,6 @@ function getBooksGenre() {
         :total-pages="totalPages"
         @page-change="changePage"
       />
-    </section>
   </main>
 </template>
 
@@ -80,63 +54,9 @@ main {
     width: 100%;
     height: 100%;
     display: flex;
-    padding: 1%;
-    padding-left: 3%;
-    gap: 65px;
-}
-
-aside {
-    height: auto;
-    width: 20%;
-    border-radius: 10px;
-    background-color: var(--cinza);
-    padding: 1% .5% 1% 1% ;
-    box-shadow: var(--primary-color) 0px 0px 5px;
-    font-size: 1.5rem;
-    display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-
-aside div:nth-child(1) {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1%;
-}
-
-aside div:nth-child(2) {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    height: 100%;
-    overflow-y: scroll;
-}
-
-aside div:nth-child(2)::-webkit-scrollbar {
-    width: 5px;
-}
-
-aside div:nth-child(2)::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-aside div:nth-child(2)::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
-    border-radius: 2px;
-}
-
-aside div:nth-child(2) span {
-    display: flex;
     align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-
-section {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
+    padding: 1%;
     gap: 20px;
 }
 
@@ -144,6 +64,9 @@ section {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 40px;
 }
 </style>

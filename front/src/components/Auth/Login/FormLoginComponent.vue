@@ -125,7 +125,7 @@ function login() {
     }
 
     .forgetPasswordLink {
-        color: #344734;
+        color: var(--primary-color);
         text-decoration: none;
         font-weight: bolder;
         position: absolute;
@@ -146,7 +146,7 @@ function login() {
     }
 
     .button button {
-        background-color: #344734;
+        background-color: var(--primary-color);
         padding: 2% 14%;
         border: none;
         color: #E7E3C0;
@@ -155,12 +155,12 @@ function login() {
         border-radius: 10px;
         cursor: pointer;
         transition: 0.5s all;
-        border: 3px solid #344734;
+        border: 3px solid var(--primary-color);
         font-size: 1.4rem;
     }
 
     .button button:hover {
         background-color: transparent;
-        color: #344734;
+        color: var(--primary-color);
     }
 </style>

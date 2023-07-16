@@ -18,16 +18,15 @@ export const useOthersStore = defineStore("others", {
                 console.log(e);
             }
         },
-        async getBooksGenre(genres) {
+        async getAuthors() {
             try {
-                const data = await othersService.getBooksGenre(genres);
-                for (let livros of data) {
-                    livros.capa = "http://127.0.0.1:8000/" + livros.capa;
-                }
-                this.bookStore.books = data;
+                const data = await othersService.getAuthors();
+                this.authors = data;
+                console.log(data)
             } catch (e) {
                 console.log(e);
             }
-        }
+        },
+        
     }
 });

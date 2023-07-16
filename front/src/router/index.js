@@ -6,11 +6,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: { name: 'home' },
       component: () => import('@/layouts/FullLayout.vue'),
-      exact: true,
       children: [
         {
-          path: '',
+          path: 'home',
           name: 'home',
           meta: {
             requiresAuth: true
@@ -19,7 +19,7 @@ const router = createRouter({
           exact: true
         },
         {
-          path: '/products',
+          path: 'products',
           name: 'products',
           meta: {
             requiresAuth: true

@@ -29,7 +29,7 @@ from drf_spectacular.views import (
 )
 
 from usuario.views import login, register, forget_password, change_password
-from app.views.livro import getBooksOfGenres
+from app.views.livro import getBooksOfFilters
 
 urlpatterns = [
     path("api/", include(usuario_router.urls)),
@@ -41,7 +41,7 @@ urlpatterns = [
     path('api/register/', register, name='register'),
     path('api/forget_password/', forget_password, name='forget_password'),
     path('api/change_password/', change_password, name='change_password'),
-    path('api/get_books_of_genre/', getBooksOfGenres, name='getBooksOfGenres'),
+    path('api/get_books_of_filters/', getBooksOfFilters, name='getBooksOfFilters'),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/swagger/",

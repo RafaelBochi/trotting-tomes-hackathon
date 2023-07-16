@@ -5,13 +5,8 @@ class OthersService {
         const { data } = await axios.get("/api/generos/");
         return data;
     }
-    async getBooksGenre(genres) {
-        const genreStrings = genres.map(String);
-        const { data } = await axios.get("/api/get_books_of_genre/", {
-            params: {
-                genres: genreStrings
-            }
-        });
+    async getAuthors() {
+        const { data } = await axios.get("/api/autores/");
         return data;
     }
 }

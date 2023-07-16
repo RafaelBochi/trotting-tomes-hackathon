@@ -14,6 +14,10 @@ class Livro(models.Model):
     author = models.ForeignKey(Autor, on_delete=models.PROTECT)
     genre = models.ManyToManyField(Genero)
     capa = models.ImageField(upload_to='livros/', blank=True, null=True)
+    sinopse = models.TextField(blank=True, null=True)
+    data_pub = models.DateField(blank=True, null=True)
+    paginas = models.IntegerField(blank=True, null=True)
+    vendas = models.IntegerField(blank=True, null=True, default=0)
 
     def __str__(self):
         return f"{self.title} - {self.price}"
