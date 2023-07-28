@@ -1,10 +1,10 @@
 <script setup>
-import Book from "../../components/Full/Book.vue";
-import Pagination from "../../components/Full/Products/Pagination.vue";
+import Book from "@/components/Full/Book/Book.vue";
+import Pagination from "@/components/Full/Products/Pagination.vue";
 import { useBookStore } from "@/stores/book.js";
 import { useOthersStore } from "@/stores/others.js";
 import { computed, ref } from "vue";
-import Filter from "../../components/Full/Products/Filter.vue";
+import Filter from "@/components/Full/Products/Filter.vue";
 
 const bookStore = useBookStore();
 const othersStore = useOthersStore();

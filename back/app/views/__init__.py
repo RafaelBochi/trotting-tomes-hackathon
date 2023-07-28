@@ -5,3 +5,5 @@ from .carrinho import CarrinhoViewSet
 from .carrinhoLivro import CarrinhoLivroViewSet
 from .compra import CompraViewSet
 from .compraLivro import CompraLivroViewSet
+from .coment import ComentViewSet
+from .favorite import FavoriteViewSet

@@ -19,13 +19,46 @@ html {
     font-size: 62.5%;
     height: 100%;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden; 
 }
 
 body {
     height: 100%;
-    overflow-x: hidden; 
 }
 
 #app {
     height: 100%;
 }
+
+.stars {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .stars input {
+    display: none;
+  }
+  
+  .stars > label {
+    width: 20px;
+    height: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    color: orange;
+  }
+  
+  .stars > label::before {
+    content: "\2606";
+    position: relative;
+    top: -8px;
+    line-height: 26px;
+  }
+  
+  .stars > .true::before {
+    content: "\2605";
+  }
+
+  textarea {
+    font-family: 'Inter', sans-serif;
+  }
+  

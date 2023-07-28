@@ -5,3 +5,5 @@ from .compra import Compra
 from .carrinho import Carrinho
 from .carrinhoLivro import CarrinhoLivro
 from .compraLivro import CompraLivro
+from .coment import Coment
+from .favorite import Favorite

@@ -1,6 +1,9 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import BookPage from "./BookPage.vue";
+import { useUserStore } from "@/stores/user.js";
+
+const userStore = useUserStore();
 
 const props = defineProps({
   book: {
@@ -14,7 +17,18 @@ const favorite = ref(false);
 const showBookPage = ref(false);
 
 function addFavorite() {
-  favorite.value = !favorite.value;
+  console.log(favorite.value)
+  if(favorite.value != true) {
+    userStore.addFavorite(props.book);
+    favorite.value = true;
+    userStore.getFavorites();
+  }  
+  else {
+    const id = userStore.favorites.find(item => item.book.id == props.book.id).id;
+    userStore.deleteFavorite(id);
+    favorite.value = false;
+    userStore.getFavorites();
+  }
 }
 
 function toggleBookPage() {
@@ -26,6 +40,26 @@ function toggleBookPage() {
     document.body.style.overflow = "auto";
   }
 }
+
+function addToCart() {
+  if(userStore.loggedIn) {
+    userStore.addBookCart(props.book.id, 1)
+  }
+  else {
+    userStore.popUpLogin = true;
+  }
+}
+
+onMounted(
+  ()=> {
+    if(userStore.favorites.find(item => item.book.id == props.book.id)) {
+      favorite.value = true;
+    }
+    else {
+      favorite.value = false;
+    }
+  }
+)
 </script>
 
 <template>
@@ -44,7 +78,7 @@ function toggleBookPage() {
             <i></i>
           </div>
           <div>
-            <button>
+            <button @click="addToCart">
               <p>
                 Adicionar
               </p>
@@ -86,8 +120,7 @@ function toggleBookPage() {
   width: 35px;
   height: 35px;
   right: 4%;
-  background-color: var(--white);
-  border-radius: 50%;
+  background-color: transparent;
   z-index: 4;
   cursor: pointer;
 }

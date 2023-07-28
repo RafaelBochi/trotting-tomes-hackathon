@@ -7,13 +7,13 @@ export const useOthersStore = defineStore("others", {
         authors: [],
         genres: [],
         bookStore: useBookStore(),
+        coments: [],
     }),
     actions: {
         async getGenres() {
             try {
                 const data = await othersService.getGenres();
                 this.genres = data;
-                console.log(data)
             } catch (e) {
                 console.log(e);
             }
@@ -22,11 +22,25 @@ export const useOthersStore = defineStore("others", {
             try {
                 const data = await othersService.getAuthors();
                 this.authors = data;
-                console.log(data)
             } catch (e) {
                 console.log(e);
             }
         },
-        
+        async getComents() {
+            try {
+                const data = await othersService.getComents();
+                this.coments = data;
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async addComent(coment) {
+            try {
+                const data = await othersService.addComent(coment);
+                this.getComents();
+            } catch (e) {
+                console.log(e);
+            }
+        }
     }
 });

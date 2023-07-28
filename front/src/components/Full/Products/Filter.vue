@@ -12,6 +12,7 @@ const authors = computed(() => othersStore.authors);
 const searchBooks = computed(() => storeBooks.books.length);
 
 const showFilters = ref(false);
+const closeFilters = ref(false)
 const showOrders = ref(false);
 const showGenres = ref(false);
 const showAuthors = ref(false);
@@ -20,11 +21,16 @@ const toggleFilters = () => {
   showOrders.value = false;
   showGenres.value = false;
   showAuthors.value = false;
-  showFilters.value = !showFilters.value;
-  if (showFilters.value) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
+
+  if(showFilters.value) {
+    closeFilters.value = true;
+    setTimeout(() => {
+      closeFilters.value = false;
+      showFilters.value = !showFilters.value
+    }, 500)
+  }
+  else {
+    showFilters.value = !showFilters.value;
   }
 };
 
@@ -103,9 +109,9 @@ function cleanFilters() {
     </button>
   </section>
 
-  <span v-if="showFilters" class="secFilters">
+  <span v-if="showFilters" class="secFilters" >
     <i @click="toggleFilters"></i>
-    <div class="form">
+    <div class="form" :class="closeFilters != false ? 'closeForm' : ''">
       <span class="close" @click="toggleFilters">
         <font-awesome-icon :icon="['fas', 'circle-xmark']" size="2xl" />
       </span>
@@ -236,6 +242,7 @@ function cleanFilters() {
 section {
   position: relative;
   width: 94%;
+  height: 91%;
 }
 
 .btnFilters {
@@ -257,10 +264,10 @@ section {
 
 .secFilters {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 8%;
+  right: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   z-index: 9;
   backdrop-filter: blur(2px);
   display: flex;
@@ -282,11 +289,36 @@ section {
   top: 0;
   background-color: #fff;
   width: 30%;
-  height: 100vh;
+  height: 100%;
   z-index: 1;
   display: flex;
   flex-direction: column;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  animation: form 0.5s forwards;
+}
+
+@keyframes form {
+  0% {
+    right: -30%;
+  }
+
+  100% {
+    right: 0;
+  }
+}
+
+.closeForm {
+  animation: closeForm 0.5s forwards;
+}
+
+@keyframes closeForm {
+  0% {
+    right: 0;
+  }
+
+  100% {
+    right: -30%;
+  }
 }
 
 .close {
@@ -325,9 +357,22 @@ section {
 }
 
 .filters {
-
     height: 80%;
     overflow-y: auto;
+}
+
+.filters::-webkit-scrollbar {
+  width: 5px;
+}
+
+.filters::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.filters::-webkit-scrollbar-thumb {
+  background-color: var(--lime-green);
+  border-radius: 20px;
+  border: 3px solid var(--lime-green);
 }
 
 .filters > div {
@@ -410,9 +455,10 @@ section {
 }
 
 .searchButton {
+  position: absolute;
   width: 100%;
   height: 10%;
-  bottom: 0;
+  bottom: 9%;
   right: 0;
   display: flex;
   align-items: center;

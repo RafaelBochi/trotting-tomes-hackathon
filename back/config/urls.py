@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 from usuario.router import router as usuario_router
 from rest_framework.routers import DefaultRouter
-from app.views import LivroViewSet, AutorViewSet, GeneroViewSet, CarrinhoViewSet, CarrinhoLivroViewSet, CompraViewSet, CompraLivroViewSet
+from app.views import LivroViewSet, AutorViewSet, GeneroViewSet, CarrinhoViewSet, CarrinhoLivroViewSet, CompraViewSet, CompraLivroViewSet, ComentViewSet, FavoriteViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -16,6 +16,9 @@ router.register(r"carrinhos", CarrinhoViewSet)
 router.register(r"carrinhoLivros", CarrinhoLivroViewSet)
 router.register(r"compras", CompraViewSet)
 router.register(r"compraLivros", CompraLivroViewSet)
+router.register(r"coments", ComentViewSet)
+router.register(r"favorites", FavoriteViewSet)
+
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -30,6 +33,8 @@ from drf_spectacular.views import (
 
 from usuario.views import login, register, forget_password, change_password
 from app.views.livro import getBooksOfFilters, searchBooks
+from app.views.favorite import getFavoritesOfUser
+from app.views.carrinhoLivro import getBookCartOfUser
 
 urlpatterns = [
     path("api/", include(usuario_router.urls)),
@@ -43,6 +48,8 @@ urlpatterns = [
     path('api/change_password/', change_password, name='change_password'),
     path('api/get_books_of_filters/', getBooksOfFilters, name='getBooksOfFilters'),
     path('api/search_books/', searchBooks, name='searchBooks'),
+    path('api/get_favorites_of_user/', getFavoritesOfUser, name='getFavoritesOfUser'),
+    path('api/get_books_cart_of_user/', getBookCartOfUser, name='getBookCartOfUser'),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/swagger/",

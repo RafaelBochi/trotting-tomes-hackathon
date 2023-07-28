@@ -9,8 +9,11 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     loggedIn: useStorage( "loggedIn", false),
     user: useStorage("user", {}),
-    userId: useStorage("userId", null),
     tokenResetPassword: useStorage("tokenResetPassword", null),
+    popUpLogin: false,
+    favorites: useStorage("favorites", []),
+    booksCart: useStorage("booksCart", []),
+    cart: useStorage("cart", Number)
   }),
   actions: {
     async login(user) {
@@ -22,8 +25,8 @@ export const useUserStore = defineStore('user', {
           username: data.username,
           email: data.email,
           id: data.id,
+          token: data.access
         }
-        console.log(data)
       } catch(e) {
         console.log(e)
       }
@@ -38,7 +41,6 @@ export const useUserStore = defineStore('user', {
           id: data.id,
         }
         router.push('/');
-        console.log(data);
       } catch (e) {
         console.log(e);
       }
@@ -52,10 +54,8 @@ export const useUserStore = defineStore('user', {
       try {
         console.log('a')
         const data = await userService.forgetPassword(email);
-        console.log(data)
         this.userId = data.id
         this.tokenResetPassword = data.token
-        console.log(this.userId)
       } catch(e) {
         console.log(e)
       }
@@ -68,8 +68,79 @@ export const useUserStore = defineStore('user', {
           new_password: password,
           user_id: this.userId,
         };
-        console.log(values)
         const data = await userService.changePassword(values)
+      } catch (error) {
+        console.log(error); // Lidar com exceções
+      }
+    },
+    async addFavorite(book){
+      try {
+        const values = {
+          user: this.user.id,
+          book: book.id,
+        }
+        const data = await userService.addFavorite(values);
+        console.log(data)
+      } catch (error) {
+        console.log(error); // Lidar com exceções
+      }
+    },
+    async getFavorites(){
+      try {
+        const data = await userService.getFavorites(this.user.id);
+        for (let item of data) {
+          item.book.capa = "http://127.0.0.1:8000/" + item.book.capa;
+        }
+        this.favorites = data;
+      } catch (error) {
+        console.log(error); // Lidar com exceções
+      }
+    },
+    async deleteFavorite(id){
+      try {
+        const data = await userService.deleteFavorite(id);
+        console.log(data)
+        this.getFavorites()
+      } catch (error) {
+        console.log(error); // Lidar com exceções
+      }
+    },
+    async getCart() {
+      try{
+
+      } catch {
+
+      }
+    },
+    async addBookCart(book, quantidade){
+      try {
+        const values = {
+          user: this.user.id,
+          book: book,
+          quantidade: quantidade
+        }
+        const data = await userService.addBookCart(values);
+        console.log(data)
+      } catch (error) {
+        console.log(error); // Lidar com exceções
+      }
+    },
+    async getBookCart(){
+      try {
+        const data = await userService.getBookCart(this.user.id);
+        for (let item of data) {
+          item.book.capa = "http://127.0.0.1:8000/" + item.book.capa;
+        }
+        this.booksCart = data;
+      } catch (error) {
+        console.log(error); // Lidar com exceções
+      }
+    },
+    async deleteBookCart(id){
+      try {
+        const data = await userService.deleteBookCart(id);
+        console.log(data)
+        this.getBookCart()
       } catch (error) {
         console.log(error); // Lidar com exceções
       }

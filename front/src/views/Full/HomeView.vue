@@ -1,17 +1,22 @@
 <script setup>
-import Banners from "../../components/Full/Home/Carousel.vue";
-import Book from "../../components/Full/Book.vue";
-import { Carousel, Navigation, Slide } from 'vue3-carousel';
-import { computed } from "vue";
+import Banners from "@/components/Full/Home/Banner.vue";
+import Carousel from "@/components/Full/Home/Carousel.vue";
+import PopUpLogin from "@/components/Full/PopUpLogin.vue";
+import { computed, ref } from "vue";
 import { useBookStore } from "@/stores/book.js";
+import { useUserStore } from "@/stores/user.js";
 
+const userStore = useUserStore();
 const bookStore = useBookStore();
 
 const books = computed(() => bookStore.books);
 
+const popUpLogin = computed(() => userStore.popUpLogin);
+
 </script>
 
 <template>
+  <PopUpLogin v-if="popUpLogin"/>
   <main>
     <Banners />
 
@@ -20,17 +25,7 @@ const books = computed(() => bookStore.books);
         <p>Mais Vendidos</p>
       </h2>
 
-      <Carousel :items-to-show="5" :breakpoints="breakpoints" :snap-align="start" :items-to-scroll="5">
-        <Slide v-for="book in books" :key="book" class="slide">
-          <div class="carousel__item">
-            <Book :book="book"/>
-          </div>
-        </Slide>
-
-        <template #addons>
-          <Navigation />
-        </template>
-      </Carousel>
+      <Carousel/>
     </section>
 
     <section class="sectionBooks">
@@ -38,17 +33,7 @@ const books = computed(() => bookStore.books);
         <p>Novidades</p>
       </h2>
 
-      <Carousel :items-to-show="5" :breakpoints="breakpoints" :snap-align="start" :items-to-scroll="5">
-        <Slide v-for="book in books" :key="book" class="slide">
-          <div class="carousel__item">
-            <Book :book="book"/>
-          </div>
-        </Slide>
-
-        <template #addons>
-          <Navigation />
-        </template>
-      </Carousel>
+      <Carousel/>
     </section>
   </main>
 </template>
@@ -56,7 +41,7 @@ const books = computed(() => bookStore.books);
 <style scoped>
 .sectionBooks {
   width: 90%;
-  margin: auto;
+  margin: 0 auto;
   margin-top: 50px;
   padding: 1%;
 }
@@ -87,28 +72,4 @@ h2 {
   margin-top: 5px;
 }
 
-.carousel__item {
-  min-height: 200px;
-  width: 80%;
-  font-size: 20px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 30px;
-}
-
-.carousel__slide {
-  padding: 10px;
-}
-
-.carousel__prev,
-.carousel__next {
-  box-sizing: content-box;
-  border: 5px solid white;
-}
 </style>

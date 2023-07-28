@@ -1,6 +1,3 @@
-from django.http import HttpRequest
-from django.conf import settings
-from django.urls import reverse
 from rest_framework.decorators import (
     api_view,
     authentication_classes,

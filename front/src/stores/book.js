@@ -11,7 +11,6 @@ export const useBookStore = defineStore('book', {
             try {
                 const data = await bookService.getBooks();
                 this.books = data;
-                console.log(data)
             } catch (e) {
                 console.log(e);
             }
@@ -36,7 +35,6 @@ export const useBookStore = defineStore('book', {
                     livros.capa = "http://127.0.0.1:8000/" + livros.capa;
                 }
                 this.searchBooks = data;
-                console.log(data)
             } catch (e) {
                 console.log(e);
             }

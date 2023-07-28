@@ -1,14 +1,17 @@
 from rest_framework.viewsets import ModelViewSet
 from config.decorators import jwt_optional
 from rest_framework.permissions import AllowAny
-from app.models import Genero
-from app.serializers import GeneroSerializer
 from rest_framework.permissions import BasePermission
 from rest_framework.parsers import MultiPartParser, FormParser
+from app.models import Coment
+from app.serializers import ComentSerializer, ComentSerializerCreate
 
-class GeneroViewSet(ModelViewSet):
-    queryset = Genero.objects.all()
-    serializer_class = GeneroSerializer
+class ComentViewSet(ModelViewSet):
+    queryset = Coment.objects.all()
+    def get_serializer_class(self):
+        if self.action in ["list", "retrieve"]:
+            return ComentSerializer
+        return ComentSerializerCreate
     parser_classes = (MultiPartParser, FormParser)
     
     @classmethod

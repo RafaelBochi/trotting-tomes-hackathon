@@ -26,7 +26,7 @@ const router = createRouter({
           },
           component: () => import('../views/Full/ProductsView.vue'),
           exact: true
-        }
+        },
       ]
     },
     {

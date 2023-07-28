@@ -132,23 +132,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "usuario.Usuario"
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1)
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=365),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=365)
 }   
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
-]
-
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOW_HEADERS = [
-    'Content-Type',
-]
-CORS_ALLOW_METHODS = [
-    'GET',
-    'POST',
-    'OPTIONS',
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # settings.py

@@ -2,9 +2,12 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import Search from "./Search.vue";
+import { useUserStore} from "../../stores/user";
 
 const activeRoute = ref(null);
 const router = useRouter();
+
+const userStore = useUserStore();
 
 function updateActiveRoute() {
     const currentRoute = router.currentRoute.value.name;
@@ -30,21 +33,21 @@ onMounted(
                 <router-link to="/" :class="{ 'active-link': activeRoute === 'home' }">
                     <a href="">
                         <p>
-                            Home
+                            HOME
                         </p>
                     </a>
                 </router-link>
                 <router-link to="/products" :class="{ 'active-link': activeRoute === 'products' }">
                     <a href="">
                         <p>
-                            Produtos
+                            PRODUTOS
                         </p>
                     </a>
                 </router-link>
                 <router-link to="/sobre">
                     <a href="">
                         <p>
-                            Sobre
+                            SOBRE
                         </p>
                     </a>
                 </router-link>
@@ -53,7 +56,7 @@ onMounted(
         <Search/>
 
         <div class="auth">
-            <router-link to="/login">
+            <router-link to="/login" v-if="userStore.loggedIn != true">
                 <button>
                 <font-awesome-icon :icon="['fas', 'user']" size="xl" style="color: #fff;" />
                 
@@ -63,6 +66,25 @@ onMounted(
                 </button>
             </router-link>
             
+            <div class="user" v-else>
+                <img src="/userIcon.png" alt="" @click="userStore.logout">
+                <span>
+                    <p class="name">
+                    {{ userStore.user.username }}
+                </p>
+                <p class="email">
+                    {{ userStore.user.email }}
+                </p>
+                </span>
+                
+            </div>
+        </div>
+
+        <div class="carrinho" @click="$emit('toggleCart')">
+                <font-awesome-icon :icon="['fas', 'shopping-cart']" size="2xl" style="color: var(--primary-color);" />
+        </div>
+        <div class="settings" @click="$emit('toggleSettings')">
+                <font-awesome-icon :icon="['fas', 'gear']" size="2xl" style="color: var(--primary-color);" />
         </div>
         </div>
 
@@ -81,7 +103,7 @@ onMounted(
         box-shadow: 0px 1px 20px -9px rgba(52,71,52,1);
         position: sticky;
         top: 0;
-        z-index: 9;
+        z-index: 11;
     }
 
     .logo {
@@ -143,6 +165,8 @@ onMounted(
         display: flex;
         align-items: center;
         justify-content: center;
+        color: #000;
+        font-size: 1.3rem;
     }
     .auth button {
         border: none;
@@ -166,7 +190,35 @@ onMounted(
         text-transform: none;
     }
 
+    .auth .user {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .auth .user .name {
+        font-size: 1.2rem;
+        font-weight: bolder;
+    }
+    .auth .user .email {
+        font-size: 1rem;
+        color: #00000090;
+    }
+
     a {
         text-decoration: none;
+    }
+
+    .carrinho, .settings {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        right: 1%;
+    }
+
+    .user img {
+        width: 35px;
     }
 </style>
