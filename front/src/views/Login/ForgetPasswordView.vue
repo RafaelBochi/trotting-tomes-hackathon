@@ -17,6 +17,7 @@ function forgetPassword() {
 
 <template>
     <main>
+        <img src="../../../public/banner.jpg" alt="">
         <section class="form">
             <i class="iconLock">
                 <font-awesome-icon :icon="['fas', 'lock']" size="xl" style="color: #ededed;" />
@@ -39,7 +40,8 @@ function forgetPassword() {
 
 <style scoped>
     main {
-        background-color: var(--secundary-color);
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.621);
         height: 100%;
         width: 100%;
         display: flex;
@@ -47,9 +49,18 @@ function forgetPassword() {
         justify-content: center;
     }
 
+    img {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        z-index: -1;
+        opacity: 0.5;
+    }
+
     .form {
         position: relative;
-        background-color: var(--white);
+        background-color: #fff;
         padding: 1% 4%;
         display: flex;
         flex-direction: column;

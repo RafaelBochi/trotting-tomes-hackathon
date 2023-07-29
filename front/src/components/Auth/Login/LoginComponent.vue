@@ -17,7 +17,7 @@ import FormLoginComponent from './FormLoginComponent.vue';
                 </h3>
             </span>
 
-            <img src="/horseandbook.jpg" alt="">
+            <img src="/horseandbook.png" alt="">
         </div>
 
         <FormLoginComponent class="form"/>
@@ -89,7 +89,11 @@ import FormLoginComponent from './FormLoginComponent.vue';
         }
     }
 
-
+    .banner > img {
+        width: 80%;
+        position: relative;
+        left: 5%;
+    }
     .title {
         display: flex;
         flex-direction: column;

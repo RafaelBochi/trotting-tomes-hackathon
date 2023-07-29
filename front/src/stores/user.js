@@ -13,7 +13,7 @@ export const useUserStore = defineStore('user', {
     popUpLogin: false,
     favorites: useStorage("favorites", []),
     booksCart: useStorage("booksCart", []),
-    cart: useStorage("cart", Number)
+    cartId: useStorage("cart", Number),
   }),
   actions: {
     async login(user) {
@@ -34,12 +34,11 @@ export const useUserStore = defineStore('user', {
     async register(user) {  
       try {
         const data = await userService.register(user);
-        this.loggedIn = true;
-        this.user = {
-          username: data.username,
-          email: data.email,
-          id: data.id,
+        const values = {
+          value : user.email,
+          password: user.password
         }
+        this.login(values)
         router.push('/');
       } catch (e) {
         console.log(e);
@@ -107,31 +106,35 @@ export const useUserStore = defineStore('user', {
     },
     async getCart() {
       try{
-
+        const data = await userService.getCart(this.user.id)
+        this.cartId = data[0].id
+        console.log(data)
       } catch {
-
+        console.log(e)
       }
     },
     async addBookCart(book, quantidade){
       try {
         const values = {
-          user: this.user.id,
-          book: book,
+          carrinho: this.cartId,
+          livro: book,
           quantidade: quantidade
         }
         const data = await userService.addBookCart(values);
+        this.getBooksCart()
         console.log(data)
       } catch (error) {
         console.log(error); // Lidar com exceções
       }
     },
-    async getBookCart(){
+    async getBooksCart(){
       try {
-        const data = await userService.getBookCart(this.user.id);
+        const data = await userService.getBooksCart(this.cartId);
         for (let item of data) {
-          item.book.capa = "http://127.0.0.1:8000/" + item.book.capa;
+          item.livro.capa = "http://127.0.0.1:8000/" + item.livro.capa;
         }
         this.booksCart = data;
+        console.log(data)
       } catch (error) {
         console.log(error); // Lidar com exceções
       }

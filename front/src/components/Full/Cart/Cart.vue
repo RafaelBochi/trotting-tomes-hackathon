@@ -5,16 +5,28 @@ import { computed } from 'vue';
 
 const userStore = useUserStore();
 
-const favorites = computed(() => userStore.favorites);
+const booksCart = computed(() => userStore.booksCart);
+
+function deleteBookCart(id) {
+  userStore.deleteBookCart(id);
+}
 </script>
 
 <template>
   <section class="cart">
     <h2>Carrinho de Itens</h2>
 
-    <div class="itens">
-        <item v-for="item in favorites" :key="item.id" :item="item"/>
+    <div class="itens" v-if="booksCart.length > 0">
+        <item v-for="item in booksCart" :key="item.id" :item="item" @delete-book-cart="deleteBookCart"/>
     </div>
+
+    <h3 v-else>
+      NENHUM ITEM ADICIONADO...
+    </h3>
+
+    <span class="close" @click="$emit('close')">
+      <font-awesome-icon :icon="['fas', 'xmark']" size="xl"/>
+    </span>
   </section>
 </template>
 
@@ -28,6 +40,17 @@ const favorites = computed(() => userStore.favorites);
   z-index: 10;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   padding: 1%;
+  animation: cart 0.5s forwards;
+}
+
+@keyframes cart {
+  0%  {
+    right: -30%;
+  }
+
+  100% {
+    right: 0;
+  }
 }
 
 h2 {
@@ -47,5 +70,12 @@ h2 {
     height: 80%;
     overflow-y: auto;
     padding: 0% 2%;
+}
+
+.close {
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  cursor: pointer;
 }
 </style>

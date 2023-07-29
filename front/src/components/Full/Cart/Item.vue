@@ -9,12 +9,12 @@ const props = defineProps({
 
 <template>
     <div class="item">
-        <img :src="item.book.capa" alt="">
+        <img :src="item.livro.capa" alt="">
 
         <div class="info">
-            <h3>{{ item.book.title }}</h3>
-            <p>Preço: R$ {{ item.book.price }}</p>
-            <p>Estoque: {{ item.book.stock }}</p>
+            <h3>{{ item.livro.title }}</h3>
+            <p>Preço: R$ {{ item.livro.price }}</p>
+            <p>Estoque: {{ item.livro.stock }}</p>
         </div>
 
         <div class="actions">
@@ -23,7 +23,7 @@ const props = defineProps({
             <button>-</button>
         </div>
 
-        <span class="delete">
+        <span class="delete" @click="$emit('deleteBookCart', item.id)">
             Delete
         </span>
     </div>

@@ -16,7 +16,7 @@
             <font-awesome-icon :icon="['fas', 'heart']" style="color: var(--lime-green);" size="xl"/>
         </div>
 
-        <div class="logout">
+        <div class="logout" @click="$emit('logout')">
             <p>
                 Sair
             </p>
@@ -29,7 +29,7 @@
     section {
         position: fixed;
         right: 2%;
-        top: 9%;
+        top: 7%;
         padding: .5% 1%;
         background-color: #fff;
         border-radius: 10px;
@@ -38,6 +38,17 @@
         gap: 15px;
         z-index: 12;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        animation: popUp 0.5s forwards;
+    }
+
+    @keyframes popUp {
+        0%  {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
     }
 
     section > div {

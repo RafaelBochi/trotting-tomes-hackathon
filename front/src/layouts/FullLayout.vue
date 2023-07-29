@@ -4,18 +4,29 @@ import Cart from '@/components/Full/Cart/Cart.vue';
 import Favorites from '@/components/Full/Favorites/Favorites.vue';
 import PopUpSettings from '../components/Full/PopUpSettings.vue';
 import { ref } from 'vue';
+import { useUserStore } from '../stores/user';
+
+const userStore = useUserStore();
 
 const showCart = ref(false)
+const closeCart = ref(false)
 const showSettings = ref(false)
+const closeSettings = ref(false)
 const showFavorites = ref(false)
 const closeFavorites = ref(false)
 
-function toggleCart() {
-  showCart.value = !showCart.value;
-}
 
 function toggleSettings() {
-  showSettings.value = !showSettings.value;
+  if(showSettings.value) {
+    closeSettings.value = true
+    setTimeout(() => {
+      closeSettings.value = false
+      showSettings.value = !showSettings.value
+    }, 500)
+  }
+  else {
+    showSettings.value = !showSettings.value;
+  }
 }
 
 function toggleFavorites() {
@@ -27,8 +38,28 @@ function toggleFavorites() {
     }, 500)
   }
   else {
-    toggleSettings();
     showFavorites.value = !showFavorites.value;
+    toggleSettings();
+    if(showCart.value) {
+      toggleCart();
+    }
+  }
+  
+}
+
+function toggleCart() {
+  if(showCart.value) {
+    closeCart.value = true
+    setTimeout(() => {
+      closeCart.value = false
+      showCart.value = !showCart.value
+    }, 500)
+  }
+  else {
+    if(showFavorites.value) {
+      toggleFavorites();
+    }
+    showCart.value = !showCart.value;
   }
   
 }
@@ -36,26 +67,39 @@ function toggleFavorites() {
 
 <template>
   <main>
-    <Header @toggle-cart="toggleCart" @toggle-settings="toggleSettings"/>
-    <Cart v-if="showCart"/>
+    <Header @toggle-cart="toggleCart" @toggle-settings="toggleSettings" />
+    <Cart v-if="showCart" @close="toggleCart" :class="closeCart != false ? 'closeCart' : ''"/>
     <Favorites v-if="showFavorites" @close="toggleFavorites" :class="closeFavorites != false ? 'closeFavorites' : ''"/>
     <RouterView/>
-    <PopUpSettings v-if="showSettings"  @toggle-favorites="toggleFavorites"/>
+    <PopUpSettings v-if="showSettings"  @toggle-favorites="toggleFavorites" @logout="userStore.logout" :class="closeSettings != false ? 'closeSettings' : ''"/>
   </main>
 </template>
 
 <style scoped>
 
-.closeFavorites {
-  animation: closeFavorites .5s forwards;
+.closeFavorites, .closeCart {
+  animation: closeSections .5s forwards;
 }
 
-@keyframes closeFavorites {
+@keyframes closeSections {
   0% {
     right: 0;
   }
   100% {
     right: -30%;
+  }
+}
+
+.closeSettings {
+  animation: closeSettings .5s forwards;
+}
+
+@keyframes closeSettings {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 </style>

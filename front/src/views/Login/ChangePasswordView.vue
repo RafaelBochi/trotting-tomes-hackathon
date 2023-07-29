@@ -42,7 +42,10 @@ function changePassword() {
 
 <style scoped>
     main {
-        background-color: var(--secundary-color);
+        background-image: url('\banner.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
         height: 100%;
         width: 100%;
         display: flex;

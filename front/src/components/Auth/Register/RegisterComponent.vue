@@ -16,7 +16,7 @@ import FormRegisterComponent from './FormRegisterComponent.vue'
                 </h3>
             </span>
 
-            <img src="/horseandbook.jpg" alt="">
+            <img src="/horseandbook.png" alt="">
         </div>
 
         <FormRegisterComponent class="form"/>
@@ -86,6 +86,12 @@ import FormRegisterComponent from './FormRegisterComponent.vue'
             left: 0%;
             border-radius: 0% 9% 9% 0% / 50% 50% 50% 50%;
         }
+    }
+
+    .banner > img {
+        width: 80%;
+        position: relative;
+        right: 5%;
     }
 
     .title {

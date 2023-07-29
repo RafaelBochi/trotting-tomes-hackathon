@@ -58,6 +58,17 @@ class UserService {
         console.log(data)
         return data;
     }
+    async getCart(user) {
+        const userStore = useUserStore();
+        const config = {
+            headers: { Authorization: `Bearer ${userStore.user.token}`,  
+            'Content-Type': 'multipart/form-data',
+            accept: 'application/json', },
+            
+        };
+        const { data } = await axios.get(`/api/get_cart_user/`, { params: {user: user} }, config)
+        return data;
+    }
     async addBookCart(values) {
         const userStore = useUserStore();
         
@@ -70,7 +81,7 @@ class UserService {
         const { data } = await axios.post("/carrinhoLivros/", values, config )
         return data;
     }
-    async getBookCart(id) {
+    async getBooksCart(id) {
         const userStore = useUserStore();
         const config = {
             headers: { Authorization: `Bearer ${userStore.user.token}`,  
@@ -78,7 +89,7 @@ class UserService {
             accept: 'application/json', },
             
         };
-        const { data } = await axios.get(`/api/get_books_cart_of_user/`, { params: { user_id: id } }, config )
+        const { data } = await axios.get(`/api/get_books_cart_of_user/`, { params: { cart_id: id } }, config )
         console.log(data)
         return data;
     }

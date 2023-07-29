@@ -16,7 +16,7 @@ function deleteFavorite(id) {
   <section class="favorites">
     <h2>Seus Favoritos</h2>
 
-    <div class="itens" v-if="favorites.lenght > 0">
+    <div class="itens" v-if="favorites.length > 0">
         <item v-for="item in favorites" :key="item.id" :item="item" @delete-favorite="deleteFavorite"/>
     </div>
 

@@ -14,7 +14,13 @@ onMounted(
     othersStore.getGenres();
     othersStore.getAuthors();
     othersStore.getComents();
-    userStore.getFavorites();
+
+    if(userStore.loggedIn) {
+      userStore.getFavorites();
+      userStore.getCart()
+      userStore.getBooksCart()
+    }
+    
   }
 )
 </script>

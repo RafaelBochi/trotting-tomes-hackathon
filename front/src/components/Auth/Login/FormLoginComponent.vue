@@ -41,7 +41,7 @@ function login() {
                     <font-awesome-icon :icon="['fas', 'eye']" size="lg" v-if="showPassword"/>
                     <font-awesome-icon :icon="['fas', 'eye-slash']" size="lg" v-else/>
                 </i>
-                <RouterLink to="/" class="forgetPasswordLink">
+                <RouterLink to="/forget-password" class="forgetPasswordLink">
                     <p>
                         Esqueceu sua senha?
                     </p>

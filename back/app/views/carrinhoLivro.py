@@ -24,10 +24,10 @@ class CarrinhoLivroViewSet(ModelViewSet):
 @authentication_classes([])
 @permission_classes([])
 def getBookCartOfUser(request):
-    user_id = request.GET.get("user_id")
-    if user_id:
-        bookCart = CarrinhoLivro.objects.filter(user_id=user_id)
+    cart_id = request.GET.get("cart_id")
+    if cart_id:
+        bookCart = CarrinhoLivro.objects.filter(carrinho_id=cart_id)
         serializer = CarrinhoLivroSerializer(bookCart, many=True)
         return Response(serializer.data)
     else:
-        return Response({"message": "Please provide a valid user_id parameter."}, status=400)
+        return Response({"message": "Please provide a valid cart_id parameter."}, status=400)

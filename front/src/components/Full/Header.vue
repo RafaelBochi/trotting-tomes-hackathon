@@ -216,8 +216,18 @@ onMounted(
         align-items: center;
         justify-content: center;
         right: 1%;
+        cursor: pointer;
+        transition: .5s;
     }
 
+    .carrinho:hover {
+        transform: scale(1.2);
+    }
+
+    .settings:hover {
+        transform: scale(1.2) rotate(180deg);;  
+        
+    }
     .user img {
         width: 35px;
     }
