@@ -17,7 +17,7 @@ import FormLoginComponent from './FormLoginComponent.vue';
                 </h3>
             </span>
 
-            <img src="/horseandbook.png" alt="">
+            <img src="/horseandbook.jpg" alt="">
         </div>
 
         <FormLoginComponent class="form"/>

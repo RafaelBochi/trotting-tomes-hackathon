@@ -4,7 +4,7 @@
 
 <template>
     <section>
-        <div class="account">
+        <div class="account" @click="$emit('toggleAccount')">
             <p>Perfil</p>
             <font-awesome-icon :icon="['fas', 'user']" style="color: var(--lime-green);" size="xl"/>
         </div>

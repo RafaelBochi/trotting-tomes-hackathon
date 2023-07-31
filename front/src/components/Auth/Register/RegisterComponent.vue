@@ -16,7 +16,7 @@ import FormRegisterComponent from './FormRegisterComponent.vue'
                 </h3>
             </span>
 
-            <img src="/horseandbook.png" alt="">
+            <img src="/horseandbook.jpg" alt="">
         </div>
 
         <FormRegisterComponent class="form"/>

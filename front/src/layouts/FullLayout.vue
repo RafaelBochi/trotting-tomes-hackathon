@@ -3,6 +3,7 @@ import Header from '@/components/Full/Header.vue';
 import Cart from '@/components/Full/Cart/Cart.vue';
 import Favorites from '@/components/Full/Favorites/Favorites.vue';
 import PopUpSettings from '../components/Full/PopUpSettings.vue';
+import Account from '../components/Full/account/Account.vue';
 import { ref } from 'vue';
 import { useUserStore } from '../stores/user';
 
@@ -14,6 +15,7 @@ const showSettings = ref(false)
 const closeSettings = ref(false)
 const showFavorites = ref(false)
 const closeFavorites = ref(false)
+const showAccount = ref(false)
 
 
 function toggleSettings() {
@@ -63,6 +65,16 @@ function toggleCart() {
   }
   
 }
+
+function toggleAccount() {
+  if(showAccount.value) {
+    showAccount.value = !showAccount.value
+  }
+  else {
+    showAccount.value = !showAccount.value;
+    document.querySelector('main').style.overflow = 'hidden';
+  }
+}
 </script>
 
 <template>
@@ -71,7 +83,8 @@ function toggleCart() {
     <Cart v-if="showCart" @close="toggleCart" :class="closeCart != false ? 'closeCart' : ''"/>
     <Favorites v-if="showFavorites" @close="toggleFavorites" :class="closeFavorites != false ? 'closeFavorites' : ''"/>
     <RouterView/>
-    <PopUpSettings v-if="showSettings"  @toggle-favorites="toggleFavorites" @logout="userStore.logout" :class="closeSettings != false ? 'closeSettings' : ''"/>
+    <PopUpSettings v-if="showSettings"  @toggle-favorites="toggleFavorites" @logout="userStore.logout" :class="closeSettings != false ? 'closeSettings' : ''" @toggle-account="toggleAccount"/>
+    <Account  v-if="showAccount" @toggle-account="toggleAccount"/>
   </main>
 </template>
 
