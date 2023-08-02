@@ -1,6 +1,6 @@
 <script setup>
 import Banners from "@/components/Full/Home/Banner.vue";
-import SlideBooks :slideNum="1" from "@/components/Full/Home/SlideBooks :slideNum="1".vue";
+import SlideBooks from "@/components/Full/Home/SlideBooks :slideNum="1".vue";
 import PopUpLogin from "@/components/Full/PopUpLogin.vue";
 import { computed, ref } from "vue";
 import { useBookStore } from "@/stores/book.js";
