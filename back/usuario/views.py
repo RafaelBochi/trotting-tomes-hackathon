@@ -205,13 +205,13 @@ def edit_account(request):
 
     user = User.objects.get(id=user_id)
 
-    if username is not '' and username is not None:
+    if username != '' and username is not None:
         user.username = username
 
-    if email is not '' and email is not None:
+    if email != '' and email is not None:
         user.email = email
 
-    if password is not '' and password is not None:
+    if password != '' and password is not None:
         user.set_password(password)
 
     user.save()
