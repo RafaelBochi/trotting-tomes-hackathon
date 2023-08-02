@@ -6,59 +6,72 @@ import Pagination from "@/components/Full/Home/Pagination.vue";
 
 const bookStore = useBookStore();
 
+const props = defineProps({
+  slideNum: {
+    type: Number,
+  },
+});
+
 const books = computed(() => bookStore.books);
 
+const active = ref(0);
+const slideNum = ref(props.slideNum);
 const currentPage = ref(1);
 const itemsPerPage = 5;
-
-const startIndex = ref(0);
-const endIndex = ref(5);
-
-
-const displayedItems = computed(() => {
-  return books.value.slice(startIndex.value, endIndex.value);
-});
 
 const totalPages = computed(() => {
   return Math.ceil(books.value.length / itemsPerPage);
 });
 
 const changePage = (page) => {
+  const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
   currentPage.value = page;
-  startIndex.value = (page - 1) * itemsPerPage;
-  endIndex.value = page * itemsPerPage;
+  active.value = (page - 1) * itemsPerPage;
+  items[active.value + 2].scrollIntoView({
+    behavior: "smooth",
+    inline: "center",
+    block: "nearest",
+  });
 };
 
 const nextBook = () => {
+  const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
   if (currentPage.value < totalPages.value) {
-      endIndex.value += 1;
-      startIndex.value += 1;
+    active.value++;
+    items[active.value + 2].scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
 
-      if (endIndex.value % itemsPerPage == 0) {
-        currentPage.value = endIndex.value / itemsPerPage;
-      }
-
+    if (active.value % itemsPerPage == 0) {
+      currentPage.value = active.value / itemsPerPage + 1;
+    }
   }
 };
 
 const previousBook = () => {
+  const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
   if (currentPage.value > 1) {
-      endIndex.value -= 1;
-      startIndex.value -= 1;
+    active.value--;
+    items[active.value + 2].scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
 
-      if (endIndex.value % itemsPerPage == 0) {
-        currentPage.value = endIndex.value / itemsPerPage;
-      }
-
+    if ((active.value + 1) % itemsPerPage == 0) {
+      currentPage.value--;
     }
+  }
 };
 </script>
 
 <template>
   <section>
-      <div class="books">
-        <Book v-for="book in displayedItems" :key="book.id" :book="book" />
-      </div>
+    <div class="books" :class="`books${slideNum}`">
+      <Book v-for="book in books" :key="book.id" :book="book" />
+    </div>
 
     <div class="pages">
       <span
@@ -72,8 +85,8 @@ const previousBook = () => {
     </div>
 
     <Pagination
-      :start-index="startIndex"
-      :end-index="endIndex"
+      :active="active"
+      :itemsPerPage="itemsPerPage"
       @next-book="nextBook"
       :books="books"
       @previous-book="previousBook"
@@ -93,17 +106,22 @@ section {
 }
 
 .books {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding: 1%;
   padding-top: 2%;
   display: flex;
   margin: auto;
-  width: 100%;
+  width: 96%;
   height: 400px;
   align-items: center;
-  justify-content: center;
   gap: 20px;
-  overflow: hidden;
+  scroll-behavior: smooth;
 }
 
+.books::-webkit-scrollbar {
+  display: none;
+}
 .pages {
   display: flex;
   gap: 10px;
@@ -122,6 +140,4 @@ section {
 .activate {
   background-color: var(--primary-color);
 }
-
-
 </style>

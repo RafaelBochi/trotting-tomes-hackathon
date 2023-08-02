@@ -1,11 +1,11 @@
 <script setup>
 
 const props = defineProps({
-  startIndex: {
+  active: {
     type: Number,
     required: true
   },
-  endIndex: {
+  itemsPerPage: {
     type: Number,
     required: true
   },
@@ -29,11 +29,11 @@ const nextBook = () => {
 
 <template>
     <div>
-        <button @click="previousBook" :disabled="startIndex == 0">
+        <button @click="previousBook" :disabled="active == 0">
             <font-awesome-icon :icon="['fas', 'chevron-left']" />
         </button>
 
-        <button @click="nextBook" :disabled="endIndex == books.length">
+        <button @click="nextBook" :disabled="active == books.length - itemsPerPage">
             <font-awesome-icon :icon="['fas', 'chevron-right']" />
         </button>
     </div>
