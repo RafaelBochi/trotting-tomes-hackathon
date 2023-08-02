@@ -1,19 +1,16 @@
 <script setup>
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+
+const banners = ['/banner1.png', '/banner2.png']
 </script>
 
 <template>
   <section>
     <Carousel class="carousel" autoplay="3000" transition="500" wrap-around="true">
-      <Slide v-for="slide in 10" :key="slide">
-        <div class="carousel__item">{{ slide }}</div>
+      <Slide v-for="banner, index in banners" :key="index">
+        <img class="carousel__item" :src="banner" alt="">
       </Slide>
-
-      <template #addons>
-        <Navigation />
-        <Pagination />
-      </template>
     </Carousel>
   </section>
 </template>
@@ -21,8 +18,7 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 <style scoped>
 
 .carousel {
-    padding-top: 2%;
-    width: 80%;
+    width: 100%;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -30,16 +26,11 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 }
 
 .carousel__item {
-  min-height: 500px;
-  width: 93%;
+  height: 500px;
+  width: 100%;
   background-color: var(--primary-color);
   color: var(--primary-color);
   font-size: 20px;
-  border-radius: 8px;
-}
-
-.carousel__slide {
-  padding: 10px;
 }
 
 .carousel__prev,
