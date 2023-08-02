@@ -105,6 +105,18 @@ class UserService {
         console.log(data)
         return data;
     }
+    async editAccount(user) {
+        const userStore = useUserStore();
+        const config = {
+            headers: { Authorization: `Bearer ${userStore.user.token}`,  
+            'Content-Type': 'multipart/form-data',
+            accept: 'application/json', },
+            
+        };
+        const { data } = await axios.put(`/api/edit_account/`, user, config )
+        console.log(data)
+        return data;
+    }
 }
 
 export default new UserService();

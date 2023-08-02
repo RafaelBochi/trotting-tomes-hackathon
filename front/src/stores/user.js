@@ -147,6 +147,17 @@ export const useUserStore = defineStore('user', {
       } catch (error) {
         console.log(error); // Lidar com exceções
       }
+    },
+    async editAccount(user){
+      try {
+        user.user_id = this.user.id
+        console.log(user)
+        const data = await userService.editAccount(user);
+        console.log(data)
+      } catch (error) {
+        console.log(error); // Lidar com exceções
+      }
+
     }
   }
 })

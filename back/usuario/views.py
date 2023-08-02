@@ -195,3 +195,29 @@ def change_password(request):
     return Response(
         {"message": "Senha atualizada com sucesso."}, status=status.HTTP_200_OK
     )
+
+@api_view(["PUT"])
+def edit_account(request):
+    user_id = request.data.get("user_id")
+    username = request.data.get("username")
+    email = request.data.get("email")
+    password = request.data.get("password")
+
+    user = User.objects.get(id=user_id)
+
+    if username is not '' and username is not None:
+        user.username = username
+
+    if email is not '' and email is not None:
+        user.email = email
+
+    if password is not '' and password is not None:
+        user.set_password(password)
+
+    user.save()
+
+    response_data = {
+        "message": "Usuário atualizado com sucesso.",
+    }
+
+    return Response(response_data, status=status.HTTP_200_OK)

@@ -7,6 +7,16 @@ const userStore = useUserStore()
 const inputUsername = computed(()=> userStore.user.username)
 const inputEmail = computed(()=> userStore.user.email)
 const inputPassword = ref('')
+
+function editAccount() {
+    const user = {
+        username: inputUsername.value,
+        email: inputEmail.value,
+        password: inputPassword.value
+    }
+
+    userStore.editAccount(user)
+}
 </script>
 
 <template>
@@ -49,8 +59,8 @@ const inputPassword = ref('')
             </div>
 
             <div class="actions">
-                <button class="btn btn-danger">Cancelar</button>
-                <button class="btn btn-success">Salvar</button>
+                <button class="btn btn-danger" @click="$emit('toggleAccount')">Cancelar</button>
+                <button class="btn btn-success" @click="editAccount">Salvar</button>
             </div>
         </div>
     </section>
@@ -67,6 +77,7 @@ const inputPassword = ref('')
         display: flex;
         align-items: center;
         justify-content: space-evenly;
+        z-index: 9;
     }
 
     .img {
