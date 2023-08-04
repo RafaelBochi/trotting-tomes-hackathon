@@ -59,6 +59,7 @@ h2 {
   width: 100%;
   font-weight: bolder;
   color: var(--primary-color);
+  text-transform: uppercase;
 }
 
 .sectionBooks h2 p::after {

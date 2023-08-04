@@ -109,8 +109,8 @@ export const useUserStore = defineStore('user', {
         const data = await userService.getCart(this.user.id)
         this.cartId = data[0].id
         console.log(data)
-      } catch {
-        console.log(e)
+      } catch(error) {
+        console.log(error)
       }
     },
     async addBookCart(book, quantidade){
