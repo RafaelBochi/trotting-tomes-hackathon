@@ -3,7 +3,7 @@ import Header from '@/components/Full/Header.vue';
 import Cart from '@/components/Full/Cart/Cart.vue';
 import Favorites from '@/components/Full/Favorites/Favorites.vue';
 import PopUpSettings from '../components/Full/PopUpSettings.vue';
-import Account from '../components/Full/account/Account.vue';
+import Account from '../components/Full/Account/Account.vue';
 import { ref } from 'vue';
 import { useUserStore } from '../stores/user';
 
@@ -69,10 +69,11 @@ function toggleCart() {
 function toggleAccount() {
   if(showAccount.value) {
     showAccount.value = !showAccount.value
+    document.querySelector('#app').style.overflow = 'auto';
   }
   else {
     showAccount.value = !showAccount.value;
-    document.querySelector('main').style.overflow = 'hidden';
+    document.querySelector('#app').style.overflow = 'hidden';
   }
 }
 </script>
@@ -99,7 +100,7 @@ function toggleAccount() {
     right: 0;
   }
   100% {
-    right: -30%;
+    right: -400px;
   }
 }
 

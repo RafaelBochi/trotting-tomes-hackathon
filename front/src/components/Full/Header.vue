@@ -96,7 +96,7 @@ onMounted(
     header {
         background-color: #fff;
         width: 100%;
-        height: 8%;
+        height: 8vh;
         display: flex;
         align-items: center;
         justify-content: space-between;

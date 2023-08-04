@@ -32,7 +32,9 @@ function deleteBookCart(id) {
 
 <style scoped>
 .cart {
-  width: 30%;
+  max-width: 400px;
+  min-width: 200px;
+  width: 400px;
   height: 100%;
   background-color: #fff;
   position: fixed;

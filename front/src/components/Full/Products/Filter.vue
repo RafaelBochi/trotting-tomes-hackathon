@@ -107,9 +107,8 @@ function cleanFilters() {
       <p>Filtrar e Organizar</p>
       <font-awesome-icon :icon="['fas', 'filter']" />
     </button>
-  </section>
 
-  <span v-if="showFilters" class="secFilters" >
+    <span v-if="showFilters" class="secFilters" >
     <i @click="toggleFilters"></i>
     <div class="form" :class="closeFilters != false ? 'closeForm' : ''">
       <span class="close" @click="toggleFilters">
@@ -236,6 +235,7 @@ function cleanFilters() {
       </span>
     </div>
   </span>
+  </section>
 </template>
 
 <style scoped>
@@ -288,7 +288,9 @@ section {
   right: 0;
   top: 0;
   background-color: #fff;
-  width: 30%;
+  max-width: 400px;
+  min-width: 200px;
+  width: 400px;
   height: 100%;
   z-index: 1;
   display: flex;
@@ -299,7 +301,7 @@ section {
 
 @keyframes form {
   0% {
-    right: -30%;
+    right: -400px;
   }
 
   100% {
@@ -317,7 +319,7 @@ section {
   }
 
   100% {
-    right: -30%;
+    right: -400px;
   }
 }
 
