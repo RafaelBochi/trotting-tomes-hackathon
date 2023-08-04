@@ -16,6 +16,25 @@ const favorite = ref(false);
 
 const showBookPage = ref(false);
 
+const comentsBook = ref([]);
+const mediaStars = ref(0);
+
+onMounted(() => {
+  for( let coment of othersStore.coments) {
+      if (coment.livro.id == props.book.id) {
+        coment.date = coment.date.split("T")[0].split("-").reverse().join("/")
+        comentsBook.value.push(coment)
+      }
+    }
+
+    if (comentsBook.value.length > 0) {
+      for( let coment of comentsBook.value) {
+      mediaStars.value += coment.stars
+    }
+    mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
+    }
+})
+
 function addFavorite() {
   console.log(favorite.value)
   if(favorite.value != true) {
@@ -63,16 +82,36 @@ onMounted(
 </script>
 
 <template>
-      <span>
+      <span class="secBook">
         <div class="produto">
           <span class="favorite" @click="addFavorite">
               <font-awesome-icon v-if="favorite" :icon="['fas', 'heart']" style="color: var(--lime-green);" class="icon" />
               <font-awesome-icon v-else :icon="['fas', 'heart']"/>
           </span>
-          <div  @click="toggleBookPage">
+          <div @click="toggleBookPage">
             <img :src="book.capa" alt="" />
             <span class="info">
               <p class="title">{{ book.title }}</p>
+              <span class="stars">
+              <input type="radio" />
+              <label :class="mediaStars > 0 ? 'true' : ''"></label>
+
+              <input type="radio" />
+              <label :class="mediaStars > 1 ? 'true' : ''"></label>
+
+              <input type="radio" />
+              <label :class="mediaStars > 2 ? 'true' : ''"></label>
+
+              <input type="radio" />
+              <label :class="mediaStars > 3 ? 'true' : ''"></label>
+
+              <input type="radio" />
+              <label :class="mediaStars > 4 ?'true' : ''"></label>
+
+              <p>
+                ( {{ comentsBook.length }} )
+              </p>
+            </span>
               <p class="price">{{ book.price }}</p>
             </span>
             <i></i>
@@ -97,8 +136,8 @@ onMounted(
 
 <style scoped>
 .produto {
-  width: 230px;
-  height: 350px;
+  width: 280px;
+  height: 470px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -172,8 +211,8 @@ onMounted(
   position: relative;
   top: -14%;
   right: 5%;
-  width: 150px;
-  height: 200px;
+  width: 180px;
+  height: 230px;
   transition: all 0.5s;
   margin: auto;
 }
@@ -198,15 +237,21 @@ onMounted(
 }
 
 .produto .info p:nth-child(2) {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bolder;
+}
+
+.produto .info .stars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .produto div:nth-child(3) {
   position: absolute;
-  bottom: 0;
+  bottom: 3%;
   width: 100%;
-  height: 15%;
+  height: 10%;
   padding: 4% 5% 1% 5%;
   background-color: #fff;
   z-index: 2;

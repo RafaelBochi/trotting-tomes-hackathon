@@ -113,7 +113,7 @@ section {
   display: flex;
   margin: auto;
   width: 96%;
-  height: 400px;
+  height: 600px;
   align-items: center;
   gap: 20px;
   scroll-behavior: smooth;
