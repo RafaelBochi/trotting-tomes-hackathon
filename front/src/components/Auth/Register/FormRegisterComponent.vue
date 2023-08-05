@@ -133,7 +133,7 @@ function register() {
         background-color: var(--primary-color);
         padding: 2% 14%;
         border: none;
-        color: #E7E3C0;
+        color: #fff;
         font-weight: 750;
         letter-spacing: 0.1rem;
         border-radius: 10px;

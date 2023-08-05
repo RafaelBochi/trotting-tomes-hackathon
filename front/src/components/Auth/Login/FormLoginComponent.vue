@@ -61,7 +61,7 @@ function login() {
 <style scoped>
     section {
         position: absolute;
-        left: 14%;
+        left: 18%;
         padding: 2%;
         display: flex;
         flex-direction: column;
@@ -125,7 +125,7 @@ function login() {
     }
 
     .forgetPasswordLink {
-        color: var(--primary-color);
+        color: var(--lime-green);
         text-decoration: none;
         font-weight: bolder;
         position: absolute;
@@ -146,21 +146,21 @@ function login() {
     }
 
     .button button {
-        background-color: var(--primary-color);
+        background-color: var(--lime-green);
         padding: 2% 14%;
         border: none;
-        color: #E7E3C0;
+        color: #fff;
         font-weight: 750;
         letter-spacing: 0.1rem;
         border-radius: 10px;
         cursor: pointer;
         transition: 0.5s all;
-        border: 3px solid var(--primary-color);
+        border: 3px solid var(--lime-green);
         font-size: 1.4rem;
     }
 
     .button button:hover {
         background-color: transparent;
-        color: var(--primary-color);
+        color: var(--lime-green);
     }
 </style>

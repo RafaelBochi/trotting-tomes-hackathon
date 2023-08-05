@@ -17,7 +17,7 @@ import FormLoginComponent from './FormLoginComponent.vue';
                 </h3>
             </span>
 
-            <img src="/horseandbook.jpg" alt="">
+            <img src="/horseandbook.png" alt="">
         </div>
 
         <FormLoginComponent class="form"/>
@@ -64,7 +64,7 @@ import FormLoginComponent from './FormLoginComponent.vue';
         position: relative;
         left: 60%;
         padding-left: 7%;
-        background-color: var(--primary-color);
+        background-color: var(--lime-green);
         width: 40%;
         height: 110%;
         border-radius: 9% 0% 0% 9% / 50% 50% 50% 50%;
@@ -81,11 +81,13 @@ import FormLoginComponent from './FormLoginComponent.vue';
             left: 0%;
             width: 100%;
             border-radius: 0% 0% 0% 0% / 50% 50% 50% 50%;
+            background: var(--primary-color);
         }
 
         100% {
             left: 60%;
             border-radius: 9% 0% 0% 9% / 50% 50% 50% 50%;
+            background: var(--lime-green);
         }
     }
 
@@ -122,7 +124,7 @@ import FormLoginComponent from './FormLoginComponent.vue';
     .changeToLogin p:nth-child(2) {
         cursor: pointer;
         text-decoration: underline;
-        color: var(--primary-color);
+        color: var(--lime-green);
         font-weight: 700;
     }
 
