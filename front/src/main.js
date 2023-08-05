@@ -22,6 +22,7 @@ import VueAwesomePaginate from "vue-awesome-paginate";
 
 import "vue-awesome-paginate/dist/style.css";
 
+
 app.use(createPinia())
 app.use(router)
 app.use(VueAwesomePaginate)

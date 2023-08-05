@@ -3,23 +3,19 @@ import { useUserStore } from "../stores/user";
 class UserService {
     async login(user) {
         const { data } = await axios.post("/api/login/", user )
-        console.log(data)
         return data;
     }
 
     async register(user) {
         const { data } = await axios.post("/api/register/", user )
-        console.log(data)
         return data;
     }
     async forgetPassword(email) {
         const { data } = await axios.post("/api/forget_password/", email );
-        console.log(data)
         return data;
     }
     async changePassword(values) {
         const { data } = await axios.post("/api/change_password/", values )
-        console.log(data)
         return data;
     }
     async addFavorite(values) {
@@ -43,7 +39,6 @@ class UserService {
             
         };
         const { data } = await axios.get(`/api/get_favorites_of_user/`, { params: { user_id: id } }, config )
-        console.log(data)
         return data;
     }
     async deleteFavorite(id) {
@@ -55,7 +50,6 @@ class UserService {
             
         };
         const { data } = await axios.delete(`/api/favorites/${id}/`, config )
-        console.log(data)
         return data;
     }
     async getCart(user) {
@@ -90,7 +84,6 @@ class UserService {
             
         };
         const { data } = await axios.get(`/api/get_books_cart_of_user/`, { params: { cart_id: id } }, config )
-        console.log(data)
         return data;
     }
     async deleteBookCart(id) {
@@ -102,7 +95,6 @@ class UserService {
             
         };
         const { data } = await axios.delete(`/api/carrinhoLivros/${id}/`, config )
-        console.log(data)
         return data;
     }
     async editAccount(user) {
@@ -114,7 +106,6 @@ class UserService {
             
         };
         const { data } = await axios.put(`/api/edit_account/`, user, config )
-        console.log(data)
         return data;
     }
 }

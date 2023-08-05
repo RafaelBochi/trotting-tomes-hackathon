@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from "vue";
 import { useBookStore } from "@/stores/book.js";
 import { useOthersStore } from "@/stores/others.js";
+import Book3d from "../Book/Book3d.vue";
 
 const bookStore = useBookStore();
 const othersStore = useOthersStore();
@@ -53,7 +54,8 @@ function toggleActiveBook(book) {
 <template>
   <section>
     <div class="book" v-for="book in bestSellers" :key="book.id" :class="book.active ? 'active' : book.deactive ? 'deactive' : ''" @click="toggleActiveBook(book)">
-      <img :src="book.capa" alt="" />
+      <Book3d :class="book.active ? 'book3dActive' : 'book3dDeactive'" :bookNum="book.id" :active="book.active"/>
+      <img :src="book.capa" alt="" v-if="book.active != true">
       <i></i>
       <div class="info">
         <h3 class="title">{{ book.title }}</h3>
@@ -101,8 +103,9 @@ section {
   transition: all 0.5s;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   border-radius: 10px;
+  background: var(--primary-color-50);
 }
 
 .book img {
@@ -117,7 +120,6 @@ section {
   top: 0;
   width: 100%;
   height: 100%;
-  background: var(--primary-color-50);
   border-radius: 5px;
 }
 
@@ -158,11 +160,13 @@ section {
 
 .active {
   width: 80%;
+  height: 500px;
+  padding: 5%;
 }
 
 .active img {
-  width: 200px;
-  height: 300px;
+  width: 100%;
+  height: 400px;
   object-fit: contain;
 }
 
@@ -172,5 +176,13 @@ section {
 
 .deactive {
   width: 10% !important;
+}
+
+.book3dDeactive {
+  display: none;
+}
+
+.book3dActive {
+  display: block;
 }
 </style>

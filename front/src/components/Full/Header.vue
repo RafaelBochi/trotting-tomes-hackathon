@@ -44,7 +44,7 @@ onMounted(
                         </p>
                     </a>
                 </router-link>
-                <router-link to="/sobre">
+                <router-link to="/about">
                     <a href="">
                         <p>
                             SOBRE

@@ -27,6 +27,15 @@ const router = createRouter({
           component: () => import('../views/Full/ProductsView.vue'),
           exact: true
         },
+        {
+          path: 'about',
+          name: 'about',
+          meta: {
+            requiresAuth: true
+          },
+          component: () => import('../views/Full/AboutView.vue'),
+          
+        }
       ]
     },
     {

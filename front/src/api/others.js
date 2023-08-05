@@ -12,7 +12,6 @@ class OthersService {
     }
     async getComents() {
         const { data } = await axios.get("/api/coments/");
-        console.log(data)
         return data;
     }
     async addComent(coment) {

@@ -51,7 +51,6 @@ export const useUserStore = defineStore('user', {
     },
     async forgetPassword(email){
       try {
-        console.log('a')
         const data = await userService.forgetPassword(email);
         this.userId = data.id
         this.tokenResetPassword = data.token
@@ -62,7 +61,6 @@ export const useUserStore = defineStore('user', {
     },
     async changePassword(password){
       try {
-        console.log(this.userId)
         let values = {
           new_password: password,
           user_id: this.userId,
@@ -79,7 +77,7 @@ export const useUserStore = defineStore('user', {
           book: book.id,
         }
         const data = await userService.addFavorite(values);
-        console.log(data)
+        
       } catch (error) {
         console.log(error); // Lidar com exceções
       }
@@ -98,7 +96,7 @@ export const useUserStore = defineStore('user', {
     async deleteFavorite(id){
       try {
         const data = await userService.deleteFavorite(id);
-        console.log(data)
+        
         this.getFavorites()
       } catch (error) {
         console.log(error); // Lidar com exceções
@@ -108,7 +106,7 @@ export const useUserStore = defineStore('user', {
       try{
         const data = await userService.getCart(this.user.id)
         this.cartId = data[0].id
-        console.log(data)
+        
       } catch(error) {
         console.log(error)
       }
@@ -122,7 +120,7 @@ export const useUserStore = defineStore('user', {
         }
         const data = await userService.addBookCart(values);
         this.getBooksCart()
-        console.log(data)
+        
       } catch (error) {
         console.log(error); // Lidar com exceções
       }
@@ -134,7 +132,7 @@ export const useUserStore = defineStore('user', {
           item.livro.capa = "http://127.0.0.1:8000/" + item.livro.capa;
         }
         this.booksCart = data;
-        console.log(data)
+        
       } catch (error) {
         console.log(error); // Lidar com exceções
       }
@@ -142,7 +140,7 @@ export const useUserStore = defineStore('user', {
     async deleteBookCart(id){
       try {
         const data = await userService.deleteBookCart(id);
-        console.log(data)
+        
         this.getBookCart()
       } catch (error) {
         console.log(error); // Lidar com exceções
@@ -153,7 +151,7 @@ export const useUserStore = defineStore('user', {
         user.user_id = this.user.id
         console.log(user)
         const data = await userService.editAccount(user);
-        console.log(data)
+        
       } catch (error) {
         console.log(error); // Lidar com exceções
       }
