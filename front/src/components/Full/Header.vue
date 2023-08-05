@@ -81,10 +81,10 @@ onMounted(
         </div>
 
         <div class="carrinho" @click="$emit('toggleCart')">
-                <font-awesome-icon :icon="['fas', 'shopping-cart']" size="2xl" style="color: var(--primary-color);" />
+                <font-awesome-icon :icon="['fas', 'shopping-cart']" size="2xl" style="color: var(--secondary-color);" />
         </div>
         <div class="settings" @click="$emit('toggleSettings')">
-                <font-awesome-icon :icon="['fas', 'gear']" size="2xl" style="color: var(--primary-color);" />
+                <font-awesome-icon :icon="['fas', 'gear']" size="2xl" style="color: var(--lime-green);" />
         </div>
         </div>
 

@@ -32,25 +32,21 @@ onMounted(async () => {
 
   if (comentsBook.value.length > 0) {
     for (let coment of comentsBook.value) {
-      mediaStars.value += coment.stars;
+      mediaStars.value += coment.stars
     }
-    mediaStars.value = Math.ceil(
-      mediaStars.value / comentsBook.value.length
-    ).toFixed(1);
+    mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
   }
-
-});
+})
 
 function addFavorite() {
-  console.log(favorite.value);
+  console.log(favorite.value)
   if (favorite.value != true) {
     userStore.addFavorite(props.book);
     favorite.value = true;
     userStore.getFavorites();
-  } else {
-    const id = userStore.favorites.find(
-      (item) => item.book.id == props.book.id
-    ).id;
+  }
+  else {
+    const id = userStore.favorites.find(item => item.book.id == props.book.id).id;
     userStore.deleteFavorite(id);
     favorite.value = false;
     userStore.getFavorites();
@@ -69,17 +65,21 @@ function toggleBookPage() {
 
 function addToCart() {
   if (userStore.loggedIn) {
-    userStore.addBookCart(props.book.id, 1);
-  } else {
+    userStore.addBookCart(props.book.id, 1)
+  }
+  else {
     userStore.popUpLogin = true;
   }
 }
 
-onMounted(() => {
-  if (userStore.favorites.find((item) => item.book.id == props.book.id)) {
-    favorite.value = true;
-  } else {
-    favorite.value = false;
+onMounted(
+  () => {
+    if (userStore.favorites.find(item => item.book.id == props.book.id)) {
+      favorite.value = true;
+    }
+    else {
+      favorite.value = false;
+    }
   }
 });
 </script>
@@ -100,25 +100,27 @@ onMounted(() => {
         <img :src="book.capa" alt="" />
         <span class="info">
           <p class="title">{{ book.title }}</p>
-          <span class="stars">
-            <input type="radio" />
-            <label :class="mediaStars > 0 ? 'true' : ''"></label>
+            <span class="stars">
+              <input type="radio" />
+              <label :class="mediaStars > 0 ? 'true' : ''"></label>
 
-            <input type="radio" />
-            <label :class="mediaStars > 1 ? 'true' : ''"></label>
+              <input type="radio" />
+              <label :class="mediaStars > 1 ? 'true' : ''"></label>
 
-            <input type="radio" />
-            <label :class="mediaStars > 2 ? 'true' : ''"></label>
+              <input type="radio" />
+              <label :class="mediaStars > 2 ? 'true' : ''"></label>
 
-            <input type="radio" />
-            <label :class="mediaStars > 3 ? 'true' : ''"></label>
+              <input type="radio" />
+              <label :class="mediaStars > 3 ? 'true' : ''"></label>
 
-            <input type="radio" />
-            <label :class="mediaStars > 4 ? 'true' : ''"></label>
+              <input type="radio" />
+              <label :class="mediaStars > 4 ? 'true' : ''"></label>
 
-            <p>({{ comentsBook.length }})</p>
-          </span>
-          <p class="price">{{ book.price }}</p>
+              <p>
+                ({{ comentsBook.length }})
+              </p>
+            </span>
+            <p class="price">R${{ book.price }}</p>
         </span>
         <i></i>
       </div>
@@ -151,6 +153,20 @@ onMounted(() => {
   border-radius: 5px;
   gap: 20px;
   box-shadow: var(--primary-color) 0px 0px 5px;
+}
+
+.price {
+  position: absolute;
+  bottom: 0;
+  font-size: medium;
+  background-color: var(--lime-green);
+  padding: 5px;
+  border-radius: 3px;
+  color: rgb(255, 255, 255);
+}
+
+.stars{
+  margin-bottom: 25px;
 }
 
 .favorite {
