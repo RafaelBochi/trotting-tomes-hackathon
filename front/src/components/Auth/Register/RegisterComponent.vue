@@ -94,6 +94,17 @@ import FormRegisterComponent from './FormRegisterComponent.vue'
         width: 80%;
         position: relative;
         right: 5%;
+        animation: horse .5s ease forwards;
+    }
+
+    @keyframes horse {
+        0% {
+            transform: rotateY(0deg);
+        }
+
+        100% {
+            transform: rotateY(180deg);
+        }
     }
 
     .title {
