@@ -17,7 +17,7 @@ const books = computed(() => bookStore.books);
 const active = ref(0);
 const slideNum = ref(props.slideNum);
 const currentPage = ref(1);
-const itemsPerPage = 5;
+const itemsPerPage = 3;
 
 const totalPages = computed(() => {
   return Math.ceil(books.value.length / itemsPerPage);
@@ -26,8 +26,9 @@ const totalPages = computed(() => {
 const changePage = (page) => {
   const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
   currentPage.value = page;
-  active.value = (page - 1) * itemsPerPage;
-  items[active.value + 2].scrollIntoView({
+  console.log(currentPage.value)
+  active.value = ((page - 1) * itemsPerPage);
+  items[active.value + 1].scrollIntoView({
     behavior: "smooth",
     inline: "center",
     block: "nearest",
@@ -38,7 +39,7 @@ const nextBook = () => {
   const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
   if (currentPage.value < totalPages.value) {
     active.value++;
-    items[active.value + 2].scrollIntoView({
+    items[active.value + 1].scrollIntoView({
       behavior: "smooth",
       inline: "center",
       block: "nearest",
@@ -52,14 +53,14 @@ const nextBook = () => {
 
 const previousBook = () => {
   const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
-  if (currentPage.value > 1) {
-    active.value--;
-    items[active.value + 2].scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-
+  console.log(currentPage.value)
+  if (currentPage.value > 0) {
+      active.value--;
+      items[active.value].scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
     if ((active.value + 1) % itemsPerPage == 0) {
       currentPage.value--;
     }
@@ -108,8 +109,7 @@ section {
 .books {
   overflow-x: scroll;
   overflow-y: hidden;
-  padding: 1%;
-  padding-top: 2%;
+  padding: 1% 2%;
   display: flex;
   margin: auto;
   width: 96%;

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, onBeforeMount } from 'vue';
 import { useBookStore } from '@/stores/book.js';
 import { useOthersStore } from '@/stores/others.js';
 import { useUserStore } from './stores/user';
@@ -7,7 +7,7 @@ import { useUserStore } from './stores/user';
 const bookStore = useBookStore();
 const othersStore = useOthersStore();
 const userStore = useUserStore();
-onMounted(
+onBeforeMount(
   () => {
     console.log("mounted")
     bookStore.getBooks();

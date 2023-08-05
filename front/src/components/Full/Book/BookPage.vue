@@ -154,7 +154,7 @@ section {
   width: 100%;
   height: 91.5%;
   position: fixed;
-  top: 8.5%;
+  top: 8vh;
   left: 0;
   background: #fff;
   z-index: 8;

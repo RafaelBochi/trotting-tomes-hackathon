@@ -3,6 +3,7 @@
 :root{
     --background-color: #e7e3c0;
     --primary-color: #3dd3a1;
+    --primary-color-50: #3dd3a150;
     --secondary-color: #AAB8A8;
     --lime-green: #d823df;
     --white: #EDEDED;
@@ -32,7 +33,7 @@ body {
 
 .stars {
     display: flex;
-    align-items: center;
+    align-items: end;
     position: relative;
   }
   .stars input {
@@ -40,17 +41,16 @@ body {
   }
   
   .stars > label {
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 20px;
+    font-size: 26px;
     color: orange;
   }
   
   .stars > label::before {
     content: "\2606";
     position: relative;
-    top: -8px;
     line-height: 26px;
   }
   

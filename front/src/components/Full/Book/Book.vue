@@ -2,8 +2,10 @@
 import { computed, ref, onMounted } from "vue";
 import BookPage from "./BookPage.vue";
 import { useUserStore } from "@/stores/user.js";
+import { useOthersStore } from "@/stores/others.js";
 
 const userStore = useUserStore();
+const othersStore = useOthersStore();
 
 const props = defineProps({
   book: {
@@ -19,11 +21,12 @@ const showBookPage = ref(false);
 const comentsBook = ref([]);
 const mediaStars = ref(0);
 
-onMounted(() => {
+onMounted(async () => {
+  await othersStore.getComents();
   for (let coment of othersStore.coments) {
     if (coment.livro.id == props.book.id) {
-      coment.date = coment.date.split("T")[0].split("-").reverse().join("/")
-      comentsBook.value.push(coment)
+      coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
+      comentsBook.value.push(coment);
     }
   }
 
@@ -78,14 +81,19 @@ onMounted(
       favorite.value = false;
     }
   }
-)
+});
 </script>
 
 <template>
   <span class="secBook">
     <div class="produto">
       <span class="favorite" @click="addFavorite">
-        <font-awesome-icon v-if="favorite" :icon="['fas', 'heart']" style="color: var(--lime-green);" class="icon" />
+        <font-awesome-icon
+          v-if="favorite"
+          :icon="['fas', 'heart']"
+          style="color: var(--lime-green)"
+          class="icon"
+        />
         <font-awesome-icon v-else :icon="['fas', 'heart']" />
       </span>
       <div @click="toggleBookPage">
@@ -109,7 +117,7 @@ onMounted(
               <label :class="mediaStars > 4 ? 'true' : ''"></label>
 
               <p>
-                ( {{ comentsBook.length }} )
+                ({{ comentsBook.length }})
               </p>
             </span>
             <p class="price">R${{ book.price }}</p>
@@ -118,21 +126,24 @@ onMounted(
       </div>
       <div>
         <button @click="addToCart">
-          <p>
-            Adicionar
-          </p>
-          <font-awesome-icon :icon="['fas', 'cart-arrow-down']" style="color: #ffffff" size="sm" />
+          <p>Adicionar</p>
+          <font-awesome-icon
+            :icon="['fas', 'cart-arrow-down']"
+            style="color: #ffffff"
+            size="sm"
+          />
         </button>
       </div>
     </div>
-    <BookPage v-if="showBookPage" :book="book" @close="toggleBookPage" />
   </span>
+
+  <BookPage v-if="showBookPage" :book="book" @close="toggleBookPage" />
 </template>
 
 <style scoped>
 .produto {
-  width: 280px;
-  height: 490px;
+  width: 350px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -180,9 +191,8 @@ onMounted(
 }
 
 .favorite:hover .fa-heart {
-  color: var(--lime-green)
+  color: var(--lime-green);
 }
-
 
 .produto div:nth-child(2) {
   position: absolute;
@@ -206,7 +216,7 @@ onMounted(
   border-radius: 0 0 100% 0;
   width: 0;
   height: 0;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 
 .produto div:nth-child(2):hover i {
@@ -252,8 +262,12 @@ onMounted(
 
 .produto .info .stars {
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: center;
+}
+
+.stars p {
+  font-size: 1.4rem;
 }
 
 .produto div:nth-child(3) {

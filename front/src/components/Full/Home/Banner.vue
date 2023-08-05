@@ -26,7 +26,8 @@ const banners = ['/banner1.png', '/banner2.png']
 }
 
 .carousel__item {
-  height: 500px;
+  max-height: 600px;
+  min-height: 150px;
   width: 100%;
   background-color: var(--primary-color);
   color: var(--primary-color);
