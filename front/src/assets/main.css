@@ -33,7 +33,7 @@ body {
 
 .stars {
     display: flex;
-    align-items: end;
+    align-items: center;
     position: relative;
   }
   .stars input {
@@ -51,6 +51,7 @@ body {
   .stars > label::before {
     content: "\2606";
     position: relative;
+    top: -8px;
     line-height: 26px;
   }
   

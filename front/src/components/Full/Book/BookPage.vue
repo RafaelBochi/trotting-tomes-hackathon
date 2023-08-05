@@ -275,5 +275,4 @@ section > div img {
   width: 50%;
 }
 
-
 </style>

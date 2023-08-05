@@ -100,7 +100,7 @@ onMounted(
         <img :src="book.capa" alt="" />
         <span class="info">
           <p class="title">{{ book.title }}</p>
-            <span class="stars">
+            <span class="stars starsBook">
               <input type="radio" />
               <label :class="mediaStars > 0 ? 'true' : ''"></label>
 
@@ -135,9 +135,10 @@ onMounted(
         </button>
       </div>
     </div>
+    <BookPage v-if="showBookPage" :book="book" @close="toggleBookPage" />
   </span>
 
-  <BookPage v-if="showBookPage" :book="book" @close="toggleBookPage" />
+
 </template>
 
 <style scoped>
@@ -257,16 +258,17 @@ onMounted(
   font-weight: bolder;
 }
 
-.produto .info .stars {
+.produto .info .starsBook {
   display: flex;
   align-items: end;
+  position: absolute;
+  bottom: 35%;
   justify-content: center;
 }
 
-.stars {
-  position: absolute;
-  bottom: 35%;
-}
+.stars > label::before {
+  top: 0 !important;
+  }
 
 .stars p {
   font-size: 1.4rem;
