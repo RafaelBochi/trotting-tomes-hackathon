@@ -2,6 +2,7 @@
 import Banners from "@/components/Full/Home/Banner.vue";
 import SlideBooks from "@/components/Full/Home/SlideBooks.vue";
 import PopUpLogin from "@/components/Full/PopUpLogin.vue";
+import BestSellers from "../../components/Full/Home/BestSellers.vue";
 import { computed, ref } from "vue";
 import { useBookStore } from "@/stores/book.js";
 import { useUserStore } from "@/stores/user.js";
@@ -20,20 +21,14 @@ const popUpLogin = computed(() => userStore.popUpLogin);
     <PopUpLogin v-if="popUpLogin"/>
     <Banners />
 
+    <BestSellers />
+
     <section class="sectionBooks">
       <h2>
         <p>Mais Vendidos</p>
       </h2>
 
       <SlideBooks :slideNum="1"/>
-    </section>
-
-    <section class="sectionBooks">
-      <h2>
-        <p>Novidades</p>
-      </h2>
-
-      <SlideBooks :slideNum="2"/>
     </section>
   </main>
 </template>

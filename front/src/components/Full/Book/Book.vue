@@ -2,8 +2,10 @@
 import { computed, ref, onMounted } from "vue";
 import BookPage from "./BookPage.vue";
 import { useUserStore } from "@/stores/user.js";
+import { useOthersStore } from "@/stores/others.js";
 
 const userStore = useUserStore();
+const othersStore = useOthersStore();
 
 const props = defineProps({
   book: {
@@ -19,31 +21,36 @@ const showBookPage = ref(false);
 const comentsBook = ref([]);
 const mediaStars = ref(0);
 
-onMounted(() => {
-  for( let coment of othersStore.coments) {
-      if (coment.livro.id == props.book.id) {
-        coment.date = coment.date.split("T")[0].split("-").reverse().join("/")
-        comentsBook.value.push(coment)
-      }
+onMounted(async () => {
+  await othersStore.getComents();
+  for (let coment of othersStore.coments) {
+    if (coment.livro.id == props.book.id) {
+      coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
+      comentsBook.value.push(coment);
     }
+  }
 
-    if (comentsBook.value.length > 0) {
-      for( let coment of comentsBook.value) {
-      mediaStars.value += coment.stars
+  if (comentsBook.value.length > 0) {
+    for (let coment of comentsBook.value) {
+      mediaStars.value += coment.stars;
     }
-    mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
-    }
-})
+    mediaStars.value = Math.ceil(
+      mediaStars.value / comentsBook.value.length
+    ).toFixed(1);
+  }
+
+});
 
 function addFavorite() {
-  console.log(favorite.value)
-  if(favorite.value != true) {
+  console.log(favorite.value);
+  if (favorite.value != true) {
     userStore.addFavorite(props.book);
     favorite.value = true;
     userStore.getFavorites();
-  }  
-  else {
-    const id = userStore.favorites.find(item => item.book.id == props.book.id).id;
+  } else {
+    const id = userStore.favorites.find(
+      (item) => item.book.id == props.book.id
+    ).id;
     userStore.deleteFavorite(id);
     favorite.value = false;
     userStore.getFavorites();
@@ -53,7 +60,7 @@ function addFavorite() {
 function toggleBookPage() {
   showBookPage.value = !showBookPage.value;
 
-  if(showBookPage.value) {
+  if (showBookPage.value) {
     document.body.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "auto";
@@ -61,83 +68,80 @@ function toggleBookPage() {
 }
 
 function addToCart() {
-  if(userStore.loggedIn) {
-    userStore.addBookCart(props.book.id, 1)
-  }
-  else {
+  if (userStore.loggedIn) {
+    userStore.addBookCart(props.book.id, 1);
+  } else {
     userStore.popUpLogin = true;
   }
 }
 
-onMounted(
-  ()=> {
-    if(userStore.favorites.find(item => item.book.id == props.book.id)) {
-      favorite.value = true;
-    }
-    else {
-      favorite.value = false;
-    }
+onMounted(() => {
+  if (userStore.favorites.find((item) => item.book.id == props.book.id)) {
+    favorite.value = true;
+  } else {
+    favorite.value = false;
   }
-)
+});
 </script>
 
 <template>
-      <span class="secBook">
-        <div class="produto">
-          <span class="favorite" @click="addFavorite">
-              <font-awesome-icon v-if="favorite" :icon="['fas', 'heart']" style="color: var(--lime-green);" class="icon" />
-              <font-awesome-icon v-else :icon="['fas', 'heart']"/>
-          </span>
-          <div @click="toggleBookPage">
-            <img :src="book.capa" alt="" />
-            <span class="info">
-              <p class="title">{{ book.title }}</p>
-              <span class="stars">
-              <input type="radio" />
-              <label :class="mediaStars > 0 ? 'true' : ''"></label>
-
-              <input type="radio" />
-              <label :class="mediaStars > 1 ? 'true' : ''"></label>
-
-              <input type="radio" />
-              <label :class="mediaStars > 2 ? 'true' : ''"></label>
-
-              <input type="radio" />
-              <label :class="mediaStars > 3 ? 'true' : ''"></label>
-
-              <input type="radio" />
-              <label :class="mediaStars > 4 ?'true' : ''"></label>
-
-              <p>
-                ( {{ comentsBook.length }} )
-              </p>
-            </span>
-              <p class="price">{{ book.price }}</p>
-            </span>
-            <i></i>
-          </div>
-          <div>
-            <button @click="addToCart">
-              <p>
-                Adicionar
-              </p>
-              <font-awesome-icon
-                :icon="['fas', 'cart-arrow-down']"
-                style="color: #ffffff"
-                size="sm"
-              />
-            </button>
-          </div>
-        </div>
+  <span class="secBook">
+    <div class="produto">
+      <span class="favorite" @click="addFavorite">
+        <font-awesome-icon
+          v-if="favorite"
+          :icon="['fas', 'heart']"
+          style="color: var(--lime-green)"
+          class="icon"
+        />
+        <font-awesome-icon v-else :icon="['fas', 'heart']" />
       </span>
+      <div @click="toggleBookPage">
+        <img :src="book.capa" alt="" />
+        <span class="info">
+          <p class="title">{{ book.title }}</p>
+          <span class="stars">
+            <input type="radio" />
+            <label :class="mediaStars > 0 ? 'true' : ''"></label>
 
-      <BookPage v-if="showBookPage" :book="book" @close="toggleBookPage"/>
+            <input type="radio" />
+            <label :class="mediaStars > 1 ? 'true' : ''"></label>
+
+            <input type="radio" />
+            <label :class="mediaStars > 2 ? 'true' : ''"></label>
+
+            <input type="radio" />
+            <label :class="mediaStars > 3 ? 'true' : ''"></label>
+
+            <input type="radio" />
+            <label :class="mediaStars > 4 ? 'true' : ''"></label>
+
+            <p>({{ comentsBook.length }})</p>
+          </span>
+          <p class="price">{{ book.price }}</p>
+        </span>
+        <i></i>
+      </div>
+      <div>
+        <button @click="addToCart">
+          <p>Adicionar</p>
+          <font-awesome-icon
+            :icon="['fas', 'cart-arrow-down']"
+            style="color: #ffffff"
+            size="sm"
+          />
+        </button>
+      </div>
+    </div>
+  </span>
+
+  <BookPage v-if="showBookPage" :book="book" @close="toggleBookPage" />
 </template>
 
 <style scoped>
 .produto {
-  width: 280px;
-  height: 470px;
+  width: 350px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -170,10 +174,9 @@ onMounted(
   font-size: 20px;
 }
 
- .favorite:hover .fa-heart {
-  color: var(--lime-green)
+.favorite:hover .fa-heart {
+  color: var(--lime-green);
 }
-
 
 .produto div:nth-child(2) {
   position: absolute;
@@ -194,10 +197,10 @@ onMounted(
   top: 0;
   z-index: 1;
   background-color: #cbced365;
-  border-radius: 0 0 100% 0 ;
+  border-radius: 0 0 100% 0;
   width: 0;
   height: 0;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 
 .produto div:nth-child(2):hover i {
@@ -243,8 +246,12 @@ onMounted(
 
 .produto .info .stars {
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: center;
+}
+
+.stars p {
+  font-size: 1.4rem;
 }
 
 .produto div:nth-child(3) {
