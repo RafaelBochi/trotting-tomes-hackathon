@@ -53,9 +53,9 @@ function toggleActiveBook(book) {
 
 <template>
   <section>
-    <div class="book" v-for="book in bestSellers" :key="book.id" :class="book.active ? 'active' : book.deactive ? 'deactive' : ''" @click="toggleActiveBook(book)">
-      <Book3d :class="book.active ? 'book3dActive' : 'book3dDeactive'" :bookNum="book.id" :active="book.active"/>
-      <img :src="book.capa" alt="" v-if="book.active != true">
+    <div class="book" v-for="book, index in bestSellers" :key="book.id" :class="book.active ? 'active' : book.deactive ? 'deactive' : ''" @click="toggleActiveBook(book)">
+      <Book3d :class="book.active ? 'book3dActive' : 'book3dDeactive'" :bookNum="index + 1" :active="book.active"/>
+      <img :src="`/books3d/book${index + 1}/front.png`" alt="" v-if="book.active != true">
       <i></i>
       <div class="info">
         <h3 class="title">{{ book.title }}</h3>

@@ -45,12 +45,13 @@ const initBook3d = () => {
   const loader = new THREE.TextureLoader();
 
   const urls = [
-    "/books3d/book1/edge.png",
-    "/books3d/book1/spine.png",
-    "/books3d/book1/top.png",
-    "/books3d/book1/bottom.png",
-    "/books3d/book1/front.png",
-    "/books3d/book1/back.png",
+    
+  `/books3d/book${props.bookNum}/edge.png`,
+    `/books3d/book${props.bookNum}/spine.png`,
+    `/books3d/book${props.bookNum}/top.png`,
+    `/books3d/book${props.bookNum}/bottom.png`,
+    `/books3d/book${props.bookNum}/front.png`,
+    `/books3d/book${props.bookNum}/back.png`,
   ];
 
   const geometry = new THREE.BoxGeometry(3.5, 5, 0.5);
