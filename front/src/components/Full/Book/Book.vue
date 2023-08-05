@@ -81,7 +81,7 @@ onMounted(
       favorite.value = false;
     }
   }
-});
+);
 </script>
 
 <template>
@@ -151,7 +151,7 @@ onMounted(
   position: relative;
   overflow: hidden;
   border-radius: 5px;
-  gap: 20px;
+  gap: 10px;
   box-shadow: var(--primary-color) 0px 0px 5px;
 }
 
@@ -165,9 +165,6 @@ onMounted(
   color: rgb(255, 255, 255);
 }
 
-.stars{
-  margin-bottom: 25px;
-}
 
 .favorite {
   position: absolute;
@@ -264,6 +261,11 @@ onMounted(
   display: flex;
   align-items: end;
   justify-content: center;
+}
+
+.stars {
+  position: absolute;
+  bottom: 35%;
 }
 
 .stars p {

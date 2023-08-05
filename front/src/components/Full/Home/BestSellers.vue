@@ -80,7 +80,7 @@ section {
 
 .book {
   position: relative;
-  width: 10%;
+  width: 30%;
   height: 400px;
   cursor: pointer;
   transition: all 0.5s;
@@ -121,6 +121,7 @@ section {
     text-transform: uppercase;
     color: var(--lime-green);
     font-weight: bolder;
+    white-space: nowrap;
 }
 
 .author {
@@ -140,12 +141,13 @@ section {
 }
 
 .book:hover {
-  width: 50%;
+  width: 80%;
 }
 
 .book:hover img {
   width: 200px;
   height: 300px;
+  object-fit: contain;
 }
 
 .book:hover .info {
