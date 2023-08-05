@@ -81,7 +81,7 @@ onMounted(
       favorite.value = false;
     }
   }
-});
+);
 </script>
 
 <template>

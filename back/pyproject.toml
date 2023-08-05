@@ -18,7 +18,7 @@ dependencies = [
     "django-extensions>=3.2.3",
     "python-magic-bin==0.4.14",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 license = {text = "MIT"}
 
 [tool.pdm.scripts]
