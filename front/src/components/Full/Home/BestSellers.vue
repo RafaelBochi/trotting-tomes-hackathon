@@ -10,7 +10,7 @@ const bestSellers = computed(() => {
   const books = bookStore.books.sort(
     (livroA, livroB) => livroB.vendas - livroA.vendas
   );
-  return books.slice(0, 3);
+  return books.slice(0, 5);
 });
 
 onMounted(async () => {
@@ -33,11 +33,26 @@ onMounted(async () => {
     }
   }
 });
+
+function toggleActiveBook(book) {
+    if (book.active) {  
+        for (let book of bestSellers.value) {
+            book.deactive = false;
+        }
+        book.active = false;
+    } else {
+        for (let book of bestSellers.value) {
+        book.active = false;
+        book.deactive = true;
+    }
+        book.active = true;
+    }
+}
 </script>
 
 <template>
   <section>
-    <div class="book" v-for="book in bestSellers" :key="book.id">
+    <div class="book" v-for="book in bestSellers" :key="book.id" :class="book.active ? 'active' : book.deactive ? 'deactive' : ''" @click="toggleActiveBook(book)">
       <img :src="book.capa" alt="" />
       <i></i>
       <div class="info">
@@ -70,7 +85,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 90%;
   height: 500px;
   overflow: hidden;
   border-radius: 5px;
@@ -131,7 +146,8 @@ section {
 .price {
     background-color: var(--lime-green);
     padding: 1%;
-    width: 35%;
+    max-width: 120px;
+    min-width: 80px;
     text-align: center;
     font-size: 1.6rem;
     border-radius: 5px;
@@ -140,17 +156,21 @@ section {
     margin-top: 4%;
 }
 
-.book:hover {
+.active {
   width: 80%;
 }
 
-.book:hover img {
+.active img {
   width: 200px;
   height: 300px;
   object-fit: contain;
 }
 
-.book:hover .info {
+.active .info {
   display: flex;
+}
+
+.deactive {
+  width: 10% !important;
 }
 </style>
