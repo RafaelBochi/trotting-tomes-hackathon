@@ -2,12 +2,13 @@
 
 :root{
     --background-color: #e7e3c0;
-    --primary-color: #41ca9d;
+    --primary-color: #37a16c;
     --primary-color-50: #3dd3a150;
     --secondary-color: #AAB8A8;
-    --lime-green: #d823df;
+    --lime-green: #c02dce;
     --white: #EDEDED;
     --cinza: #cbced365;
+    --third-color: #33a07b;
 }
 
 * {

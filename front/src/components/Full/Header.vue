@@ -25,7 +25,13 @@ onMounted(
 <template>
     <header>
         <div class="logo">
-            <img src="/logo-principal-green.png" alt="">
+            <router-link to="/home">
+                <a href="">
+                    <p>
+                        <img src="/logo-principal-green.png" alt="">
+                    </p>
+                </a>
+            </router-link>
         </div>
 
         <div class="actions">

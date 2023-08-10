@@ -160,10 +160,9 @@ onMounted(
   position: absolute;
   bottom: 0;
   font-size: medium;
-  background-color: var(--lime-green);
   padding: 5px;
+  color: var(--lime-green);
   border-radius: 3px;
-  color: rgb(255, 255, 255);
 }
 
 
@@ -248,8 +247,8 @@ onMounted(
 }
 
 .produto .info p:nth-child(1) {
-  font-size: 1.7rem;
-  width: 95%;
+  font-size: 2rem;
+  width: 100%;
   margin: 1%;
 }
 
@@ -306,6 +305,6 @@ button p {
 }
 
 button:hover {
-  background-color: var(--lime-green);
+  background-color: var(--third-color);
 }
 </style>
