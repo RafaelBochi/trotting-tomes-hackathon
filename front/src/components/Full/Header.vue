@@ -52,7 +52,7 @@ function updateActiveRoute() {
 
 onMounted(
     () => {
-        // setActiveLink(0)
+        setActiveLink(0)
         updateActiveRoute();
         router.afterEach(updateActiveRoute);
     }

@@ -6,6 +6,8 @@ const userStore = useUserStore()
 
 const passwordInput = ref('');
 const passwordConfirmInput = ref('');
+const showPassword = ref('');
+const showConfirmPassword = ref('');
 
 function changePassword() {
     userStore.changePassword(passwordInput.value);
@@ -19,18 +21,22 @@ function changePassword() {
                 <font-awesome-icon :icon="['fas', 'lock']" size="xl" style="color: #ededed;" />
             </i>
 
-            <h2>Forget Password</h2>
+            <h2>Trocar Senha</h2>
 
             <div class="inputPassword">
                 <input type="text" required v-model="passwordInput">
                 <label>Senha</label>
                 <i></i>
+                <font-awesome-icon v-if="showPassword" :icon="['fas', 'eye']" size="lg" class="icon" style="color: var(--primary-color);"/>
+                <font-awesome-icon v-else :icon="['fas', 'eye-slash']" size="lg" class="icon" style="color: var(--primary-color);"/>
             </div>
 
             <div class="inputPassword">
-                <input type="text" required v-model="emailInput">
+                <input type="text" required v-model="passwordConfirmInput">
                 <label>Confirmar Senha</label>
                 <i></i>
+                <font-awesome-icon v-if="showConfirmPassword" :icon="['fas', 'eye']" size="lg" class="icon" style="color: var(--primary-color);"/>
+                <font-awesome-icon v-else :icon="['fas', 'eye-slash']" size="lg" class="icon" style="color: var(--primary-color);"/>
             </div>
 
             <button @click="changePassword">
@@ -77,8 +83,12 @@ function changePassword() {
     }
 
     h2 {
+        position: relative;
+        top: 10%;
         color: var(--primary-color);
+        font-size: 2.0rem;
         font-weight: bolder;
+        text-transform: uppercase;
     }
 
     .inputPassword {
@@ -91,7 +101,8 @@ function changePassword() {
         outline: 0;
         border: none;
         padding: 2%;
-        padding-left: 5%;
+        padding-left: 4%;
+        padding-right: 12%;
         border-radius: 20px;
         height: 30px;
         font-size: 1.2rem;
@@ -125,6 +136,17 @@ function changePassword() {
     .inputPassword input:focus + label + i, .inputPassword input:valid + label + i {
         height: 30px;
         border-radius: 10px;
+    }
+
+    .inputPassword input:focus ~ .icon, .inputPassword input:valid ~ .icon {
+        color: #fff !important;
+    }
+
+    .icon {
+        position: absolute;
+        right: 4%;
+        z-index: 2;
+        transition: .5s all;
     }
 
     button {

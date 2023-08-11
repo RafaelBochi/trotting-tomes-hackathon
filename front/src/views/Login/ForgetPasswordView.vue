@@ -4,7 +4,7 @@ import { useUserStore } from '@/stores/user'
 
 const userStore = useUserStore()
 
-const emailInput = ref('');
+const emailInput = ref();
 
 function forgetPassword() {
     const email = {
@@ -28,7 +28,10 @@ function forgetPassword() {
             <div class="inputEmail">
                 <input type="text" required v-model="emailInput">
                 <label>Email</label>
-                <i></i>
+                <i class="bar"></i>
+                <span class="iconInput">
+                    <font-awesome-icon :icon="['fas', 'envelope']" size="xl" class="icon" style="color: var(--primary-color);"/>
+                </span>
             </div>
 
             <button @click="forgetPassword">
@@ -82,8 +85,12 @@ function forgetPassword() {
     }
 
     h2 {
+        position: relative;
+        top: 10%;
         color: var(--primary-color);
+        font-size: 2.0rem;
         font-weight: bolder;
+        text-transform: uppercase;
     }
 
     .inputEmail {
@@ -91,12 +98,14 @@ function forgetPassword() {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        height: 32px;
     }
     .inputEmail input{
         outline: 0;
         border: none;
         padding: 2%;
         padding-left: 5%;
+        padding-right: 13%;
         border-radius: 20px;
         height: 30px;
         font-size: 1.2rem;
@@ -112,7 +121,19 @@ function forgetPassword() {
         transition: all 0.5s ease;
     }
 
-    .inputEmail i {
+    .iconInput {
+        position: absolute;
+        top: 10px;
+        right: 5%;
+        z-index: 2;
+    }
+
+    .iconInput .icon {
+        transition: all 0.5s ease;
+
+    }
+
+    .inputEmail .bar {
         position: absolute;
         width: 100%;
         height: 2px;
@@ -127,9 +148,13 @@ function forgetPassword() {
         color: var(--primary-color);
     }
 
-    .inputEmail input:focus + label + i, .inputEmail input:valid + label + i {
+    .inputEmail input:focus + label + .bar, .inputEmail input:valid + label + .bar {
         height: 30px;
         border-radius: 10px;
+    }
+
+    .inputEmail input:focus ~ .iconInput .fa-envelope, .inputEmail input:valid ~ .iconInput .fa-envelope {
+        color: #fff !important;
     }
 
     button {
