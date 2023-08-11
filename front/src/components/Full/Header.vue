@@ -1,13 +1,35 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import Search from "./Search.vue";
 import { useUserStore} from "../../stores/user";
 
-const activeRoute = ref(null);
-const router = useRouter();
 
+
+const activeRoute = ref();
+const links = ['home', 'products', 'about'];
+const router = useRouter();
+const linkSizes = []; 
 const userStore = useUserStore();
+
+function animationBarStyle(index) {
+  const width = linkSizes[activeRoute.value] || 0;
+  const bar = document.querySelector('.animation-bar')
+  bar.style.width = width + 'px'
+  const left = linkSizes[index -1]
+    bar.style.left = left + 'px'
+}
+
+function setActiveLink(index) {
+  const linkElement = document.querySelector(`#link${index}`);
+  if (linkElement) {
+    const width = linkElement.offsetWidth;
+    linkSizes[index] = width;
+    activeRoute.value = index;
+    animationBarStyle(index)
+  }
+}
+
 
 function updateActiveRoute() {
     const currentRoute = router.currentRoute.value.name;
@@ -36,27 +58,20 @@ onMounted(
 
         <div class="actions">
             <div class="links">
-                <router-link to="/" :class="{ 'active-link': activeRoute === 'home' }">
+                <router-link 
+                v-for="link, index in links"
+                :to="`/${link}`"
+                :key="link"
+                :class="{ 'active-link': activeRoute === link }"
+                :id="`link${index}`"
+                @click="setActiveLink(index)" >
                     <a href="">
                         <p>
-                            HOME
+                            {{ link }}
                         </p>
                     </a>
                 </router-link>
-                <router-link to="/products" :class="{ 'active-link': activeRoute === 'products' }">
-                    <a href="">
-                        <p>
-                            PRODUTOS
-                        </p>
-                    </a>
-                </router-link>
-                <router-link to="/about">
-                    <a href="">
-                        <p>
-                            SOBRE
-                        </p>
-                    </a>
-                </router-link>
+                <div class="animation-bar" :style="animationBarStyle"></div>
         </div>
 
         <Search/>
@@ -152,6 +167,7 @@ onMounted(
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        text-transform: uppercase;
     }
 
     .active-link p {
@@ -159,11 +175,12 @@ onMounted(
 
     }
 
-    .active-link::after {
-        content: '';
-        width: 120%;
+    .animation-bar  {
         height: 3px;
-        background: var(--primary-color);
+        background-color: var(--primary-color);
+        position: absolute;
+        bottom: 0;
+        transition: .5s all;
     }
 
     
