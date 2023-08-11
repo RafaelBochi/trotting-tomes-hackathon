@@ -2,15 +2,20 @@
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 
-const userStore = useUserStore()
+const userStore = useUserStore();
 
 const passwordInput = ref('');
 const passwordConfirmInput = ref('');
 const showPassword = ref('');
-const showConfirmPassword = ref('');
+const showPasswordConfirm= ref('');
 
 function changePassword() {
-    userStore.changePassword(passwordInput.value);
+    if (passwordInput.value != passwordConfirmInput.value) {
+        alert('erro')
+    }
+    else {
+        userStore.changePassword(passwordInput.value);
+    }
 }
 </script>
 
@@ -24,19 +29,19 @@ function changePassword() {
             <h2>Trocar Senha</h2>
 
             <div class="inputPassword">
-                <input type="text" required v-model="passwordInput">
+                <input :type="showPassword ? 'text' : 'password'" required v-model="passwordInput">
                 <label>Senha</label>
                 <i></i>
-                <font-awesome-icon v-if="showPassword" :icon="['fas', 'eye']" size="lg" class="icon" style="color: var(--primary-color);"/>
-                <font-awesome-icon v-else :icon="['fas', 'eye-slash']" size="lg" class="icon" style="color: var(--primary-color);"/>
+                <font-awesome-icon v-if="showPassword" @click="showPassword = !showPassword" :icon="['fas', 'eye']" size="lg" class="icon" style="color: var(--primary-color);"/>
+                <font-awesome-icon v-else @click="showPassword = !showPassword" :icon="['fas', 'eye-slash']" size="lg" class="icon" style="color: var(--primary-color);"/>
             </div>
 
             <div class="inputPassword">
-                <input type="text" required v-model="passwordConfirmInput">
+                <input :type="showPasswordConfirm ? 'text' : 'password'" required v-model="passwordConfirmInput">
                 <label>Confirmar Senha</label>
                 <i></i>
-                <font-awesome-icon v-if="showConfirmPassword" :icon="['fas', 'eye']" size="lg" class="icon" style="color: var(--primary-color);"/>
-                <font-awesome-icon v-else :icon="['fas', 'eye-slash']" size="lg" class="icon" style="color: var(--primary-color);"/>
+                <font-awesome-icon v-if="showPasswordConfirm" @click="showPasswordConfirm = !showPasswordConfirm" :icon="['fas', 'eye']" size="lg" class="icon" style="color: var(--primary-color);"/>
+                <font-awesome-icon v-else @click="showPasswordConfirm = !showPasswordConfirm" :icon="['fas', 'eye-slash']" size="lg" class="icon" style="color: var(--primary-color);"/>
             </div>
 
             <button @click="changePassword">
@@ -78,7 +83,7 @@ function changePassword() {
         display: flex;
         align-items: center;
         justify-content: center;
-        top: -10%;
+        top: -7%;
         left: 5%;
     }
 
@@ -147,6 +152,7 @@ function changePassword() {
         right: 4%;
         z-index: 2;
         transition: .5s all;
+        cursor: pointer;
     }
 
     button {
