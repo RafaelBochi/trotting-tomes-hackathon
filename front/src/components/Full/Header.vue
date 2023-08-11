@@ -6,7 +6,7 @@ import { useUserStore} from "../../stores/user";
 
 
 
-const activeRoute = ref();
+const activeRoute = ref(0);
 const links = ['home', 'products', 'about'];
 const router = useRouter();
 const linkSizes = []; 
@@ -14,16 +14,34 @@ const userStore = useUserStore();
 
 function animationBarStyle(index) {
   const width = linkSizes[activeRoute.value] || 0;
-  const bar = document.querySelector('.animation-bar')
-  bar.style.width = width + 'px'
-  const left = linkSizes[index -1]
-    bar.style.left = left + 'px'
+  const bar = document.querySelector('.animation-bar');
+  bar.style.width = (width + 20) + 'px';
+  bar.style.left = getLeftDifference(index) + 'px';
+}
+
+function getLeftDifference(index) {
+    if (index == 0) {
+        return -10
+    }
+    else {
+    const bar = document.querySelector(`.animation-bar`).getBoundingClientRect()
+    const link1 = document.querySelector(`#link${index}`).getBoundingClientRect()
+    const link2 = document.querySelector(`#link${index - 1}`).getBoundingClientRect()
+    const left1 = link1.left
+    const left2 = link2.left
+    const leftDifference = left1 - left2;
+    console.log(left1) 
+    return leftDifference;
+    }
+    
 }
 
 function setActiveLink(index) {
   const linkElement = document.querySelector(`#link${index}`);
   if (linkElement) {
-    const width = linkElement.offsetWidth;
+    const rect = linkElement.getBoundingClientRect();
+    const width = rect.width; // Largura do elemento
+    const left = rect.left; // Posição horizontal em relação à viewport
     linkSizes[index] = width;
     activeRoute.value = index;
     animationBarStyle(index)
@@ -38,6 +56,7 @@ function updateActiveRoute() {
 
 onMounted(
     () => {
+        // setActiveLink(0)
         updateActiveRoute();
         router.afterEach(updateActiveRoute);
     }
@@ -176,7 +195,9 @@ onMounted(
     }
 
     .animation-bar  {
+        width: 100px;
         height: 3px;
+        left: calc(0px + 100px);
         background-color: var(--primary-color);
         position: absolute;
         bottom: 0;
