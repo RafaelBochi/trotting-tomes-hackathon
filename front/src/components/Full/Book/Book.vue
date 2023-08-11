@@ -153,7 +153,7 @@ onMounted(
   overflow: hidden;
   border-radius: 5px;
   gap: 10px;
-  box-shadow: var(--primary-color) 0px 0px 5px;
+  box-shadow: 10px 10px 15px -3px rgba(0, 0, 0, 0.185), 7px 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 .price {
@@ -305,6 +305,6 @@ button p {
 }
 
 button:hover {
-  background-color: var(--third-color);
+  background-color: var(--primary-color-50);
 }
 </style>
