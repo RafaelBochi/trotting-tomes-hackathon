@@ -20,20 +20,16 @@ function animationBarStyle(index) {
 }
 
 function getLeftDifference(index) {
-    if (index == 0) {
-        return -10
-    }
-    else {
-    const bar = document.querySelector(`.animation-bar`).getBoundingClientRect()
     const link1 = document.querySelector(`#link${index}`).getBoundingClientRect()
+    if (index == 0) {
+        return link1.left - 10;
+    } 
     const link2 = document.querySelector(`#link${index - 1}`).getBoundingClientRect()
     const left1 = link1.left
     const left2 = link2.left
     const leftDifference = left1 - left2;
-    console.log(left1) 
-    return leftDifference;
-    }
-    
+    console.log(left1 - leftDifference/2) 
+    return left1 - 10;
 }
 
 function setActiveLink(index) {
@@ -169,7 +165,6 @@ onMounted(
     }
 
     .links {
-        position: relative;
         width: 30%;
         display: flex;
         align-items: center;
@@ -195,12 +190,10 @@ onMounted(
     }
 
     .animation-bar  {
-        width: 100px;
         height: 3px;
-        left: calc(0px + 100px);
         background-color: var(--primary-color);
         position: absolute;
-        bottom: 0;
+        bottom: 15px;
         transition: .5s all;
     }
 
