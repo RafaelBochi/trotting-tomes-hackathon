@@ -22,11 +22,17 @@ const popUpLogin = computed(() => userStore.popUpLogin);
     <PopUpLogin v-if="popUpLogin"/>
     <Banners />
 
-    <BestSellers/>
-
     <section class="sectionBooks">
       <h2>
         <p>Mais Vendidos</p>
+      </h2>
+
+      <BestSellers/>
+
+    </section>
+    <section class="sectionBooks">
+      <h2>
+        <p>Novidades</p>
       </h2>
 
       <SlideBooks :slideNum="1"/>
@@ -54,7 +60,7 @@ h2 {
   font-size: 2.5rem;
   width: 100%;
   font-weight: bolder;
-  color: var(--primary-color);
+  color: var(--fourth-color);
   text-transform: uppercase;
 }
 
@@ -62,11 +68,12 @@ h2 {
   content: "";
   display: flex;
   width: 100%;
-  height: 4px;
-  background-color: var(--primary-color);
+  height: 2px;
+  background-color: var(--fourth-color);
   position: absolute;
   left: 0;
   margin-top: 5px;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 </style>

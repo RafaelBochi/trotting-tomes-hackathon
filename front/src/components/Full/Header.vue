@@ -1,13 +1,49 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import Search from "./Search.vue";
 import { useUserStore} from "../../stores/user";
 
-const activeRoute = ref(null);
-const router = useRouter();
 
+
+const activeRoute = ref(0);
+const links = ['home', 'products', 'about'];
+const router = useRouter();
+const linkSizes = []; 
 const userStore = useUserStore();
+
+function animationBarStyle(index) {
+  const width = linkSizes[activeRoute.value] || 0;
+  const bar = document.querySelector('.animation-bar');
+  bar.style.width = (width + 20) + 'px';
+  bar.style.left = getLeftDifference(index) + 'px';
+}
+
+function getLeftDifference(index) {
+    const link1 = document.querySelector(`#link${index}`).getBoundingClientRect()
+    if (index == 0) {
+        return link1.left - 10;
+    } 
+    const link2 = document.querySelector(`#link${index - 1}`).getBoundingClientRect()
+    const left1 = link1.left
+    const left2 = link2.left
+    const leftDifference = left1 - left2;
+    console.log(left1 - leftDifference/2) 
+    return left1 - 10;
+}
+
+function setActiveLink(index) {
+  const linkElement = document.querySelector(`#link${index}`);
+  if (linkElement) {
+    const rect = linkElement.getBoundingClientRect();
+    const width = rect.width; // Largura do elemento
+    const left = rect.left; // Posição horizontal em relação à viewport
+    linkSizes[index] = width;
+    activeRoute.value = index;
+    animationBarStyle(index)
+  }
+}
+
 
 function updateActiveRoute() {
     const currentRoute = router.currentRoute.value.name;
@@ -16,6 +52,7 @@ function updateActiveRoute() {
 
 onMounted(
     () => {
+        setActiveLink(0)
         updateActiveRoute();
         router.afterEach(updateActiveRoute);
     }
@@ -36,27 +73,20 @@ onMounted(
 
         <div class="actions">
             <div class="links">
-                <router-link to="/" :class="{ 'active-link': activeRoute === 'home' }">
+                <router-link 
+                v-for="link, index in links"
+                :to="`/${link}`"
+                :key="link"
+                :class="{ 'active-link': activeRoute === link }"
+                :id="`link${index}`"
+                @click="setActiveLink(index)" >
                     <a href="">
                         <p>
-                            HOME
+                            {{ link }}
                         </p>
                     </a>
                 </router-link>
-                <router-link to="/products" :class="{ 'active-link': activeRoute === 'products' }">
-                    <a href="">
-                        <p>
-                            PRODUTOS
-                        </p>
-                    </a>
-                </router-link>
-                <router-link to="/about">
-                    <a href="">
-                        <p>
-                            SOBRE
-                        </p>
-                    </a>
-                </router-link>
+                <div class="animation-bar" :style="animationBarStyle"></div>
         </div>
 
         <Search/>
@@ -110,6 +140,8 @@ onMounted(
         position: sticky;
         top: 0;
         z-index: 11;
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
     }
 
     .logo {
@@ -133,7 +165,6 @@ onMounted(
     }
 
     .links {
-        position: relative;
         width: 30%;
         display: flex;
         align-items: center;
@@ -150,6 +181,7 @@ onMounted(
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        text-transform: uppercase;
     }
 
     .active-link p {
@@ -157,11 +189,12 @@ onMounted(
 
     }
 
-    .active-link::after {
-        content: '';
-        width: 120%;
+    .animation-bar  {
         height: 3px;
-        background: var(--primary-color);
+        background-color: var(--primary-color);
+        position: absolute;
+        bottom: 15px;
+        transition: .5s all;
     }
 
     

@@ -1,16 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
 
-:root{
+/* :root{
     --background-color: #e7e3c0;
-    --primary-color: #37a16c;
-    --primary-color-50: #3dd3a150;
+    --primary-color: #62a082;
+    --primary-color-50: #527a6d;
     --secondary-color: #AAB8A8;
-    --lime-green: #c02dce;
+    --lime-green: #268b5b;
     --white: #EDEDED;
     --cinza: #cbced365;
     --third-color: #33a07b;
     --success-color: #5cb85c;
     --error-color: #ff3333;
+    --third-color: #474747;
+    --fourth-color: #2c2c2c;
+} */
+/* 4ba78a */
+
+:root{
+  --background-color: #ffffff;
+  --primary-color: #4ba78a;
+  --primary-color-50: #a8e6cf;
+  --secondary-color: #AAB8A8;
+  --lime-green: #a8ce66;
+  --white: #EDEDED;
+  --cinza: #cbced365;
+  --success-color: #5cb85c;
+  --error-color: #ff3333;
+  --third-color: #474747;
+  --fourth-color: #0f0f0f;
 }
 
 * {
@@ -23,7 +40,8 @@ html {
     font-size: 62.5%;
     height: 100%;
     font-family: 'Inter', sans-serif;
-    overflow-x: hidden; 
+    overflow-x: hidden;
+    background-color: var(--background-color);
 }
 
 body {
