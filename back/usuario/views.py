@@ -47,7 +47,7 @@ def register(request):
         user.save()
 
         response_data = {
-            "message": "Usuário criado com sucesso.",
+            "message": "Usuário criado com sucesso!",
             "username": user.username,
             "email": user.email,
             "id": user.id,
@@ -55,7 +55,7 @@ def register(request):
         }
         return Response(response_data, status=status.HTTP_200_OK)
     else:
-        return Response({"message": "Dados de usuário inválidos."}, status=400)
+        return Response({"message": "Dados de usuário inválidos!"}, status=400)
 
 
 @api_view(["POST"])
@@ -74,7 +74,7 @@ def login(request):
             user = None
     else:
         return Response(
-            {"error": "Credenciais inválidas"}, status=status.HTTP_400_BAD_REQUEST
+            {"message": "Credenciais inválidas!"}, status=status.HTTP_400_BAD_REQUEST
         )
 
     if user is not None:
@@ -87,12 +87,13 @@ def login(request):
             "username": user.username,
             "email": user.email,
             "id": user.id,
+            "message": "Login realizado com sucesso!"
             # Adicione outros campos do usuário que você deseja retornar
         }
         return Response(response_data, status=status.HTTP_200_OK)
     else:
         return Response(
-            {"error": "Falha na autenticação"}, status=status.HTTP_401_UNAUTHORIZED
+            {"message": "Falha na autenticação!"}, status=status.HTTP_401_UNAUTHORIZED
         )
 
 
