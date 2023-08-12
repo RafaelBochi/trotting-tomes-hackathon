@@ -43,13 +43,14 @@ function addFavorite() {
   if (favorite.value != true) {
     userStore.addFavorite(props.book);
     favorite.value = true;
-    userStore.getFavorites();
+    console.log('add')
   }
   else {
     const id = userStore.favorites.find(item => item.book.id == props.book.id).id;
+    console.log(id)
     userStore.deleteFavorite(id);
     favorite.value = false;
-    userStore.getFavorites();
+    console.log('delete')
   }
 }
 
