@@ -1,3 +1,4 @@
 front/src/plugins/axios.js
 back/pyproject.toml
-front/plugins/axios.js
+back/db.sqlite3
+back/pdm.lock
