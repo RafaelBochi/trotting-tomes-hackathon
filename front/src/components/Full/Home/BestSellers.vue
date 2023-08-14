@@ -1,7 +1,9 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, defineComponent } from "vue";
 import { useBookStore } from "@/stores/book.js";
 import { useOthersStore } from "@/stores/others.js";
+import { CarouselCard, CarouselCardItem } from 'vue-carousel-card'
+import 'vue-carousel-card/styles/index.css'
 import Book3d from "../Book/Book3d.vue";
 
 const bookStore = useBookStore();
@@ -53,32 +55,12 @@ function toggleActiveBook(book) {
 
 <template>
   <section>
-    <div class="book" v-for="book, index in bestSellers" :key="book.id" :class="book.active ? 'active' : book.deactive ? 'deactive' : ''" @click="toggleActiveBook(book)">
-      <Book3d :class="book.active ? 'book3dActive' : 'book3dDeactive'" :bookNum="index + 1" :active="book.active"/>
-      <img :src="`/books3d/book${index + 1}/front.png`" alt="" v-if="book.active != true">
-      <i></i>
-      <div class="info">
-        <h3 class="title">{{ book.title }}</h3>
-        <p class="author">{{ book.author.name }}</p>
-        <div class="stars">
-          <input type="radio" />
-          <label :class="book.mediaStars > 0 ? 'true' : ''"></label>
+    <CarouselCard ref="carouselCardRef" :interval="5000" :autoplay="true" height="260px" type="card" arrow="always" @change="changeHandle" class="carousel-card">
+    <CarouselCardItem v-for="book in bestSellers" :key="i" :name="`cc_${i}`" class="carousel-item">
+      <img :src="book.capa" alt="">
+    </CarouselCardItem>
+  </CarouselCard>
 
-          <input type="radio" />
-          <label :class="book.mediaStars > 1 ? 'true' : ''"></label>
-
-          <input type="radio" />
-          <label :class="book.mediaStars > 2 ? 'true' : ''"></label>
-
-          <input type="radio" />
-          <label :class="book.mediaStars > 3 ? 'true' : ''"></label>
-
-          <input type="radio" />
-          <label :class="book.mediaStars > 4 ? 'true' : ''"></label>
-        </div>
-        <p class="price">R$ {{ book.price }}</p>
-      </div>
-    </div>
   </section>
 </template>
 
