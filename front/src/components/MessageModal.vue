@@ -1,24 +1,35 @@
 <script setup>
 import { useGlobalStore } from '@/stores/global';
+import { set } from '@vueuse/core';
 import { computed, onMounted, ref } from 'vue';
 
 const globalStore = useGlobalStore();
 
 const messageModal = ref(globalStore.messageModel);
+const closeModal = ref(false);
 
-onMounted(() => {
+function close() {
+    closeModal.value = true;
     setTimeout(() => {
         messageModal.value.show = false;
-    }, 4000);
+    }, 500);
+}
+
+onMounted(() => {
+    close()
 });
 </script>
 
 <template>
-    <span class="message" :class="messageModal.type == 'success' ? 'success' : messageModal.type == 'error' ? 'error' : ''" v-if="messageModal.show">
+    <span class="message" :class="{ 
+          closeModal: closeModal, 
+          success: messageModal.type === 'success', 
+          error: messageModal.type === 'error' 
+      }" v-if="messageModal.show">
         <p class="text">
             {{ messageModal.text  }}
         </p>
-        <span class="close" @click="messageModal.show = false">
+        <span class="close" @click="close">
             <font-awesome-icon :icon="['fas', 'xmark']" size="lg"/>
         </span>
         <i class="time"></i>
@@ -39,6 +50,22 @@ onMounted(() => {
         align-items: center;
         border-radius: 10px;
         font-size: 1.3rem;
+    }
+
+    .closeModal {
+        animation: close .5s 3.5s ease-in-out forwards;
+    }
+
+    @keyframes close {
+        0% {
+            transform: translateX(0);
+        }
+        10% {
+            transform: translateX(-10px);
+        }
+        100% {
+            transform: translateX(300px);
+        }
     }
 
     .text {
@@ -70,7 +97,7 @@ onMounted(() => {
         width: 85%;
         height: 3px;
         background-color: #fff;
-        animation: timeClose 4s infinite;
+        animation: timeClose 3.5s forwards;
     }
 
     @keyframes timeClose {

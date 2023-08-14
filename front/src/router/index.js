@@ -34,7 +34,12 @@ const router = createRouter({
             requiresAuth: true
           },
           component: () => import('../views/Full/AboutView.vue'),
-          
+        },
+        {
+          path: 'book/:id',
+          name: 'bookPage',
+          component: () => import('../views/Full/BookPageView.vue'),
+          props: true,
         }
       ]
     },

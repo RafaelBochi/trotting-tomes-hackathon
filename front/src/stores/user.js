@@ -22,7 +22,6 @@ export const useUserStore = defineStore('user', {
         const data = await userService.login(user);
         useGlobalStore().showPreloader = false;
         this.loggedIn = true
-        useGlobalStore().showMessageModal(data.message, "success")
         this.user = {
           username: data.username,
           email: data.email,
@@ -30,7 +29,9 @@ export const useUserStore = defineStore('user', {
           token: data.access
         }
         router.push('/')
+        useGlobalStore().showMessageModal(data.message, "success")
       } catch(e) {
+        useGlobalStore().showPreloader = false;
         useGlobalStore().showMessageModal(e.response.data.error, "error")
         console.log(e)
       }
@@ -128,6 +129,7 @@ export const useUserStore = defineStore('user', {
     },
     async addBookCart(book, quantidade){
       try {
+        console.log('add in')
         const values = {
           carrinho: this.cartId,
           livro: book,

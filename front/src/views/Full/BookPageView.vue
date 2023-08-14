@@ -1,25 +1,39 @@
 <script setup>
 import { useUserStore } from "@/stores/user.js";
 import { useOthersStore } from "@/stores/others";
-import { onMounted, ref } from "vue";
-import ComentsBook from "./ComentsBook.vue";
+import { useBookStore } from "@/stores/book";
+import { onMounted, ref, defineEmits } from "vue";
+import ComentsBook from "../../components/Full/Book/ComentsBook.vue";
+import router from "@/router";
 
 const userStore = useUserStore();
 const othersStore = useOthersStore();
+const bookStore = useBookStore();
 
 const props = defineProps({
-  book: {
-    type: Object,
+  id: {
+    type: Number,
     required: true,
   },
 });
 
 const comentsBook = ref([]);
 const mediaStars = ref(0);
+const book = ref({
+  id: 0,
+  title: "",
+  price: 0,
+  capa: "",
+  author: {
+    name: "",
+  }
+})
 
-onMounted(() => {
+onMounted(async () => {
+  console.log(props.id);
+  book.value = await bookStore.getBookId(props.id);
   for( let coment of othersStore.coments) {
-      if (coment.livro.id == props.book.id) {
+      if (coment.livro.id == book.id) {
         coment.date = coment.date.split("T")[0].split("-").reverse().join("/")
         comentsBook.value.push(coment)
       }
@@ -46,11 +60,15 @@ function goToComents() {
     behavior: "smooth",
   });
 }
+
+function close() {
+  router.go(-1)
+}
 </script>
 
 <template>
   <section>
-    <span class="close" @click="$emit('close')">
+    <span class="close" @click="close()">
       <font-awesome-icon :icon="['fas', 'arrow-left']" size="2xl" />
     </span>
     <div>
@@ -152,14 +170,14 @@ section {
   flex-direction: column;
   padding: 20px;
   width: 100%;
-  height: 91.5%;
+  height: calc(100% - 60px);
   position: fixed;
-  top: 8vh;
+  top: 60px;
   left: 0;
   background: #fff;
   z-index: 8;
   align-items: center;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  box-shadow: inset rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   overflow-y: scroll;
   gap: 10%;
 }

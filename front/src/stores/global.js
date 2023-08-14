@@ -16,7 +16,7 @@ export const useGlobalStore = defineStore("global", {
             this.messageModel.show = true;
             setTimeout(() => {
                 this.messageModel.show = false;
-            }, 4000);
+            }, 4500);
         }
     }
 });

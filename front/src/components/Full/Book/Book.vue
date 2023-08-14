@@ -1,11 +1,13 @@
 <script setup>
 import { computed, ref, onMounted } from "vue";
-import BookPage from "./BookPage.vue";
+import BookPage from "../../../views/Full/BookPageView.vue";
 import { useUserStore } from "@/stores/user.js";
 import { useOthersStore } from "@/stores/others.js";
+import { useRouter } from "vue-router";
 
 const userStore = useUserStore();
 const othersStore = useOthersStore();
+const router = useRouter();
 
 const props = defineProps({
   book: {
@@ -54,16 +56,6 @@ function addFavorite() {
   }
 }
 
-function toggleBookPage() {
-  showBookPage.value = !showBookPage.value;
-
-  if (showBookPage.value) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
-}
-
 function addToCart() {
   if (userStore.loggedIn) {
     userStore.addBookCart(props.book.id, 1)
@@ -71,6 +63,10 @@ function addToCart() {
   else {
     userStore.popUpLogin = true;
   }
+}
+
+function openBookPage() {
+  router.push({ name: 'bookPage', params: { id: props.book.id } });
 }
 
 onMounted(
@@ -97,7 +93,7 @@ onMounted(
         />
         <font-awesome-icon v-else :icon="['fas', 'heart']" />
       </span>
-      <div @click="toggleBookPage">
+      <div @click="openBookPage">
         <img :src="book.capa" alt="" />
         <span class="info">
           <p class="title">{{ book.title }}</p>
@@ -136,7 +132,6 @@ onMounted(
         </button>
       </div>
     </div>
-    <BookPage v-if="showBookPage" :book="book" @close="toggleBookPage" />
   </span>
 
 

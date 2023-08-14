@@ -14,6 +14,10 @@ class BookService {
         const { data } = await axios.get("/api/search_books/", { params: search });
         return data;
     }
+    async getBookId(id) {
+        const { data } = await axios.get(`/api/livros/${id}/`);
+        return data;
+    }
 }
 
 export default new BookService();
