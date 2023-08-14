@@ -11,7 +11,7 @@ const othersStore = useOthersStore();
 
 const books = computed(() => bookStore.books);
 const currentPage = ref(1);
-const itemsPerPage = 15;
+const itemsPerPage = 16;
 
 const displayedItems = computed(() => {
   const startIndex = (currentPage.value - 1) * itemsPerPage;
