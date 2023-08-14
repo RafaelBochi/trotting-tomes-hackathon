@@ -26,7 +26,7 @@ const book = ref({
   capa: "",
   author: {
     name: "",
-  }
+  },
 })
 
 onMounted(async () => {
@@ -45,6 +45,8 @@ onMounted(async () => {
     }
     mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
     }
+    console.log(comentsBook.value)
+    console.log(mediaStars.value)
 })
 
 function addToCart() {
