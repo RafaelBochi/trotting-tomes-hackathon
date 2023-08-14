@@ -57,7 +57,7 @@ section {
   height: 100%;
   padding: 20px;
   backdrop-filter: blur(10px);
-  z-index: 9;
+  z-index: 19;
 }
 .form {
   display: flex;

@@ -1,32 +1,43 @@
 <script setup>
-import { onMounted, onBeforeMount } from 'vue';
+import { onMounted, onBeforeMount, computed } from 'vue';
 import { useBookStore } from '@/stores/book.js';
 import { useOthersStore } from '@/stores/others.js';
 import { useUserStore } from './stores/user';
+import { useGlobalStore } from './stores/global';
+import MessageModalVue from './components/MessageModal.vue';
+import PreLoaderVue from './components/PreLoader.vue';
 
 const bookStore = useBookStore();
 const othersStore = useOthersStore();
 const userStore = useUserStore();
+const globalStore = useGlobalStore();
+
+const showPreloader = computed(() => globalStore.showPreloader);
+
 onBeforeMount(
-  () => {
-    console.log("mounted")
-    bookStore.getBooks();
-    othersStore.getGenres();
-    othersStore.getAuthors();
-    othersStore.getComents();
+  async () => {
+    showPreloader.value = true;
+    await bookStore.getBooks();
+    await othersStore.getGenres();
+    await othersStore.getAuthors();
+    await othersStore.getComents();
 
     if(userStore.loggedIn) {
-      userStore.getFavorites();
-      userStore.getCart()
-      userStore.getBooksCart()
+      await userStore.getFavorites();
+      await userStore.getCart()
+      await userStore.getBooksCart()
     }
-    
+    showPreloader.value = false;
   }
 )
 </script>
 
 <template>
-  <RouterView />
+  <main>
+    <PreLoaderVue v-if="showPreloader"/>
+    <MessageModalVue />
+    <RouterView />
+  </main>
 </template>
 
 <style scoped>

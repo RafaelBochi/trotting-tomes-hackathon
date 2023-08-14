@@ -1,107 +1,71 @@
 <template>
-  <div class="book3d"></div>
+  <div ref="container" class="three-container"></div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import * as THREE from "three";
+import { ref, onMounted } from 'vue';
+import * as THREE from "https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js";
+import { GLTFLoader } from "https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js";
+import { OrbitControls } from "https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js";
 
-const initBook3d = () => {
-  const scene = new THREE.Scene();
-  scene.background = null;
+const container = ref(null);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xdddddd);
 
-  const camera = new THREE.PerspectiveCamera(75, 400 / 500, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(40, 1, 1, 5000);
+camera.position.set(0, 200, 800);
 
-  const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x8d8d8d, 3 );
-				hemiLight.position.set( 0, 20, 0 );
-				scene.add( hemiLight );
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(1000, 1000); // You can change this size
+onMounted(() => {
+  if (container.value) {
+    container.value.appendChild(renderer.domElement);
+  }
+});
 
-  const dirLight = new THREE.DirectionalLight(0x000, 3);
-  dirLight.position.set(-3, 10, -10);
-  dirLight.castShadow = true;
-  dirLight.shadow.camera.top = 2;
-  dirLight.shadow.camera.bottom = -2;
-  dirLight.shadow.camera.left = -2;
-  dirLight.shadow.camera.right = 2;
-  dirLight.shadow.camera.near = 0.1;
-  dirLight.shadow.camera.far = 40;
-  scene.add(dirLight);
+const controls = new OrbitControls(camera, renderer.domElement);
 
-  const loader = new THREE.TextureLoader();
+let car, podium;
 
-  const urls = [
-    "/books3d/book1/edge.png",
-    "/books3d/book1/spine.png",
-    "/books3d/book1/top.png",
-    "/books3d/book1/bottom.png",
-    "/books3d/book1/front.png",
-    "/books3d/book1/back.png",
-  ];
-
-  const geometry = new THREE.BoxGeometry(3.5, 5, 0.5);
-  const materials = urls.map((url) => {
-    return new THREE.MeshBasicMaterial({ map: loader.load(url) });
-  });
-  materials.opacity = 0.5;
-
-  const mesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(100, 100),
-    new THREE.MeshPhongMaterial({ color: 0xcbcbcb, depthWrite: false })
-  );
-  mesh.rotation.x = -Math.PI / 2;
-  mesh.receiveShadow = true;
-  scene.add(mesh);
-
-  const cube = new THREE.Mesh(geometry, materials);
-  cube.castShadow = true;
-  scene.add(cube);
-
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(400, 500);
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFShadowMap; // Tipo de sombra (opcional)
-  renderer.setClearColor(0x000000, 0); // Fundo preto transparente
-  const div = document.querySelector(".book3d");
-  div.appendChild(renderer.domElement);
-
-  camera.position.z = 5.5;
-
-  const animate = () => {
-    requestAnimationFrame(animate);
-
-    cube.rotation.y += 0.01;
-
-    renderer.render(scene, camera);
-  };
-
+const loader = new GLTFLoader();
+loader.load("horse/horse.gltf", (gltf) => {
+  car = gltf.scene.children[0];
+  car.scale.set(10, 12, 10);
+  car.position.set(-105, 20, -40);
+  car.castShadow = true;
+  scene.add(gltf.scene);
+  createPodium();
   animate();
+});
+
+const ambientLight = new THREE.AmbientLight(0xffff, 10);
+scene.add(ambientLight);
+
+const directionLight = new THREE.DirectionalLight(0x000, 10);
+directionLight.position.set(0, 1, 0);
+directionLight.castShadow = true;
+scene.add(directionLight);
+
+const createPodium = () => {
+  const podiumGeometry = new THREE.CylinderGeometry(100, 100, 20, 32);
+  const podiumMaterial = new THREE.MeshStandardMaterial({ color: 0xfff });
+  podium = new THREE.Mesh(podiumGeometry, podiumMaterial);
+  podium.position.set(0, 0, 0);
+  podium.castShadow = true;
+  scene.add(podium);
 };
 
-onMounted(() => {
-  initBook3d();
-});
+const animate = () => {
+  requestAnimationFrame(animate);
+
+
+  renderer.render(scene, camera);
+};
 </script>
 
 <style scoped>
-.book3d {
-  position: relative;
-  top: 30%;
-    left: 25%;
-  width: 300px;
-  height: 500px;
-  z-index: 9;
-}
-
-.book3d::before {
-  content: "";
-  position: absolute;
-  bottom: -10px; /* Altura da sombra projetada */
-  left: 100px; /* Deslocamento horizontal da sombra */
-  width: 200px; /* Largura da sombra */
-  height: 50px; /* Altura da sombra */
-  border-radius: 50px;
-  background: var(--lime-green); /* Cor da sombra */
-  transform: skewX(-25deg); /* Inclinação para simular perspectiva */
+.three-container {
+  width: 100%;
+  height: 100%;
 }
 </style>

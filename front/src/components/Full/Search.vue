@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useBookStore } from "@/stores/book";
+import router from '@/router'
 
 const bookStore = useBookStore();
-
 const inputText = ref("");
 
 const searchBooks = computed(() => bookStore.searchBooks);
@@ -19,10 +19,16 @@ function getSearchBooks() {
 function clearInput() {
   inputText.value = "";
 }
+
+function openBookPage(id) {
+  router.push({ name: 'bookPage', params: { id: id } });
+}
+
 </script>
 
 <template>
   <section>
+  <div class="searchSection">
     <div class="search">
       <input
         type="text"
@@ -36,7 +42,7 @@ function clearInput() {
     </div>
 
   <div class="searchBooks" v-if="inputText != ``">
-    <div v-for="book in searchBooks" :key="book.id">
+    <div v-for="book in searchBooks" :key="book.id" @click="openBookPage(book.id)">
       <img :src="book.capa" alt="" />
       <div class="info">
         <h3>{{ book.title }}</h3>
@@ -44,16 +50,15 @@ function clearInput() {
       </div>
     </div>
   </div>
-  
+</div>
 </section>
 </template>
 
 <style scoped>
 
-section {
-    position: relative;
+.searchSection {
+  position: relative;
 }
-
 .search {
     position: relative;
     display: flex;
@@ -86,7 +91,7 @@ section {
   left: 0;
   background-color: #fff;
   padding: 1%;
-  z-index: 10;
+  z-index: 9;
   max-height: 500%;
   overflow: auto;
   border-radius: 5px;

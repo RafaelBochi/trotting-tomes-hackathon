@@ -31,17 +31,6 @@ const initBook3d = () => {
   const div = document.querySelector(`.book3d${props.bookNum}`);
   div.appendChild(renderer.domElement);
 
-  const dirLight = new THREE.DirectionalLight(0x000, 3);
-  dirLight.position.set(-3, 10, -10);
-  dirLight.castShadow = true;
-  dirLight.shadow.camera.top = 2;
-  dirLight.shadow.camera.bottom = -2;
-  dirLight.shadow.camera.left = -2;
-  dirLight.shadow.camera.right = 2;
-  dirLight.shadow.camera.near = 0.1;
-  dirLight.shadow.camera.far = 40;
-  scene.add(dirLight);
-
   const loader = new THREE.TextureLoader();
 
   const urls = [
@@ -56,26 +45,44 @@ const initBook3d = () => {
 
   const geometry = new THREE.BoxGeometry(3.5, 5, 0.5);
   const materials = urls.map((url) => {
-    return new THREE.MeshBasicMaterial({ map: loader.load(url) });
+    return new THREE.MeshStandardMaterial({ map: loader.load(url) });
   });
-  materials.opacity = 0.5;
-
-  const mesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(100, 100),
-    new THREE.MeshPhongMaterial({ color: 0xcbcbcb, depthWrite: false })
-  );
-  mesh.rotation.x = -Math.PI / 2;
-  mesh.receiveShadow = true;
-  scene.add(mesh);
 
   const cube = new THREE.Mesh(geometry, materials);
   scene.add(cube);
 
-  cube.castShadow = true;
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFShadowMap; // Tipo de sombra (opcional)
+  const light = new THREE.DirectionalLight(0xff00ff, 1); // Cor roxa
+  light.position.set(10, 10, 10);
+  light.castShadow = true;
 
-  camera.position.z = 5.5;
+  // Configuração das propriedades de sombra
+  light.shadow.mapSize.width = 1024;
+  light.shadow.mapSize.height = 1024;
+  light.shadow.camera.near = 0.5;
+  light.shadow.camera.far = 50;
+
+  scene.add(light);
+
+  cube.castShadow = true;
+  cube.receiveShadow = true;
+
+  // Adicionando um solo (plano) para as sombras
+  const groundGeometry = new THREE.PlaneGeometry(30, 30);
+  const groundMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 }); // Cor do plano
+  const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  // Luz ambiente para preencher áreas não iluminadas
+  const ambientLight = new THREE.AmbientLight(0xffffff); // Cor da luz ambiente
+  scene.add(ambientLight);
+
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+
+  camera.position.z = 8;
 
   const animate = () => {
     requestAnimationFrame(animate);

@@ -16,6 +16,7 @@ const closeSettings = ref(false)
 const showFavorites = ref(false)
 const closeFavorites = ref(false)
 const showAccount = ref(false)
+const links = ['home', 'products', 'about']
 
 
 function toggleSettings() {
@@ -80,7 +81,7 @@ function toggleAccount() {
 
 <template>
   <main>
-    <Header @toggle-cart="toggleCart" @toggle-settings="toggleSettings" />
+    <Header @toggle-cart="toggleCart" @toggle-settings="toggleSettings" :links="links" />
     <Cart v-if="showCart" @close="toggleCart" :class="closeCart != false ? 'closeCart' : ''"/>
     <Favorites v-if="showFavorites" @close="toggleFavorites" :class="closeFavorites != false ? 'closeFavorites' : ''"/>
     <RouterView/>

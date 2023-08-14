@@ -1,11 +1,13 @@
 <script setup>
 import { computed, ref, onMounted } from "vue";
-import BookPage from "./BookPage.vue";
+import BookPage from "../../../views/Full/BookPageView.vue";
 import { useUserStore } from "@/stores/user.js";
 import { useOthersStore } from "@/stores/others.js";
+import { useRouter } from "vue-router";
 
 const userStore = useUserStore();
 const othersStore = useOthersStore();
+const router = useRouter();
 
 const props = defineProps({
   book: {
@@ -43,23 +45,14 @@ function addFavorite() {
   if (favorite.value != true) {
     userStore.addFavorite(props.book);
     favorite.value = true;
-    userStore.getFavorites();
+    console.log('add')
   }
   else {
     const id = userStore.favorites.find(item => item.book.id == props.book.id).id;
+    console.log(id)
     userStore.deleteFavorite(id);
     favorite.value = false;
-    userStore.getFavorites();
-  }
-}
-
-function toggleBookPage() {
-  showBookPage.value = !showBookPage.value;
-
-  if (showBookPage.value) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
+    console.log('delete')
   }
 }
 
@@ -70,6 +63,10 @@ function addToCart() {
   else {
     userStore.popUpLogin = true;
   }
+}
+
+function openBookPage() {
+  router.push({ name: 'bookPage', params: { id: props.book.id } });
 }
 
 onMounted(
@@ -96,7 +93,7 @@ onMounted(
         />
         <font-awesome-icon v-else :icon="['fas', 'heart']" />
       </span>
-      <div @click="toggleBookPage">
+      <div @click="openBookPage">
         <img :src="book.capa" alt="" />
         <span class="info">
           <p class="title">{{ book.title }}</p>
@@ -135,7 +132,6 @@ onMounted(
         </button>
       </div>
     </div>
-    <BookPage v-if="showBookPage" :book="book" @close="toggleBookPage" />
   </span>
 
 
@@ -153,7 +149,7 @@ onMounted(
   overflow: hidden;
   border-radius: 5px;
   gap: 10px;
-  box-shadow: var(--primary-color) 0px 0px 5px;
+  box-shadow: 10px 10px 15px -3px rgba(0, 0, 0, 0.185), 7px 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 .price {
@@ -305,6 +301,6 @@ button p {
 }
 
 button:hover {
-  background-color: var(--third-color);
+  background-color: var(--primary-color-50);
 }
 </style>
