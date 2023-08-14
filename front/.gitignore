@@ -26,3 +26,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+front/plugins/axios.js
+back/db.sqlite3
+back/pdm.lock
