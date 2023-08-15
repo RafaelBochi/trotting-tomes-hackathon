@@ -146,8 +146,13 @@ def forget_password(request):
         )
         pass
     else:
+        if(user.password_reset_token is not None):
+            user.password_reset_token = None
+            
         # Gerar token exclusivo
-        token = secrets.token_hex(6)
+        desired_length = 6
+        token_size = (desired_length + 1) // 2 
+        token = secrets.token_hex(token_size)[:desired_length]
         # Salvar o token, e-mail do usuário e data/hora
         user.password_reset_token = token
         user.password_reset_token_created = datetime.now(pytz.timezone('America/Sao_Paulo'))
