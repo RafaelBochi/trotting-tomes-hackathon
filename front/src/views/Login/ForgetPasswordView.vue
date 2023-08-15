@@ -17,13 +17,15 @@ function forgetPassword() {
 
 <template>
     <main>
-        <img src="../../../public/banner.jpg" alt="">
         <section class="form">
             <i class="iconLock">
                 <font-awesome-icon :icon="['fas', 'lock']" size="xl" style="color: #ededed;" />
             </i>
 
-            <h2>Forget Password</h2>
+            <div class="title">
+                <h2>Esqueceu sua senha?</h2> 
+                <p>Informe seu email para recuperar sua senha</p>
+            </div>
 
             <div class="inputEmail">
                 <input type="text" required v-model="emailInput">
@@ -67,7 +69,7 @@ function forgetPassword() {
         padding: 1% 4%;
         display: flex;
         flex-direction: column;
-        gap: 50px;
+        gap: 40px;
         border-radius: 10px;
         width: 25%;
     }
