@@ -1,5 +1,5 @@
 <script setup>
-import Search from '../Search.vue';
+import SearchResponsive from '@/components/Responsive/SearchResponsive.vue';
 </script>
 
 <template>
@@ -8,13 +8,13 @@ import Search from '../Search.vue';
       <router-link to="/home">
         <a href="">
           <p>
-            <img src="/logo-principal-green.png" alt="" />
+            <img src="/logo-mini.png" alt="" />
           </p>
         </a>
       </router-link>
     </div>
 
-    <Search/>
+    <SearchResponsive class="searchResponsive"/>
 
     <div class="actions">
         <div class="carrinho" @click="$emit('toggleCart')">
@@ -50,7 +50,8 @@ header {
 }
 
 .logo {
-  width: 40%;
+  position: absolute;
+  width: 12%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,14 +64,21 @@ header {
 }
 
 .actions {
+    position: relative;
+    right: 5%;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 }
 
-.search input {
-    width: 100px;
+.searchResponsive {
+    width: 150px;
+    position: relative;
+    right: 5%;
 }
 
-
+.searchResponsive .search input {
+  width: 20px;
+  height: 10px;
+}
 </style>

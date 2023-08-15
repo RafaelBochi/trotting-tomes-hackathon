@@ -1,9 +1,9 @@
 <script setup>
-import Header from '../../components/Full/Responsive/Header.vue';
+import HeaderResponsive from '@/components/Full/Responsive/HeaderResponsive.vue';
 </script>
 
 <template>
-  <Header/>
+  <HeaderResponsive />
 </template>
 
 <style scoped>
