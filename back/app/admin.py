@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Autor, Genero, Livro, Carrinho, CarrinhoLivro, Compra, CompraLivro, Coment, Favorite
+from .models import Autor, Genero, Livro, Carrinho, CarrinhoLivro, Compra, CompraLivro, Coment, Favorite, Images
 
 admin.site.register(Livro)
 admin.site.register(Genero)
@@ -11,3 +11,4 @@ admin.site.register(Compra)
 admin.site.register(CompraLivro)
 admin.site.register(Coment)
 admin.site.register(Favorite)
+admin.site.register(Images)

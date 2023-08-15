@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 from usuario.router import router as usuario_router
 from rest_framework.routers import DefaultRouter
-from app.views import LivroViewSet, AutorViewSet, GeneroViewSet, CarrinhoViewSet, CarrinhoLivroViewSet, CompraViewSet, CompraLivroViewSet, ComentViewSet, FavoriteViewSet
+from app.views import LivroViewSet, AutorViewSet, GeneroViewSet, CarrinhoViewSet, CarrinhoLivroViewSet, CompraViewSet, CompraLivroViewSet, ComentViewSet, FavoriteViewSet, ImagesViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -18,6 +18,7 @@ router.register(r"compras", CompraViewSet)
 router.register(r"compraLivros", CompraLivroViewSet)
 router.register(r"coments", ComentViewSet)
 router.register(r"favorites", FavoriteViewSet)
+router.register(r"images", ImagesViewSet)
 
 
 from rest_framework_simplejwt.views import (

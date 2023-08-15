@@ -7,3 +7,4 @@ from .carrinhoLivro import CarrinhoLivro
 from .compraLivro import CompraLivro
 from .coment import Coment
 from .favorite import Favorite
+from .images import Images

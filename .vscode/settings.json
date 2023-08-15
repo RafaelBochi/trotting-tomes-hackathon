@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./back/__pypackages__/3.11/lib"
+        "./back/__pypackages__/3.11/lib",
+        "./back/__pypackages__/3.10/lib"
     ]
 }
