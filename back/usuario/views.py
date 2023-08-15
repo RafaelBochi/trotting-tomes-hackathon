@@ -16,6 +16,10 @@ from django.core.mail import send_mail
 import secrets
 from datetime import datetime
 
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 User = get_user_model()
 
 
@@ -101,15 +105,23 @@ import smtplib
 from email.mime.text import MIMEText
 
 
-def enviar_email(destinatario, assunto, mensagem):
+def enviar_email(destinatario, assunto, token, name):
     remetente = "trottingtomes@gmail.com"
     senha = "xektjmzuaveczuhh"
 
+    with open('/home/faelbochi/Documentos/dev/ifc/hackathon/back/usuario/email/token_change_password.html', 'r') as file:
+        conteudo_html = file.read()
+
+    conteudo_html = conteudo_html.replace('{name}', name)
+    conteudo_html = conteudo_html.replace('{token}', token)
+
     # Criando a mensagem
-    msg = MIMEText(mensagem)
+    msg = MIMEMultipart()
     msg["Subject"] = assunto
     msg["From"] = remetente
     msg["To"] = destinatario
+
+    msg.attach(MIMEText(conteudo_html, 'html'))
 
     # Conectando ao servidor SMTP do Gmail
     server = smtplib.SMTP("smtp.gmail.com", 587)
@@ -117,7 +129,7 @@ def enviar_email(destinatario, assunto, mensagem):
     server.login(remetente, senha)
 
     # Enviando o e-mail
-    server.send_message(msg)
+    server.sendmail(remetente, destinatario, msg.as_string())
     server.quit()
 
 
@@ -135,19 +147,19 @@ def forget_password(request):
         pass
     else:
         # Gerar token exclusivo
-        token = secrets.token_hex(20)
+        token = secrets.token_hex(6)
         # Salvar o token, e-mail do usuário e data/hora
         user.password_reset_token = token
         user.password_reset_token_created = datetime.now(pytz.timezone('America/Sao_Paulo'))
         user.save()
         # Enviar e-mail
         subject = "Redefinição de senha"
-        message = f"Olá, {user.username}! Para redefinir sua senha, clique neste link: http://localhost:5173/change-password/"
         to_email = email
         enviar_email(
             to_email,
             subject,
-            message,
+            token,
+            name = user.username
         )
 
         response_data = {
