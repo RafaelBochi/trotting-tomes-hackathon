@@ -32,9 +32,13 @@ window.addEventListener("scroll", reveal);
                     style="stroke: none; fill: #fff;"></path>
         </svg></div>
     </header>
-
+    <div>
+        <img class="livro1 reveal" src="../../../public/Livro-Logo-SEEL.png" alt="">
+    </div>
     <section class="wave-conteudo website container reveal">
+        
         <div class="conteudo-textos-main text-box">
+            
             <h1>AAAAAAAAAAAAAAAAAAA</h1>
         </div>
     </section>
@@ -43,9 +47,13 @@ window.addEventListener("scroll", reveal);
        
     </section>
 
-    <section class="info" style="background-color: #fff; height: 500px;">
+    <section class="info" style="background-color: #fff; height: 400px;">
        
     </section>
+
+    <div class="tester">
+        <img class="livro1 reveal" src="../../../public/Livro-Logo-SEEL.png" alt="">
+    </div>
 
     <section class="info-last">
         <div class="svg-wave" style="height: 150px; overflow: hidden;"><svg viewBox="0 0 500 150" preserveAspectRatio="none"
@@ -361,5 +369,16 @@ footer{
 }
 h1 {
     font-size: 50px;
+}
+.livro1{
+    display: flex;
+    position: absolute;
+    width: 400px;
+}
+.tester{
+    display: flex;
+    position: relative;
+    justify-content: end;
+    margin-bottom: 300px;
 }
 </style>
