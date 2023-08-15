@@ -2,8 +2,8 @@
 import { computed, onMounted, ref, defineComponent } from "vue";
 import { useBookStore } from "@/stores/book.js";
 import { useOthersStore } from "@/stores/others.js";
-import { CarouselCard, CarouselCardItem } from 'vue-carousel-card'
-import 'vue-carousel-card/styles/index.css'
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import Book3d from "../Book/Book3d.vue";
 
 const bookStore = useBookStore();
@@ -14,68 +14,36 @@ const bestSellers = computed(() => {
     (livroA, livroB) => livroB.vendas - livroA.vendas
   );
   return books.slice(0, 5);
-});
-
-onMounted(async () => {
-  await othersStore.getComents();
-  for (let book of bestSellers.value) {
-    let comentsBook = [];
-    for (let coment of othersStore.coments) {
-      if (coment.livro.id == book.id) {
-        coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
-        comentsBook.push(coment);
-      }
-
-      let mediaStars = 0;
-      if (comentsBook.length > 0) {
-        for (let coment of comentsBook) {
-          mediaStars += coment.stars;
-        }
-        book.mediaStars = Math.ceil(mediaStars / comentsBook.length).toFixed(1);
-      }
-    }
-  }
-});
-
-function toggleActiveBook(book) {
-    if (book.active) {  
-        for (let book of bestSellers.value) {
-            book.deactive = false;
-        }
-        book.active = false;
-    } else {
-        for (let book of bestSellers.value) {
-        book.active = false;
-        book.deactive = true;
-    }
-        book.active = true;
-    }
-}
+}); 
 </script>
 
 <template>
   <section>
-    <CarouselCard ref="carouselCardRef" :interval="5000" :autoplay="true" height="260px" type="card" arrow="always" @change="changeHandle" class="carousel-card">
-    <CarouselCardItem v-for="book in bestSellers" :key="i" :name="`cc_${i}`" class="carousel-item">
-      <img :src="book.capa" alt="">
-    </CarouselCardItem>
-  </CarouselCard>
 
+    <Carousel>
+      <Slide v-for="slide in 10" :key="slide">
+        <div class="carousel__item">{{ slide }}</div>
+      </Slide>
+
+      <template #addons>
+        <Navigation />
+        <Pagination />
+      </template>
+    </Carousel>
   </section>
 </template>
 
 <style scoped>
 section {
-  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  height: 500px;
   overflow: hidden;
   border-radius: 5px;
   margin: 20px auto;
   gap: 10px;
 }
+
 
 .book {
   position: relative;
@@ -96,6 +64,49 @@ section {
   transition: all 0.5s;
   object-fit: cover;
 }
+
+.carousel__slide {
+  padding: 5px;
+  border: 2px solid black;
+  height: 200px;
+}
+
+.carousel__viewport {
+  perspective: 2000px;
+}
+
+.carousel__track {
+  transform-style: preserve-3d;
+}
+
+.carousel__slide--sliding {
+  transition: 0.5s;
+}
+
+.carousel__slide {
+  opacity: 0.9;
+  transform: rotateY(-20deg) scale(0.9);
+}
+
+.carousel__slide--active ~ .carousel__slide {
+  transform: rotateY(20deg) scale(0.9);
+}
+
+.carousel__slide--prev {
+  opacity: 1;
+  transform: rotateY(-10deg) scale(0.95);
+}
+
+.carousel__slide--next {
+  opacity: 1;
+  transform: rotateY(10deg) scale(0.95);
+}
+
+.carousel__slide--active {
+  opacity: 1;
+  transform: rotateY(0) scale(1.1);
+}
+
 .book i {
   position: absolute;
   left: 0;
@@ -106,38 +117,38 @@ section {
 }
 
 .book .info {
-    display: flex;
-    flex-direction: column;
-    height: 50%;
-    gap: 5px;
-    display: none;
-    transition: all .5s;
-    transition-delay: 1s;
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  gap: 5px;
+  display: none;
+  transition: all .5s;
+  transition-delay: 1s;
 }
 
 .title {
-    font-size: 2.0rem;
-    text-transform: uppercase;
-    color: var(--lime-green);
-    font-weight: bolder;
-    white-space: nowrap;
+  font-size: 2.0rem;
+  text-transform: uppercase;
+  color: var(--lime-green);
+  font-weight: bolder;
+  white-space: nowrap;
 }
 
 .author {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .price {
-    background-color: var(--lime-green);
-    padding: 1%;
-    max-width: 120px;
-    min-width: 80px;
-    text-align: center;
-    font-size: 1.6rem;
-    border-radius: 5px;
-    color: #fff;
-    font-weight: bolder;
-    margin-top: 4%;
+  background-color: var(--lime-green);
+  padding: 1%;
+  max-width: 120px;
+  min-width: 80px;
+  text-align: center;
+  font-size: 1.6rem;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bolder;
+  margin-top: 4%;
 }
 
 .active {
