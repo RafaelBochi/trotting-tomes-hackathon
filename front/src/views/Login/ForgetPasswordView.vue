@@ -1,23 +1,29 @@
 <script setup>
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
+import router from '@/router'
 
 const userStore = useUserStore()
 
 const emailInput = ref();
 
-function forgetPassword() {
+async function forgetPassword() {
     const email = {
         "email": `${emailInput.value}`
     };
+    try {
+        await userStore.forgetPassword(email);
+    } catch(e) {
+        console.log(e)
+    }
 
-    userStore.forgetPassword(email);
+    router.push('/token-change-password')
 }
 </script>
 
 <template>
     <main>
-        <section class="form">
+        <section class="form" id="formTokenPassword">
             <i class="iconLock">
                 <font-awesome-icon :icon="['fas', 'lock']" size="xl" style="color: #ededed;" />
             </i>
@@ -69,9 +75,13 @@ function forgetPassword() {
         padding: 1% 4%;
         display: flex;
         flex-direction: column;
+        justify-content: space-evenly;
         gap: 40px;
         border-radius: 10px;
-        width: 25%;
+        max-width: 800px;
+        max-height: 600px;
+        min-width: 320px;
+        min-height: 300px;
     }
 
     .iconLock {
@@ -82,13 +92,23 @@ function forgetPassword() {
         display: flex;
         align-items: center;
         justify-content: center;
-        top: -10%;
+        top: -20px;
         left: 5%;
+        width: 40px;
+        height: 40px;
+    }
+
+    .title {
+        position: absolute;
+        top: 40px;
+        width: 100%;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     h2 {
-        position: relative;
-        top: 10%;
         color: var(--primary-color);
         font-size: 2.0rem;
         font-weight: bolder;
@@ -96,11 +116,15 @@ function forgetPassword() {
     }
 
     .inputEmail {
-        position: relative;
+        position: absolute;
         display: flex;
         flex-direction: column;
         justify-content: center;
         height: 32px;
+        width: 80%;
+        margin: auto;
+        left: 10%;
+        top: 42%;
     }
     .inputEmail input{
         outline: 0;
@@ -160,6 +184,9 @@ function forgetPassword() {
     }
 
     button {
+        position: absolute;
+        bottom: 8%;
+        left: 15%;
         padding: 2% 0;
         border: none;
         background-color: var(--primary-color);
