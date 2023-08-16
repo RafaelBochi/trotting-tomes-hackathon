@@ -14,7 +14,8 @@ class Usuario(AbstractUser):
     data_nascimento = models.DateField(
         _("Birth Date"), auto_now=False, auto_now_add=False, blank=True, null=True
     )
-    password_reset_token_created = models.DateTimeField(null=True, blank=True)
+    password_reset_token = models.CharField(max_length=6, null=True, blank=True)
+    password_reset_token_created = models.DateField(null=True, blank=True)
 
 
     

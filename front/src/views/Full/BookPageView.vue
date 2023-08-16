@@ -50,7 +50,7 @@ router.afterEach(async (to) => {
   globalStore.showPreloader = true
   setTimeout(async() => {
     book.value = await bookStore.getBookId(props.id);
-    globalStore.showPreloader = false
+    globalStore.showPreloader = false;
   }, 1000)
   
 });
@@ -58,7 +58,7 @@ router.afterEach(async (to) => {
 onMounted(async () => {
   book.value = await bookStore.getBookId(props.id);
   comentsBook.value = await othersStore.getComents(book.value.id);
-  for( let coment of Object.values(comentsBook.value)) {
+  for( let coment of comentsBook.value) {
         coment.date = coment.date.split("T")[0].split("-").reverse().join("/")
     }
 
