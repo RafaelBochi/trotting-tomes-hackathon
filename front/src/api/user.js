@@ -25,7 +25,6 @@ class UserService {
             headers: { Authorization: `Bearer ${userStore.user.token}`,  
             'Content-Type': 'multipart/form-data',
             accept: 'application/json', },
-            
         };
         const { data } = await axios.post("/favorites/", values, config )
         return data;

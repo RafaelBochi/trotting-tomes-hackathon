@@ -57,8 +57,8 @@ export const useUserStore = defineStore('user', {
     async forgetPassword(email){
       try {
         const data = await userService.forgetPassword(email);
-        this.userId = data.id
-        this.tokenResetPassword = data.token
+        this.userId = data.id;
+        this.tokenResetPassword = data.token;
       } catch(e) {
         console.log(e)
       }
