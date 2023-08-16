@@ -26,10 +26,10 @@ export const useOthersStore = defineStore("others", {
                 console.log(e);
             }
         },
-        async getComents() {
+        async getComents(id) {
             try {
-                const data = await othersService.getComents();
-                this.coments = data;
+                const data = await othersService.getComents(id);
+                return data;
             } catch (e) {
                 console.log(e);
             }

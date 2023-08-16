@@ -10,8 +10,8 @@ class OthersService {
         const { data } = await axios.get("/api/autores/");
         return data;
     }
-    async getComents() {
-        const { data } = await axios.get("/api/coments/");
+    async getComents(id) {
+        const { data } = await axios.get("/api/get_coments_of_book/", {params: {id: id}});
         return data;
     }
     async addComent(coment) {

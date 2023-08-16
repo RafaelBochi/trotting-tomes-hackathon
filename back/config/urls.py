@@ -37,6 +37,7 @@ from app.views.livro import getBooksOfFilters, searchBooks
 from app.views.favorite import getFavoritesOfUser
 from app.views.carrinhoLivro import getBookCartOfUser
 from app.views.carrinho import get_cart_user
+from app.views.coment import getComentsOfBook
 
 urlpatterns = [
     path("api/", include(usuario_router.urls)),
@@ -49,11 +50,14 @@ urlpatterns = [
     path('api/forget_password/', forget_password, name='forget_password'),
     path('api/change_password/', change_password, name='change_password'),
     path('api/edit_account/', edit_account, name='edit_account'),
+
     path('api/get_books_of_filters/', getBooksOfFilters, name='getBooksOfFilters'),
     path('api/search_books/', searchBooks, name='searchBooks'),
     path('api/get_favorites_of_user/', getFavoritesOfUser, name='getFavoritesOfUser'),
     path('api/get_cart_user/', get_cart_user, name='get_cart_user'),
     path('api/get_books_cart_of_user/', getBookCartOfUser, name='getBookCartOfUser'),
+    path('api/get_coments_of_book/', getComentsOfBook, name='getComentsOfBook'),
+
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/swagger/",

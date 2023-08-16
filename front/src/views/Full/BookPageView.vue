@@ -2,8 +2,8 @@
 import { useUserStore } from "@/stores/user.js";
 import { useOthersStore } from "@/stores/others";
 import { useBookStore } from "@/stores/book";
-import { onMounted, ref, defineEmits } from "vue";
-import ComentsBook from "../../components/Full/Book/ComentsBook.vue";
+import { onMounted, ref } from "vue";
+import ComentsBook from "@/components/Full/Book/ComentsBook.vue";
 import router from "@/router";
 
 const userStore = useUserStore();
@@ -29,24 +29,6 @@ const book = ref({
   }
 })
 
-onMounted(async () => {
-  console.log(props.id);
-  book.value = await bookStore.getBookId(props.id);
-  for( let coment of othersStore.coments) {
-      if (coment.livro.id == book.id) {
-        coment.date = coment.date.split("T")[0].split("-").reverse().join("/")
-        comentsBook.value.push(coment)
-      }
-    }
-
-    if (comentsBook.value.length > 0) {
-      for( let coment of comentsBook.value) {
-      mediaStars.value += coment.stars
-    }
-    mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
-    }
-})
-
 function addToCart() {
   if (userStore.loggedIn) {
     console.log("teste");
@@ -64,6 +46,21 @@ function goToComents() {
 function close() {
   router.go(-1)
 }
+
+onMounted(async () => {
+  book.value = await bookStore.getBookId(props.id);
+  comentsBook.value = await othersStore.getComents(book.value.id);
+  for( let coment of Object.values(comentsBook.value)) {
+        coment.date = coment.date.split("T")[0].split("-").reverse().join("/")
+    }
+
+    if (comentsBook.value.length > 0) {
+      for( let coment of Object.values(comentsBook.value)) {
+      mediaStars.value += coment.stars
+    }
+    mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
+    }
+})
 </script>
 
 <template>
@@ -160,7 +157,7 @@ function close() {
       </div>
     </div>
 
-    <ComentsBook :book="book"/>
+    <ComentsBook :book="book" :coments="comentsBook"/>
   </section>
 </template>
 

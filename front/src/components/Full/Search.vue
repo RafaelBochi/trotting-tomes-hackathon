@@ -36,8 +36,9 @@ function openBookPage(id) {
         @input="getSearchBooks"
         v-model="inputText"
       />
-      <i @click="clearInput" v-if="inputText != ''">
-        <font-awesome-icon :icon="['fas', 'xmark-circle']" size="xl" />
+      <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="searchIcon"/>
+      <i @click="clearInput" v-if="inputText != ''" class="closeIcon">
+        <font-awesome-icon :icon="['fas', 'x']" size="sm" />
       </i>
     </div>
 
@@ -55,14 +56,19 @@ function openBookPage(id) {
 </template>
 
 <style scoped>
-
+section {
+  width: 25%;
+}
 .searchSection {
   position: relative;
+  width: 100%;
 }
 .search {
+    width: 100%;
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .search input {
   outline: none;
@@ -71,14 +77,31 @@ function openBookPage(id) {
   box-shadow: var(--primary-color) 0px 0px 5px;
   padding: 2%;
   padding-left: 3%;
-  width: 300px;
-  height: 32px;
+  padding-right: 20%;
+  width: 100%;
+  height: 35px;
 }
 
-.search i {
+.search .searchIcon {
+  position: absolute;
+  right: 3%;
+}
+
+.search .closeIcon {
     position: absolute;
-    right: 3%;
+    right: 10%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.search .closeIcon::after {
+  content: '';
+  width: 1px;
+  height: 20px;
+  background-color: #00000069;
 }
 
 .searchBooks {

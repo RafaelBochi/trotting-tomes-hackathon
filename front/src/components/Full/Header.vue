@@ -167,12 +167,12 @@ header {
 }
 
 .logo {
-  width: 10%;
+  width: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  left: 6%;
+  left: 2%;
 }
 
 .logo img {
@@ -180,17 +180,17 @@ header {
 }
 
 .actions {
-  width: 70%;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
 
 .links {
-  width: 30%;
+  width: 40%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .links a {
@@ -225,12 +225,14 @@ header {
   justify-content: center;
   color: #000;
   font-size: 1.3rem;
+  width: 15%;
 }
 .auth button {
   border: none;
   background-color: var(--lime-green);
   color: #fff;
-  width: 150px;
+  width: 100%;
+  height: 35px;
   padding: 0.7rem 2rem;
   border-radius: 5px;
   display: flex;

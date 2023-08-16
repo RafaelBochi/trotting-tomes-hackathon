@@ -1,7 +1,7 @@
 <script setup>
 import { useUserStore } from "@/stores/user";
 import { useOthersStore } from "@/stores/others";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, onUpdated, ref } from "vue";
 import FormComent from "./FormComent.vue";
 
 const userStore = useUserStore();
@@ -12,52 +12,34 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  coments: {
+    type: Array,
+    required: true,
+  },
 });
 
-const comentsBook = ref([]);
-const totalComentsBooks = ref([]);
-const mediaStars = ref(0);
+const filterComents = ref([]);
+const mediaStars = computed(()=> {
+  if (props.coments.length == 0) {
+    return 0;
+  } 
+  else {
+    let stars = 0;
+    for (let coment of props.coments) {
+      stars += coment.stars;
+    }
+
+    stars = Math.ceil(
+      stars / props.coments.length
+    ).toFixed(1);
+
+    return stars;
+  }
+});
 const showFormComent = ref(false);
 
-const coments = computed( () => {
-  comentsBook.value = [];
-  for (let coment of othersStore.coments) {
-    if (coment.livro.id == props.book.id) {
-      coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
-      comentsBook.value.push(coment);
-    }
-  }
-  console.log('coments')
-  return comentsBook;
-}
-)
-
-onMounted(() => {
-  comentsBook.value = [];
-  for (let coment of othersStore.coments) {
-    if (coment.livro.id == props.book.id) {
-      coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
-      comentsBook.value.push(coment);
-    }
-  }
-
-  for (let coment of othersStore.coments) {
-    if (coment.livro.id == props.book.id) {
-      coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
-      totalComentsBooks.value.push(coment);
-    }
-  }
-  if (totalComentsBooks.value.length == 0) {
-    mediaStars.value = 0;
-  } else {
-    for (let coment of totalComentsBooks.value) {
-      mediaStars.value += coment.stars;
-    }
-
-    mediaStars.value = Math.ceil(
-      mediaStars.value / totalComentsBooks.value.length
-    ).toFixed(1);
-  }
+onUpdated( () => {
+  filterComents.value = props.coments;
 });
 
 async function addComent(comentInputs) {
@@ -70,14 +52,17 @@ async function addComent(comentInputs) {
   }
   await othersStore.addComent(coment)
   toggleFormComent();
+  props.coments = await othersStore.getComents(props.book.id);
+  window.location.reload()
 }
 
-function filterComents(stars) {
-  comentsBook.value = [];
-  for (let coment of othersStore.coments) {
-    if (coment.livro.id == props.book.id && coment.stars == stars) {
+function filterComentsFunc(stars) {
+  console.log(props.coments)
+  filterComents.value = [];
+  for (let coment of props.coments) {
+    if (coment.stars == stars) {
       coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
-      comentsBook.value.push(coment);
+      filterComents.value.push(coment);
     }
   }
 }
@@ -116,13 +101,13 @@ function toggleFormComent() {
             <input type="radio" />
             <label :class="mediaStars > 4 ? 'true' : ''"></label>
           </span>
-          <p>({{ totalComentsBooks.length }} avaliações)</p>
+          <p>({{ props.coments.length }} avaliações)</p>
         </div>
       </div>
 
       <div class="filters">
         <div v-for="i in 5" :key="i">
-          <span class="stars" @click="filterComents(i)">
+          <span class="stars" @click="filterComentsFunc(i)">
             <input type="radio" />
             <label class="true"></label>
 
@@ -139,13 +124,13 @@ function toggleFormComent() {
             <label :class="i > 4 ? 'true' : ''"></label>
           </span>
         </div>
-        <div @click="comentsBook = coments">Todos</div>
+        <div @click="filterComents = props.coments">Todos</div>
       </div>
       <button @click="toggleFormComent">Adicionar Avaliação</button>
     </div>
 
-    <div class="coments" v-if="comentsBook.length > 0">
-      <div class="coment" v-for="coment in comentsBook" :key="coment.id">
+    <div class="coments" v-if="filterComents.length > 0">
+      <div class="coment" v-for="coment in filterComents" :key="coment.id">
         <h3>{{ coment.title }}</h3>
 
         <p class="mensagem">

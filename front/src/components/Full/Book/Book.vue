@@ -1,6 +1,5 @@
 <script setup>
-import { computed, ref, onMounted } from "vue";
-import BookPage from "../../../views/Full/BookPageView.vue";
+import { ref, onMounted } from "vue";
 import { useUserStore } from "@/stores/user.js";
 import { useOthersStore } from "@/stores/others.js";
 import { useRouter } from "vue-router";
@@ -17,28 +16,8 @@ const props = defineProps({
 });
 
 const favorite = ref(false);
-
-const showBookPage = ref(false);
-
 const comentsBook = ref([]);
 const mediaStars = ref(0);
-
-onMounted(async () => {
-  await othersStore.getComents();
-  for (let coment of othersStore.coments) {
-    if (coment.livro.id == props.book.id) {
-      coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
-      comentsBook.value.push(coment);
-    }
-  }
-
-  if (comentsBook.value.length > 0) {
-    for (let coment of comentsBook.value) {
-      mediaStars.value += coment.stars
-    }
-    mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
-  }
-})
 
 function addFavorite() {
   console.log(favorite.value)
@@ -69,16 +48,23 @@ function openBookPage() {
   router.push({ name: 'bookPage', params: { id: props.book.id } });
 }
 
-onMounted(
-  () => {
-    if (userStore.favorites.find(item => item.book.id == props.book.id)) {
-      favorite.value = true;
-    }
-    else {
-      favorite.value = false;
-    }
+onMounted(async () => {
+  const isFavorite = userStore.favorites.some(item => item.book.id === props.book.id);
+  favorite.value = isFavorite;
+
+  comentsBook.value = await othersStore.getComents(props.book.id);
+
+  for (let coment of comentsBook.value) {
+      coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
   }
-);
+
+  if (comentsBook.value.length > 0) {
+    for (let coment of comentsBook.value) {
+      mediaStars.value += coment.stars
+    }
+    mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
+  }
+})
 </script>
 
 <template>

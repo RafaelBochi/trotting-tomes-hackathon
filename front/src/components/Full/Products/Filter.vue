@@ -264,7 +264,7 @@ section {
 
 .secFilters {
   position: fixed;
-  top: 8%;
+  top: 60px;
   right: 0;
   width: 100vw;
   height: 100%;
