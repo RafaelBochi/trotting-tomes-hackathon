@@ -68,7 +68,6 @@ onMounted(() => {
 });
 
 router.afterEach((to) => {
-    console.log('rota mudou!')
   updateActiveRoute(to);
 });
 </script>

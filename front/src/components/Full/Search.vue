@@ -22,6 +22,7 @@ function clearInput() {
 
 function openBookPage(id) {
   router.push({ name: 'bookPage', params: { id: id } });
+  clearInput()
 }
 
 </script>

@@ -2,13 +2,16 @@
 import { useUserStore } from "@/stores/user.js";
 import { useOthersStore } from "@/stores/others";
 import { useBookStore } from "@/stores/book";
+import { useGlobalStore } from "../../stores/global";
 import { onMounted, ref } from "vue";
+import { onBeforeRouteUpdate } from "vue-router";
 import ComentsBook from "@/components/Full/Book/ComentsBook.vue";
 import router from "@/router";
 
 const userStore = useUserStore();
 const othersStore = useOthersStore();
 const bookStore = useBookStore();
+const globalStore = useGlobalStore();
 
 const props = defineProps({
   id: {
@@ -43,9 +46,14 @@ function goToComents() {
   });
 }
 
-function close() {
-  router.go(-1)
-}
+router.afterEach(async (to) => {
+  globalStore.showPreloader = true
+  setTimeout(async() => {
+    book.value = await bookStore.getBookId(props.id);
+    globalStore.showPreloader = false
+  }, 1000)
+  
+});
 
 onMounted(async () => {
   book.value = await bookStore.getBookId(props.id);
@@ -65,9 +73,6 @@ onMounted(async () => {
 
 <template>
   <section>
-    <span class="close" @click="close()">
-      <font-awesome-icon :icon="['fas', 'arrow-left']" size="2xl" />
-    </span>
     <div>
       <img :src="book.capa" alt="" />
 
@@ -177,13 +182,6 @@ section {
   box-shadow: inset rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   overflow-y: scroll;
   gap: 10%;
-}
-
-.close {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  cursor: pointer;
 }
 
 section > div {
