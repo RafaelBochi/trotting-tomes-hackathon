@@ -14,6 +14,14 @@ class UserService {
         const { data } = await axios.post("/api/forget_password/", email );
         return data;
     }
+    async checkToken(id, token) {
+        const values = {
+            user_id: id,
+            token: token
+        }
+        const { data } = await axios.post('/api/check_token/', values)
+        return data;
+    }
     async changePassword(values) {
         const { data } = await axios.post("/api/change_password/", values )
         return data;

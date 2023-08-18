@@ -36,7 +36,7 @@ const handleBackInput = (index) => {
 
 
 
-function checkToken() {
+async function checkToken() {
     console.log(inputValues.value)
     for(let value in inputValues.value) {
         if(inputValues.value[value] == '') {
@@ -46,7 +46,8 @@ function checkToken() {
     }
     
     tokenInput.value = inputValues.value.join('');
-    if(tokenInput.value == userStore.tokenResetPassword) {
+    console.log(await userStore.checkToken(tokenInput.value))
+    if(await userStore.checkToken(tokenInput.value)) {
         router.push('/change-password')
     }
     else {

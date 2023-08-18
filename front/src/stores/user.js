@@ -9,6 +9,7 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     loggedIn: useStorage( "loggedIn", false),
     user: useStorage("user", {}),
+    userId: useStorage("userId", Number),
     tokenResetPassword: useStorage("tokenResetPassword", null),
     popUpLogin: false,
     favorites: useStorage("favorites", []),
@@ -87,6 +88,18 @@ export const useUserStore = defineStore('user', {
         useGlobalStore().showPreloader = false;
         useGlobalStore().showMessageModal(e.response.data.message, "error")
         console.log(e); // Lidar com exceções
+      }
+    },
+    async checkToken(token) {
+      try {
+        useGlobalStore().showPreloader = true;
+        const data = await userService.checkToken(this.userId, token)
+        useGlobalStore().showPreloader = false;
+        return true;
+      } catch(e) {
+        console.log(e)
+        useGlobalStore().showPreloader = false;
+        return false;
       }
     },
     async getFavorites(){

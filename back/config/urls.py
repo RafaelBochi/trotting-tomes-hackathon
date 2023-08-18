@@ -32,7 +32,7 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
-from usuario.views import login, register, forget_password, change_password, edit_account
+from usuario.views import login, register, forget_password, check_token_reset_password, change_password, edit_account
 from app.views.livro import getBooksOfFilters, searchBooks
 from app.views.favorite import getFavoritesOfUser
 from app.views.carrinhoLivro import getBookCartOfUser
@@ -48,6 +48,7 @@ urlpatterns = [
     path('api/login/', login, name='login'),
     path('api/register/', register, name='register'),
     path('api/forget_password/', forget_password, name='forget_password'),
+    path('api/check_token/', check_token_reset_password, name='checkToken'),
     path('api/change_password/', change_password, name='change_password'),
     path('api/edit_account/', edit_account, name='edit_account'),
 

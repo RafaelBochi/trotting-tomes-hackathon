@@ -14,7 +14,7 @@ from rest_framework.decorators import (
 from django.db.models import Q
 from django.core.mail import send_mail
 import secrets
-from datetime import datetime, timedelta, date
+from datetime import datetime
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -156,6 +156,8 @@ def forget_password(request):
         user.password_reset_token = token
         user.password_reset_token_created = datetime.now(pytz.timezone('America/Sao_Paulo'))
         user.save()
+
+        print(user.password_reset_token_created)
         # Enviar e-mail
         subject = "Redefinição de senha"
         to_email = email
@@ -179,6 +181,41 @@ TOKEN_EXPIRATION_SECONDS = 1200
 @api_view(["POST"])
 @authentication_classes([])
 @permission_classes([])
+def check_token_reset_password(request):
+    id = request.data.get("user_id")
+    token = request.data.get('token')
+
+    try:
+        user = User.objects.get(id=id)  # Alterar para 'id=usuario_id'
+    except User.DoesNotExist:
+        return Response(
+            {"message": "Usuário não encontrado."}, status=status.HTTP_404_NOT_FOUND
+        )
+
+    if user.password_reset_token_created:
+        timezone = pytz.timezone('America/Sao_Paulo')
+        current_time = datetime.now(timezone)
+        expiration_time = current_time - user.password_reset_token_created
+        
+        print(expiration_time.total_seconds())
+        if expiration_time.total_seconds() > TOKEN_EXPIRATION_SECONDS:
+            user.password_reset_token = None
+            user.password_reset_token_created = None
+            user.save()
+            return Response(
+                {"message": "Token expirado."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+    
+    if token == user.password_reset_token:
+        return Response(
+                {"message": "Token valido."},
+                status=status.HTTP_200_OK,
+            )
+
+@api_view(["POST"])
+@authentication_classes([])
+@permission_classes([])
 def change_password(request):
     # Procurar usuário com base no token
     id = request.data.get("user_id")
@@ -192,13 +229,10 @@ def change_password(request):
 
     if user.password_reset_token_created:
         timezone = pytz.timezone('America/Sao_Paulo')
-        user_password_reset_datetime = timezone.localize(datetime.combine(user.password_reset_token_created, datetime.min.time()))
-
-        # Check if the password reset token has expired
         current_time = datetime.now(timezone)
-        expiration_time = current_time - user_password_reset_datetime
-        print(user_password_reset_datetime)
-        print(current_time)
+        expiration_time = current_time - user.password_reset_token_created
+        
+        print(expiration_time.total_seconds())
         if expiration_time.total_seconds() > TOKEN_EXPIRATION_SECONDS:
             user.password_reset_token = None
             user.password_reset_token_created = None
