@@ -3,7 +3,7 @@ import LoginComponent from '@/components/Auth/Login/LoginComponent.vue';
 import RegisterComponent from '@/components/Auth/Register/RegisterComponent.vue';
 import { ref } from 'vue';
 
-const register = ref(true);
+const register = ref(false);
 </script>
 
 <template>

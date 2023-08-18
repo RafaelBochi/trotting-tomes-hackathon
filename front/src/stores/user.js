@@ -38,13 +38,16 @@ export const useUserStore = defineStore('user', {
     },
     async register(user) {  
       try {
+        useGlobalStore().showPreloader = true;
         const data = await userService.register(user);
         const values = {
           value : user.email,
           password: user.password
         }
         this.login(values)
+        useGlobalStore().showPreloader = false;
       } catch (e) {
+        useGlobalStore().showPreloader = false;
         useGlobalStore().showMessageModal(e.response.data.message, "error")
         console.log(e);
       }
@@ -56,23 +59,34 @@ export const useUserStore = defineStore('user', {
     },
     async forgetPassword(email){
       try {
+        useGlobalStore().showPreloader = true;
         const data = await userService.forgetPassword(email);
         this.userId = data.id;
         this.tokenResetPassword = data.token;
+        await router.push('/token-change-password')
+        useGlobalStore().showPreloader = false;
       } catch(e) {
         console.log(e)
+        useGlobalStore().showPreloader = false;
+        useGlobalStore().showMessageModal(e.response.data.message, "error")
       }
       
     },
     async changePassword(password){
       try {
+        useGlobalStore().showPreloader = true;
         let values = {
           new_password: password,
           user_id: this.userId,
         };
-        const data = await userService.changePassword(values)
-      } catch (error) {
-        console.log(error); // Lidar com exceções
+        const data = await userService.changePassword(values);
+        router.push('/login')
+        useGlobalStore().showPreloader = false;
+        useGlobalStore().showMessageModal(data.message, 'success')
+      } catch (e) {
+        useGlobalStore().showPreloader = false;
+        useGlobalStore().showMessageModal(e.response.data.message, "error")
+        console.log(e); // Lidar com exceções
       }
     },
     async getFavorites(){

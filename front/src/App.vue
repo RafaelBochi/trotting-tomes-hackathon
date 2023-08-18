@@ -33,11 +33,9 @@ onBeforeMount(
 </script>
 
 <template>
-  <main>
     <PreLoaderVue v-if="showPreloader"/>
     <MessageModalVue />
     <RouterView />
-  </main>
 </template>
 
 <style scoped>
