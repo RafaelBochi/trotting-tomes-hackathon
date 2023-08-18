@@ -87,7 +87,7 @@ onMounted(() => {
 <style scoped>
     main {
         position: relative;
-        background-color: rgba(0, 0, 0, 0.621);
+        background-color: var(--primary-color-50);
         height: 100vh;
         width: 100vw;
         display: flex;
@@ -104,10 +104,11 @@ onMounted(() => {
         justify-content: space-evenly;
         gap: 40px;
         border-radius: 10px;
-        max-width: 800px;
-        max-height: 600px;
+        width: 480px;
+        height: 520px;
         min-width: 320px;
-        min-height: 300px;
+        min-height: 380px;
+        margin: 2%;
     }
 
     .iconLock {

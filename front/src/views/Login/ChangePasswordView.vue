@@ -84,7 +84,7 @@ if(event.target.value.length > 0) {
 <style scoped>
     main {
         position: relative;
-        background-color: rgba(0, 0, 0, 0.621);
+        background-color: var(--primary-color-50);
         height: 100vh;
         width: 100vw;
         display: flex;
@@ -101,10 +101,11 @@ if(event.target.value.length > 0) {
         justify-content: space-evenly;
         gap: 40px;
         border-radius: 10px;
-        max-width: 800px;
-        max-height: 600px;
+        width: 480px;
+        height: 520px;
         min-width: 320px;
-        min-height: 300px;
+        min-height: 380px;
+        margin: 2%;
     }
 
     .iconLock {
@@ -143,7 +144,7 @@ if(event.target.value.length > 0) {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 32px;
+        height: 40px;
         width: 80%;
         margin: auto;
         left: 10%;
@@ -182,12 +183,12 @@ if(event.target.value.length > 0) {
     }
 
     .inputPassword input:focus + label, .inputPassword input:valid + label {
-        top: -14px;
+        top: -20px;
         color: var(--primary-color);
     }
 
     .inputPassword input:focus + label + i, .inputPassword input:valid + label + i {
-        height: 30px;
+        height: 40px;
         border-radius: 10px;
     }
 

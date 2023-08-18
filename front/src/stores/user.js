@@ -47,6 +47,7 @@ export const useUserStore = defineStore('user', {
         }
         this.login(values)
         useGlobalStore().showPreloader = false;
+        useGlobalStore().showMessageModal(data.message, "success")
       } catch (e) {
         useGlobalStore().showPreloader = false;
         useGlobalStore().showMessageModal(e.response.data.message, "error")
