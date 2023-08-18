@@ -1,20 +1,48 @@
 <script setup>
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
+import { useGlobalStore } from '../../stores/global';
 
 const userStore = useUserStore();
+const globalStore = useGlobalStore();
 
 const passwordInput = ref('');
 const passwordConfirmInput = ref('');
 const showPassword = ref('');
 const showPasswordConfirm= ref('');
 
+const emptyInputPassword = ref(false);
+const emptyInputPasswordConfirm = ref(false);
+
 function changePassword() {
+    if(passwordInput.value == '' || passwordConfirmInput == '' ) {
+        emptyInputPassword.value = true;
+        emptyInputPasswordConfirm.value = true;
+        return;
+    }
+
+    else if (passwordInput.value == '') {
+        emptyInputPassword.value = true;
+        return;
+    }
+
+    else if (passwordConfirmInput.value == '' || passwordConfirmInput.value == null) {
+        emptyInputPasswordConfirm.value = true;
+        return;
+    }
+
     if (passwordInput.value != passwordConfirmInput.value) {
-        alert('erro')
+        globalStore.showMessageModal('As senhas não coincidem', 'error');
     }
     else {
         userStore.changePassword(passwordInput.value);
+    }
+}
+
+function checkInput() {
+if(event.target.value.length > 0) {
+        emptyInputPassword.value = false;
+        emptyInputPasswordConfirm.value = false;
     }
 }
 </script>
@@ -26,22 +54,24 @@ function changePassword() {
                 <font-awesome-icon :icon="['fas', 'lock']" size="xl" style="color: #ededed;" />
             </i>
 
-            <h2>Trocar Senha</h2>
+            <p class="title">
+                <h2>Troque sua senha</h2>
+            </p>
 
-            <div class="inputPassword">
+            <div class="inputPassword" style="top: 32%;" :class="emptyInputPassword ? 'empty' : ''" @input="checkInput">
                 <input :type="showPassword ? 'text' : 'password'" required v-model="passwordInput">
                 <label>Senha</label>
                 <i></i>
-                <font-awesome-icon v-if="showPassword" @click="showPassword = !showPassword" :icon="['fas', 'eye']" size="lg" class="icon" style="color: var(--primary-color);"/>
-                <font-awesome-icon v-else @click="showPassword = !showPassword" :icon="['fas', 'eye-slash']" size="lg" class="icon" style="color: var(--primary-color);"/>
+                <font-awesome-icon v-if="showPassword" @click="showPassword = !showPassword" :icon="['fas', 'eye']" size="lg" class="icon" style="color: var(--primary-color)"/>
+                <font-awesome-icon v-else @click="showPassword = !showPassword" :icon="['fas', 'eye-slash']" size="lg" class="icon" style="color: var(--primary-color)"/>
             </div>
 
-            <div class="inputPassword">
+            <div class="inputPassword" style="top: 50%;" :class="emptyInputPasswordConfirm ? 'empty' : ''" @input="checkInput">
                 <input :type="showPasswordConfirm ? 'text' : 'password'" required v-model="passwordConfirmInput">
                 <label>Confirmar Senha</label>
                 <i></i>
-                <font-awesome-icon v-if="showPasswordConfirm" @click="showPasswordConfirm = !showPasswordConfirm" :icon="['fas', 'eye']" size="lg" class="icon" style="color: var(--primary-color);"/>
-                <font-awesome-icon v-else @click="showPasswordConfirm = !showPasswordConfirm" :icon="['fas', 'eye-slash']" size="lg" class="icon" style="color: var(--primary-color);"/>
+                <font-awesome-icon v-if="showPasswordConfirm" @click="showPasswordConfirm = !showPasswordConfirm" :icon="['fas', 'eye']" size="lg" class="icon" style="color: var(--primary-color)"/>
+                <font-awesome-icon v-else @click="showPasswordConfirm = !showPasswordConfirm" :icon="['fas', 'eye-slash']" size="lg" class="icon" style="color: var(--primary-color)"/>
             </div>
 
             <button @click="changePassword">
@@ -53,12 +83,10 @@ function changePassword() {
 
 <style scoped>
     main {
-        background-image: url('\banner.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        height: 100%;
-        width: 100%;
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.621);
+        height: 100vh;
+        width: 100vw;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -66,13 +94,17 @@ function changePassword() {
 
     .form {
         position: relative;
-        background-color: var(--white);
+        background-color: #fff;
         padding: 1% 4%;
         display: flex;
         flex-direction: column;
-        gap: 50px;
+        justify-content: space-evenly;
+        gap: 40px;
         border-radius: 10px;
-        width: 25%;
+        max-width: 800px;
+        max-height: 600px;
+        min-width: 320px;
+        min-height: 300px;
     }
 
     .iconLock {
@@ -83,13 +115,23 @@ function changePassword() {
         display: flex;
         align-items: center;
         justify-content: center;
-        top: -7%;
+        top: -20px;
         left: 5%;
+        width: 40px;
+        height: 40px;
+    }
+
+    .title {
+        position: absolute;
+        top: 40px;
+        width: 100%;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     h2 {
-        position: relative;
-        top: 10%;
         color: var(--primary-color);
         font-size: 2.0rem;
         font-weight: bolder;
@@ -97,11 +139,16 @@ function changePassword() {
     }
 
     .inputPassword {
-        position: relative;
+        position: absolute;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        height: 32px;
+        width: 80%;
+        margin: auto;
+        left: 10%;
     }
+
     .inputPassword input{
         outline: 0;
         border: none;
@@ -121,6 +168,7 @@ function changePassword() {
         position: absolute;
         left: 5%;
         transition: all 0.5s ease;
+        font-size: 1.2rem;
     }
 
     .inputPassword i {
@@ -156,6 +204,9 @@ function changePassword() {
     }
 
     button {
+        position: absolute;
+        bottom: 8%;
+        left: 15%;
         padding: 2% 0;
         border: none;
         background-color: var(--primary-color);
@@ -173,5 +224,21 @@ function changePassword() {
     button:hover {
         background-color: var(--white);
         color: var(--primary-color);
+    }
+
+    .empty i{
+        background-color: var(--error-color);
+    }
+
+    .empty label {
+        color: var(--error-color);
+    }
+
+    .empty input {
+        color: var(--error-color);
+    }
+
+    .empty .icon {
+        color: var(--error-color) !important;
     }
 </style>

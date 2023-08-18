@@ -1,12 +1,63 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
+import { useGlobalStore } from '../../stores/global';
 import router from '../../router'
 
 const userStore = useUserStore()
+const globalStore = useGlobalStore()
 
 const tokenInput = ref();
 
+const inputValues = ref(Array(6).fill(''));
+
+const inputFields = ref([]);
+
+const handleNextInput = (index) => {
+    console.log(event.target.value.length)
+    const nextIndex = index;
+    if (event.target.value.length === 1 && nextIndex < inputValues.value.length) {
+        inputFields.value[nextIndex].focus();
+    }
+    else if(event.target.value.length === 0 && nextIndex > 1){
+        inputFields.value[nextIndex - 2].focus()
+    }
+};
+
+const handleBackInput = (index) => {
+    console.log(index)
+    if (event.target.value.length === 0 && index > 1) {
+        inputFields.value[index - 2].focus()
+    }
+    else {
+        inputFields.value[index - 1].focus()
+    }
+}
+
+
+
+function checkToken() {
+    console.log(inputValues.value)
+    for(let value in inputValues.value) {
+        if(inputValues.value[value] == '') {
+            globalStore.showMessageModal('Preencha todos os campos', 'error');
+            return;
+        }
+    }
+    
+    tokenInput.value = inputValues.value.join('');
+    if(tokenInput.value == userStore.tokenResetPassword) {
+        router.push('/change-password')
+    }
+    else {
+        globalStore.showMessageModal('Token inválido', 'error');
+    }
+}
+
+
+onMounted(() => {
+    inputFields.value = document.querySelectorAll('.inputToken input');
+});
 </script>
 
 <template>
@@ -22,15 +73,10 @@ const tokenInput = ref();
             </div>
 
             <div class="inputToken">
-                <input type="text" required v-model="tokenInput">
-                <label>Token</label>
-                <i class="bar"></i>
-                <span class="iconInput">
-                    <font-awesome-icon :icon="['fas', 'envelope']" size="xl" class="icon" style="color: var(--primary-color);"/>
-                </span>
+                <input type="text" maxlength="1" v-for="i in 6" @input="handleNextInput(i)" @keyup.delete="handleBackInput(i)" @paste="copyCode" v-model="inputValues[i - 1]"> 
             </div>
 
-            <button @click="forgetPassword">
+            <button @click="checkToken">
                 Trocar Senha
             </button>
         </section>
@@ -46,15 +92,6 @@ const tokenInput = ref();
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    img {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        z-index: -1;
-        opacity: 0.5;
     }
 
     .form {
@@ -106,26 +143,25 @@ const tokenInput = ref();
     .inputToken {
         position: absolute;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         height: 32px;
-        width: 80%;
-        margin: auto;
-        left: 10%;
+        width: 100%;
         top: 42%;
+        gap: 10px;
+        left: 0;
     }
     .inputToken input{
         outline: 0;
         border: none;
-        padding: 2%;
-        padding-left: 5%;
-        padding-right: 13%;
-        border-radius: 20px;
-        height: 30px;
-        font-size: 1.2rem;
+        height: 50px;
+        font-size: 3.2rem;
         background-color: transparent;
+        border-bottom: 1px solid #000;
         z-index: 2;
-        color: var(--white);
+        color: #000;
+        width: 10%;
+        text-align: center;
     }
 
     .inputToken label {
@@ -133,42 +169,6 @@ const tokenInput = ref();
         position: absolute;
         left: 5%;
         transition: all 0.5s ease;
-    }
-
-    .iconInput {
-        position: absolute;
-        top: 10px;
-        right: 5%;
-        z-index: 2;
-    }
-
-    .iconInput .icon {
-        transition: all 0.5s ease;
-
-    }
-
-    .inputToken .bar {
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        background-color: var(--primary-color);
-        bottom: 0;
-        transition: all 0.5s ease;
-        z-index: 1;
-    }
-
-    .inputToken input:focus + label, .inputToken input:valid + label {
-        top: -14px;
-        color: var(--primary-color);
-    }
-
-    .inputToken input:focus + label + .bar, .inputToken input:valid + label + .bar {
-        height: 30px;
-        border-radius: 10px;
-    }
-
-    .inputToken input:focus ~ .iconInput .fa-envelope, .inputToken input:valid ~ .iconInput .fa-envelope {
-        color: #fff !important;
     }
 
     button {
