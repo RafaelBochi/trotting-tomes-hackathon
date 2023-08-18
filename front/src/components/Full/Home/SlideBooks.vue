@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useBookStore } from "@/stores/book.js";
 import Book from "@/components/Full/Book/Book.vue";
 import Pagination from "@/components/Full/Home/Pagination.vue";
@@ -17,17 +17,37 @@ const books = computed(() => bookStore.books);
 const active = ref(0);
 const slideNum = ref(props.slideNum);
 const currentPage = ref(1);
-const itemsPerPage = 3;
+const itemsPerPage = ref(3);
 
 const totalPages = computed(() => {
-  return Math.ceil(books.value.length / itemsPerPage);
+  return Math.ceil(books.value.length / itemsPerPage.value);
 });
 
 const changePage = (page) => {
   const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
   currentPage.value = page;
-  console.log(currentPage.value)
-  active.value = ((page - 1) * itemsPerPage);
+  console.log(page)
+  if(page == 1) {
+    active.value = 0
+    items[0].scrollIntoView({
+      behavior: 'smooth',
+      inline: 'start',
+      block: 'nearest'
+    })
+    return;
+  }
+
+  active.value = ((page - 1) * itemsPerPage.value);
+
+  if(itemsPerPage.value % 2 == 0) {
+    items[active.value].scrollIntoView({
+      behavior: 'smooth',
+      inline: 'start',
+      block: 'nearest',
+    })
+    return;
+  }
+
   items[active.value + 1].scrollIntoView({
     behavior: "smooth",
     inline: "center",
@@ -39,42 +59,98 @@ const nextBook = () => {
   const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
   if (currentPage.value < totalPages.value) {
     active.value++;
+    if(itemsPerPage.value == 1) {
+      items[active.value].scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+    }
+    else {
     items[active.value + 1].scrollIntoView({
       behavior: "smooth",
       inline: "center",
       block: "nearest",
     });
-
-    if (active.value % itemsPerPage == 0) {
-      currentPage.value = active.value / itemsPerPage + 1;
+  }
+    if (active.value % itemsPerPage.value == 0) {
+      currentPage.value = active.value / itemsPerPage.value + 1;
     }
   }
 };
 
 const previousBook = () => {
   const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
-  console.log(currentPage.value)
+  if(active.value == 0) {
+    console.log(items[0])
+        items[0].scrollIntoView({
+        behavior: "smooth",
+        inline: "start",
+        block: "nearest",
+      });
+      }
   if (currentPage.value > 0) {
       active.value--;
+      
       items[active.value].scrollIntoView({
         behavior: "smooth",
         inline: "center",
         block: "nearest",
       });
-    if ((active.value + 1) % itemsPerPage == 0) {
+    if ((active.value + 1) % itemsPerPage.value == 0) {
       currentPage.value--;
     }
   }
 };
+
+let widthSecBooks;
+
+function getWidthSecBooks() {
+  const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
+  if(active.value == 0) {
+    items[0].scrollIntoView({
+    behavior: "smooth",
+    inline: "end",
+    block: "nearest",
+  });
+  }
+
+  else {
+  items[active.value].scrollIntoView({
+    behavior: "smooth",
+    inline: "center",
+    block: "nearest",
+  });
+}
+  const secBooks = document.querySelector(`.books${slideNum.value}`)
+  if(secBooks) {
+    widthSecBooks = secBooks.getBoundingClientRect().width;
+  }
+
+  if(widthSecBooks > 3) {
+    widthSecBooks = 3;
+  }
+
+  itemsPerPage.value = Math.floor(widthSecBooks / 350);
+}
+
+
+window.addEventListener("resize", getWidthSecBooks);
+
+onMounted(
+  ()=> {
+    getWidthSecBooks();
+  }
+)
 </script>
 
 <template>
   <section>
     <div class="books" :class="`books${slideNum}`">
-      <Book v-for="book in books" :key="book.id" :book="book" />
+      <Book v-for="book in books" :key="book.id" :book="book" class="book"/>
     </div>
 
-    <div class="pages">
+    <div class="pages" v-if="itemsPerPage > 1">
       <span
         v-for="(page, index) in totalPages"
         :key="index"

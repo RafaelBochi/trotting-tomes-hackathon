@@ -22,6 +22,7 @@ const previousBook = () => {
 };
 
 const nextBook = () => {
+    console.log(props.itemsPerPage, props.active)
     emit('next-book');
 };
 
@@ -33,7 +34,7 @@ const nextBook = () => {
             <font-awesome-icon :icon="['fas', 'chevron-left']" />
         </button>
 
-        <button @click="nextBook" :disabled="active - 1 == books.length - itemsPerPage">
+        <button @click="nextBook" :disabled="active >= books.length - itemsPerPage">
             <font-awesome-icon :icon="['fas', 'chevron-right']" />
         </button>
     </div>
