@@ -127,11 +127,11 @@ function getWidthSecBooks() {
     widthSecBooks = secBooks.getBoundingClientRect().width;
   }
 
-  if(widthSecBooks > 3) {
-    widthSecBooks = 3;
-  }
-
   itemsPerPage.value = Math.floor(widthSecBooks / 350);
+  
+  if(itemsPerPage.value > 3) {
+    itemsPerPage.value = 3;
+  }
 }
 
 
