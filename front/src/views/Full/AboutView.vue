@@ -43,8 +43,22 @@ window.addEventListener("scroll", reveal);
         </div>
     </section>
 
-    <section class="info">
+    <section class="info ">
        
+    </section>
+    <section class="container1">
+        <div class="slider-wrapper">
+        <div class="slider">
+            <img id="slide-1" src="https://moewalls.com/wp-content/uploads/2021/08/baal-and-kokomi-genshin-impact-thumb.jpg" alt="">
+            <img id="slide-2" src="https://wallpaperwaifu.com/wp-content/uploads/2021/09/hu-tao-genshin-impact-4k-thumb.jpg" alt="">
+            <img id="slide-3" src="https://wallpaperaccess.com/full/8314405.jpg" alt="">
+        </div>
+        <div class="slider-nav">
+            <a href="#slider-1"></a>
+            <a href="#slider-2"></a>
+            <a href="#slider-3"></a>
+        </div>
+       </div>
     </section>
 
     <section class="info" style="background-color: #fff; height: 400px;">
@@ -56,11 +70,13 @@ window.addEventListener("scroll", reveal);
     </div>
 
     <section class="info-last">
-        <div class="svg-wave" style="height: 150px; overflow: hidden;"><svg viewBox="0 0 500 150" preserveAspectRatio="none"
+        <div class="svg-wave" style="height: 150px; overflow: hidden;">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none"
             style="height: 100%; width: 100%;">
             <path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
                 style="stroke: none; fill: #9ef557;"></path>
-        </svg></div>
+        </svg>
+    </div>
     </section>
 
     <footer id="contato">
@@ -82,6 +98,52 @@ window.addEventListener("scroll", reveal);
   padding: 0;
   box-sizing: border-box;
   font-family: "Asap", sans-serif;
+}
+
+.container1{
+    padding: 2rem;
+}
+.slider-wrapper {
+    position: relative;
+    max-width: 108rem;
+    margin: 0 auto;
+}
+.slider{
+    display: flex;
+    aspect-ratio: 16/ 9;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
+    border-radius: 0.5rem;
+}
+
+.slider img{
+    flex: 1 0 100%;
+    scroll-snap-align: start;
+    object-fit: cover;
+}
+.slider-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1rem;
+    position: relative;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+.slider-nav a{
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: white;
+    opacity: 0.75;
+    transition: opacity ease 250ms;
+}
+.slider-nav a:hover{
+    opacity: 1;
 }
 .reveal{
   position: relative;
