@@ -104,7 +104,7 @@ class UserService {
         const { data } = await axios.delete(`/api/carrinhoLivros/${id}/`, config )
         return data;
     }
-    async editAccount(user) {
+    async uploadImage(image) {
         const userStore = useUserStore();
         const config = {
             headers: { Authorization: `Bearer ${userStore.user.token}`,  
@@ -112,8 +112,29 @@ class UserService {
             accept: 'application/json', },
             
         };
-        const { data } = await axios.put(`/api/edit_account/`, user, config )
+        console.log(image)
+        const { data } = await axios.post("/api/profileImages/", {
+            url: image,
+            user: userStore.user.id,
+            name: userStore.user.name + userStore.user.id,
+        }, config ).then((response) => {
+            console.log(response)
+        }).catch((error) => {
+            console.log(error)
+        })
         return data;
+    }
+    async editAccount(userId, values, image) {
+        const userStore = useUserStore();
+        const config = {
+            headers: { Authorization: `Bearer ${userStore.user.token}`,  
+            'Content-Type': 'multipart/form-data',
+            accept: 'application/json', },
+            
+        };
+        if (image) {
+            this.uploadImage(image)
+        }
     }
 }
 

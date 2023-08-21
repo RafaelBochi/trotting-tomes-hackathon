@@ -1,5 +1,58 @@
 <script setup>
+import { ref } from 'vue'
+import { useUserStore } from '../../stores/user';
+import { useGlobalStore } from '../../stores/global';
+import axios from 'axios';
 
+const globalStore = useGlobalStore();
+
+const userStore = useUserStore()
+
+const inputName = ref(userStore.user.username)
+const inputEmail = ref(userStore.user.email)
+const inputPassword = ref('')
+const inputPasswordConfirm = ref('')
+const imageInput = ref(null)
+
+async function loadImage(e) {
+    const formData = new FormData();
+    const selectedFile = e.target.files[0];
+    formData.append('image', selectedFile );
+    const config = {
+            headers: { Authorization: `Bearer ${userStore.user.token}`,  
+            'Content-Type': 'multipart/form-data'}
+            
+        };
+        const { data } = await axios.post("/api/profileImages/", {
+            url: formData,
+            user: userStore.user.id,
+            name: userStore.user.name + userStore.user.id,
+        }, config ).then((response) => {
+            console.log(response)
+        }).catch((error) => {
+            console.log(error)
+        })
+    imageInput.value = formData;
+}
+
+function verificationInputs() {
+    if (inputPassword.value != inputPasswordConfirm.value) {
+        globalStore.showMessageModal('As senhas não coincidem', 'error');
+        return false;
+    }
+    return true;
+}
+
+const editAccount = () => {
+    if (!verificationInputs()) return;
+    const values = {
+        username: inputName.value,
+        email: inputEmail.value,
+        password: inputPassword.value,
+    }
+    userStore.editAccount(values, imageInput.value);
+    console.log(imageInput.value)
+}
 </script>
 
 <template>
@@ -34,26 +87,34 @@
         <div class="contentEditAccount">
             <h2>Edite Sua Conta</h2>
             <div class="form">
-                <img src="/userIcon.png" alt="">
+                <div class="userImg">
+                    <img :src="imageInput != '' ? imageInput : userStore.user.image" alt="">
+
+                    <label for="imageInput" >
+                        <font-awesome-icon :icon="['fas', 'camera']" size="xl" />
+                    </label>
+
+                    <input id="imageInput" type="file" accept="image/*" @change="loadImage">
+                </div>
 
                 <div class="inputs">
                     <div class="inputName">
-                        <input type="text" required>
+                        <input type="text" required v-model="inputName">
                         <label>Nome de Usuario</label>
                     </div>
 
                     <div class="inputEmail">
-                        <input type="email" required>
+                        <input type="email" required v-model="inputEmail">
                         <label>Email</label>
                     </div>
 
                     <div class="inputPassword">
-                        <input type="password" required>
+                        <input type="password" required v-model="inputPassword">
                         <label>Senha</label>
                     </div>
 
                     <div class="inputPasswordConfirm">
-                        <input type="password" required>
+                        <input type="password" required v-model="inputPasswordConfirm">
                         <label>Confirmar Senha</label>
                     </div>
                 </div>
@@ -61,7 +122,7 @@
 
             </div>
             <div class="actions">
-                <button class="confirm">
+                <button class="confirm" @click="editAccount">
                     Confirmar
                 </button>
                 <button class="cancel">
@@ -148,9 +209,41 @@ aside .links .bar {
     gap: 100px;
 }
 
-.contentEditAccount .form img {
+.contentEditAccount .form .userImg {
+    position: relative;
     width: 200px;
+    height: 200px;
 }
+.contentEditAccount .form .userImg img {
+    width: 200px;
+    height: 200px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    object-fit: fill;
+    border-radius: 50%;
+}
+.contentEditAccount .form .userImg label {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0%;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    background-color: var(--lime-green);
+    color: #fff;
+    cursor: pointer;
+    transition: all .5s ease;
+    font-size: 1.5rem;
+}
+
+.contentEditAccount .form .userImg input {
+    display: none;
+}
+
 
 .contentEditAccount .form .inputs {
     position: relative;
@@ -181,16 +274,16 @@ aside .links .bar {
     z-index: 2;
 }
 
-.contentEditAccount .form .inputs > div label {
+.contentEditAccount .form .inputs div label {
     position: absolute;
     left: 15px;
     font-size: 1.5rem;
     z-index: 1;
-    transition: all .5s ease;
+    transition: all .5s;
 }
 
 .contentEditAccount .form .inputs input:focus + label, .contentEditAccount .form .inputs input:valid + label {
-    top: -20px;
+    transform: translateY(-30px);
 }
 
 .contentEditAccount .actions {

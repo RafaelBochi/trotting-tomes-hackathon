@@ -119,7 +119,7 @@ router.afterEach((to) => {
         </router-link>
 
         <div class="user" v-else>
-          <img src="/userIcon.png" alt="" @click="userStore.logout" />
+          <img :src="userStore.user.image" alt="" />
           <span>
             <p class="name">
               {{ userStore.user.username }}

@@ -88,10 +88,10 @@ function register() {
             
             <div class="input" :class="emptyUsername ? 'empty' : ''">
                 <input type="text" required v-model="usernameInput" @input="emptyUsername = false">
-                <label>Username</label>
+                <label>Nome de Usuario</label>
             </div>
             <div class="input" :class="emptyEmail ? 'empty' : ''">
-                <input type="text" required v-model="emailInput" @input="emptyEmail = false">
+                <input type="email" required v-model="emailInput" @input="emptyEmail = false">
                 <label>Email</label>
             </div>
             <div class="input"  :class="emptyPassword ? 'empty' : ''">
@@ -122,6 +122,7 @@ function register() {
         justify-content: center;
         gap: 20px;
         width: 60%;
+        right: 0;
     }
 
     h2 {
@@ -155,7 +156,7 @@ function register() {
         padding: 3%;
         border: none;
         outline: none;
-        font-size: 1.2rem;
+        font-size: 1.6rem;
         border-radius: 10px;
     }
 
@@ -166,7 +167,7 @@ function register() {
         padding: 2%;
         pointer-events: none;
         transition: all 0.5s ease;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
     .input input:focus + label, .input input:valid + label {
         top: -20px;

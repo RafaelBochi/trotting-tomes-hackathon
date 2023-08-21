@@ -21,6 +21,7 @@
     "vue-awesome-paginate": "^1.1.46",
     "vue-carousel": "^0.18.0",
     "vue-carousel-card": "^2.0.0",
+    "vue-dropzone": "^1.0.4",
     "vue-router": "^4.2.2",
     "vue3-carousel": "^0.3.1"
   },

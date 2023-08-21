@@ -126,8 +126,8 @@ main {
 
 .changeToLogin {
     position: absolute;
-    right: 2%;
-    bottom: 2%;
+    right: 0%;
+    bottom: 0%;
     display: flex;
     gap: 5px;
     padding: 0.5%;

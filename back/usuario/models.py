@@ -32,6 +32,15 @@ class Usuario(AbstractUser):
         verbose_name_plural = "Usuários"
         ordering = ["-date_joined"]
 
+class ProfileImage(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.ImageField(upload_to='profileImages/', blank=True, null=True)
+    user = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='image')
+
+    def __str__(self):
+        return self.name
+
+
 @receiver(post_save, sender=Usuario)
 def create_user_carrinho(sender, instance, created, **kwargs):
     if created:

@@ -57,7 +57,7 @@ function login() {
             
             <div class="input" :class="emptyEmailOrUsername ? 'empty' : ''">
                 <input type="text" required v-model="email_or_usernameInput" @input="emptyEmailOrUsername = false">
-                <label>Username ou Email</label>
+                <label>Nome de Usuario ou Email</label>
             </div>
             <div class="input" :class="emptyPassword ? 'empty' : ''">
                 <input :type="showPassword ? 'text' : 'password'" required v-model="passwordInput" @input="emptyPassword = false">
@@ -128,7 +128,7 @@ function login() {
         padding: 3%;
         border: none;
         outline: none;
-        font-size: 1.2rem;
+        font-size: 1.6rem;
         border-radius: 10px;
         background-color: var(--cinza);
         margin: 0 2%;

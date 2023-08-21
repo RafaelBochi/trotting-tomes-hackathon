@@ -2,8 +2,8 @@ import pytz
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Usuario
-from .serializers import UsuarioSerializer
+from .models import Usuario, ProfileImage
+from .serializers import UsuarioSerializer, ProfileImageSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework.decorators import (
@@ -25,6 +25,10 @@ User = get_user_model()
 class UsuarioViewSet(ModelViewSet):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+
+class ProfileImageViewSet(ModelViewSet):
+    queryset = ProfileImage.objects.all()
+    serializer_class = ProfileImageSerializer
 
 
 @api_view(["POST"])
@@ -84,11 +88,16 @@ def login(request):
         refresh = RefreshToken.for_user(user)
         access = AccessToken.for_user(user)
 
+        if(ProfileImage.objects.filter(user=user).exists()):
+            profile_image = ProfileImage.objects.get(user=user)
+            profile_image = profile_image.url
+
         response_data = {
             "refresh": str(refresh),
             "access": str(access),
             "username": user.username,
             "email": user.email,
+            "image": profile_image,
             "id": user.id,
             "message": "Login realizado com sucesso!"
             # Adicione outros campos do usuário que você deseja retornar
@@ -255,28 +264,40 @@ def change_password(request):
         {"message": "Senha atualizada com sucesso."}, status=status.HTTP_200_OK
     )
 
-@api_view(["PUT"])
+@api_view(["PATCH"])
+@authentication_classes([])
+@permission_classes([])
 def edit_account(request):
-    user_id = request.data.get("user_id")
-    username = request.data.get("username")
-    email = request.data.get("email")
-    password = request.data.get("password")
+    print(request.data.get("image"))
+    print(request.data)
+    user_id = request.data.get('user_id')
+    username = request.data.get("values[username]")
+    email = request.data.get("values[email]")
+    password = request.data.get("values[password]")
+    image = request.FILES.get("image")
 
     user = User.objects.get(id=user_id)
 
-    if username != '' and username is not None:
+    if username != '' and username is not None and username != user.username:
         user.username = username
 
-    if email != '' and email is not None:
+    if email != '' and email is not None and email != user.email:
         user.email = email
 
-    if password != '' and password is not None:
+    if password != '' and password is not None and password != user.password:
         user.set_password(password)
 
-    user.save()
+    if image is not None:
+        user.image.delete()  # Exclui a imagem anterior, se houver
+        user.image = image  # Adiciona a nova imagem
+        print('aaaa')
+        user.save()
+
+    print(user.image)
 
     response_data = {
         "message": "Usuário atualizado com sucesso.",
     }
 
     return Response(response_data, status=status.HTTP_200_OK)
+

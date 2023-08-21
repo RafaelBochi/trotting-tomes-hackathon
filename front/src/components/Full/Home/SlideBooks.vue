@@ -58,8 +58,9 @@ const changePage = (page) => {
 const nextBook = () => {
   const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
   if (currentPage.value < totalPages.value) {
+    console.log(itemsPerPage.value)
     active.value++;
-    if(itemsPerPage.value == 1) {
+    if(itemsPerPage.value <= 1) {
       items[active.value].scrollIntoView({
       behavior: "smooth",
       inline: "center",
@@ -106,22 +107,7 @@ const previousBook = () => {
 let widthSecBooks;
 
 function getWidthSecBooks() {
-  const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
-  if(active.value == 0) {
-    items[0].scrollIntoView({
-    behavior: "smooth",
-    inline: "end",
-    block: "nearest",
-  });
-  }
-
-  else {
-  items[active.value].scrollIntoView({
-    behavior: "smooth",
-    inline: "center",
-    block: "nearest",
-  });
-}
+  const items = document.querySelectorAll(`.books.books${slideNum.value} > *`); 
   const secBooks = document.querySelector(`.books${slideNum.value}`)
   if(secBooks) {
     widthSecBooks = secBooks.getBoundingClientRect().width;

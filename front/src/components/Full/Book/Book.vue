@@ -125,7 +125,7 @@ onMounted(async () => {
 
 <style scoped>
 .produto {
-  width: 350px;
+  width: 320px;
   height: 500px;
   display: flex;
   flex-direction: column;

@@ -29,7 +29,7 @@
     section {
         position: fixed;
         right: 2%;
-        top: 7%;
+        top: 50px;
         padding: .5% 1%;
         background-color: #fff;
         border-radius: 10px;
