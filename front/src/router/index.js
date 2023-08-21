@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useUserStore } from '../stores/user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,27 +11,18 @@ const router = createRouter({
         {
           path: 'home',
           name: 'home',
-          meta: {
-            requiresAuth: true
-          },
           component: () => import('../views/Full/HomeView.vue'),
           exact: true
         },
         {
           path: 'products',
           name: 'products',
-          meta: {
-            requiresAuth: true
-          },
           component: () => import('../views/Full/ProductsView.vue'),
           exact: true
         },
         {
           path: 'about',
           name: 'about',
-          meta: {
-            requiresAuth: true
-          },
           component: () => import('../views/Full/AboutView.vue'),
         },
         {
@@ -40,6 +30,11 @@ const router = createRouter({
           name: 'bookPage',
           component: () => import('../views/Full/BookPageView.vue'),
           props: true,
+        },
+        {
+          path: 'settings',
+          name: 'settings',
+          component: () => import('../views/Full/SettingsView.vue')
         }
       ]
     },
@@ -73,7 +68,5 @@ const router = createRouter({
     }
   ]
 })
-
-
 
 export default router

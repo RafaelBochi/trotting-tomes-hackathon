@@ -4,7 +4,7 @@
 
 <template>
     <section class="preloader">
-        <img src="/gif-horse-trotting.gif" alt="">
+        <img src="/gif-horse-trotting.gif" alt="" class="img-preloader">
     </section>
 </template>
 
@@ -22,8 +22,8 @@
         justify-content: center;
     }
 
-    img {
-        width: 10%;
-        object-fit: cover;
+    .img-preloader {
+        width: 150px;
     }
+
 </style>

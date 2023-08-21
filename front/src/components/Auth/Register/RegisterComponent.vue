@@ -19,7 +19,7 @@ import FormRegisterComponent from './FormRegisterComponent.vue'
             <img src="/horseandbook.png" alt="">
         </div>
 
-        <FormRegisterComponent class="form"/>
+        <FormRegisterComponent class="form" />
 
         <span class="changeToLogin">
             <p>
@@ -33,125 +33,144 @@ import FormRegisterComponent from './FormRegisterComponent.vue'
 </template>
 
 <style scoped>
-    main {
-        height: 100vh;
-        width: 100vw;
-        display: flex;
-        align-items: center;
-        background-color: var(--white);
-        animation: main 1s ease forwards;
-        overflow: hidden;
+main {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    background-color: var(--white);
+    animation: main 1s ease forwards;
+    overflow: hidden;
+}
+
+@keyframes main {
+    from {
+        opacity: 0.3;
     }
 
-    @keyframes main {
-        from {
-            opacity: 0.3;
-        }
-        to {
-            opacity: 1;
-        }
+    to {
+        opacity: 1;
+    }
+}
+
+.logo {
+    width: 150px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.banner {
+    position: relative;
+    right: 0%;
+    padding-right: 6%;
+    background-color: var(--primary-color);
+    width: 40%;
+    height: 110%;
+    border-radius: 9% 0% 0% 9% / 50% 50% 50% 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 30px;
+    animation: banner 1s ease forwards;
+}
+
+@keyframes banner {
+    0% {
+        left: 0%;
+        width: 100%;
+        border-radius: 0% 0% 0% 0% / 50% 50% 50% 50%;
+        background: var(--lime-green);
     }
 
-    .logo {
-        width: 10%;
-        position: absolute;
-        right: 0;
-        top: 0;
+    100% {
+        left: 0%;
+        border-radius: 0% 9% 9% 0% / 50% 50% 50% 50%;
+        background: var(--primary-color);
+    }
+}
+
+.banner>img {
+    width: 80%;
+    position: relative;
+    right: 5%;
+    animation: horse .5s ease forwards;
+}
+
+@keyframes horse {
+    0% {
+        transform: rotateY(0deg);
     }
 
+    100% {
+        transform: rotateY(180deg);
+    }
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    top: 20%;
+    left: 15%;
+    text-align: center;
+    color: #fff;
+    gap: 10px;
+    font-size: 1.8rem;
+}
+
+.title h3 {
+    letter-spacing: 0.1rem;
+    font-weight: 500;
+}
+
+.changeToLogin {
+    position: absolute;
+    right: 2%;
+    bottom: 2%;
+    display: flex;
+    gap: 5px;
+    padding: 0.5%;
+    font-size: 1.6rem;
+}
+
+.changeToLogin p:nth-child(2) {
+    cursor: pointer;
+    text-decoration: underline;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.form,
+.changeToLogin,
+.logo {
+    animation: form 1.5s ease forwards;
+}
+
+@keyframes form {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+}
+
+@media screen and (max-width: 1000px) {
     .banner {
-        position: relative;
-        right: 0%;
-        padding-right: 6%;
-        background-color: var(--primary-color);
-        width: 40%;
-        height: 110%;
-        border-radius: 9% 0% 0% 9% / 50% 50% 50% 50%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        justify-content: center;
-        gap: 30px;
-        animation: banner 1s ease forwards;
+        display: none;
     }
 
-    @keyframes banner {
-        0% {
-            left: 0%;
-            width: 100%;
-            border-radius: 0% 0% 0% 0% / 50% 50% 50% 50%;
-            background: var(--lime-green);
-        }
-
-        100% {
-            left: 0%;
-            border-radius: 0% 9% 9% 0% / 50% 50% 50% 50%;
-            background: var(--primary-color);
-        }
+    .form {
+        width: 90%;
+        left: 5%;
     }
 
-    .banner > img {
-        width: 80%;
-        position: relative;
-        right: 5%;
-        animation: horse .5s ease forwards;
-    }
-
-    @keyframes horse {
-        0% {
-            transform: rotateY(0deg);
-        }
-
-        100% {
-            transform: rotateY(180deg);
-        }
-    }
-
-    .title {
-        display: flex;
-        flex-direction: column;
-        top: 20%;
-        left: 15%;
-        text-align: center;
-        color: #fff;
-        gap: 10px;
-        font-size: 1.8rem;
-    }
-
-    .title h3 {
-        letter-spacing: 0.1rem;
-        font-weight: 500;
-    }
     .changeToLogin {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        display: flex;
-        gap: 5px;
-        padding: 0.5%;
-        font-size: 1.2rem;
+        left: 2%;
+        bottom: 2%;
     }
-
-    .changeToLogin p:nth-child(2) {
-        cursor: pointer;
-        text-decoration: underline;
-        color: var(--primary-color);
-        font-weight: 700;
-    }
-
-    .form, .changeToLogin, .logo {
-        animation: form 1.5s ease forwards;
-    }
-
-    @keyframes form {
-        0% {
-            opacity: 0;
-            transform: translateX(100%);
-        }
-
-        100% {
-            opacity: 1;
-            transform: translateX(0%);
-        }
-    }
-</style>
+}</style>

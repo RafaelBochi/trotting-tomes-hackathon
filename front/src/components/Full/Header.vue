@@ -114,7 +114,7 @@ router.afterEach((to) => {
               style="color: #fff"
             />
 
-            <p>Registrar-se</p>
+            <p>Entrar</p>
           </button>
         </router-link>
 

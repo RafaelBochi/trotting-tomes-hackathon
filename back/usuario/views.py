@@ -15,7 +15,6 @@ from django.db.models import Q
 from django.core.mail import send_mail
 import secrets
 from datetime import datetime
-
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -142,7 +141,7 @@ def forget_password(request):
         user = User.objects.get(email=email)
     except User.DoesNotExist:
         return Response(
-            {"error": "Email não encontrado"}, status=status.HTTP_401_UNAUTHORIZED
+            {"message": "Email não encontrado"}, status=status.HTTP_401_UNAUTHORIZED
         )
         pass
     else:
@@ -157,6 +156,8 @@ def forget_password(request):
         user.password_reset_token = token
         user.password_reset_token_created = datetime.now(pytz.timezone('America/Sao_Paulo'))
         user.save()
+
+        print(user.password_reset_token_created)
         # Enviar e-mail
         subject = "Redefinição de senha"
         to_email = email
@@ -175,6 +176,42 @@ def forget_password(request):
         # Exibir uma mensagem de sucesso na tela
         return Response(response_data, status=status.HTTP_200_OK)
 
+TOKEN_EXPIRATION_SECONDS = 1200 
+
+@api_view(["POST"])
+@authentication_classes([])
+@permission_classes([])
+def check_token_reset_password(request):
+    id = request.data.get("user_id")
+    token = request.data.get('token')
+
+    try:
+        user = User.objects.get(id=id)  # Alterar para 'id=usuario_id'
+    except User.DoesNotExist:
+        return Response(
+            {"message": "Usuário não encontrado."}, status=status.HTTP_404_NOT_FOUND
+        )
+
+    if user.password_reset_token_created:
+        timezone = pytz.timezone('America/Sao_Paulo')
+        current_time = datetime.now(timezone)
+        expiration_time = current_time - user.password_reset_token_created
+        
+        print(expiration_time.total_seconds())
+        if expiration_time.total_seconds() > TOKEN_EXPIRATION_SECONDS:
+            user.password_reset_token = None
+            user.password_reset_token_created = None
+            user.save()
+            return Response(
+                {"message": "Token expirado."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+    
+    if token == user.password_reset_token:
+        return Response(
+                {"message": "Token valido."},
+                status=status.HTTP_200_OK,
+            )
 
 @api_view(["POST"])
 @authentication_classes([])
@@ -190,13 +227,18 @@ def change_password(request):
             {"message": "Usuário não encontrado."}, status=status.HTTP_404_NOT_FOUND
         )
 
-    # Verificar se o token expirou (se necessário)
-    # Aqui está um exemplo de verificação se o token expirou após 1 hora
-    if user.password_reset_token_created is not None:
-        expiration_time = datetime.now(pytz.timezone('America/Sao_Paulo')) - user.password_reset_token_created
-        if expiration_time.total_seconds() > 3600:  # Token expirado após 1 hora
+    if user.password_reset_token_created:
+        timezone = pytz.timezone('America/Sao_Paulo')
+        current_time = datetime.now(timezone)
+        expiration_time = current_time - user.password_reset_token_created
+        
+        print(expiration_time.total_seconds())
+        if expiration_time.total_seconds() > TOKEN_EXPIRATION_SECONDS:
+            user.password_reset_token = None
+            user.password_reset_token_created = None
+            user.save()
             return Response(
-                {"message": "Token de redefinição de senha expirado."},
+                {"message": "Token expirado."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
             
@@ -205,10 +247,9 @@ def change_password(request):
     user.set_password(new_password)
     user.save()
 
-    # Limpar o token de redefinição de senha e data/hora
-    #user.password_reset_token = ""
-    #user.password_reset_token_created = None
-    #user.save()
+    user.password_reset_token = ""
+    user.password_reset_token_created = None
+    user.save()
 
     return Response(
         {"message": "Senha atualizada com sucesso."}, status=status.HTTP_200_OK

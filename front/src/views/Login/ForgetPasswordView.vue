@@ -1,23 +1,32 @@
 <script setup>
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
+import { useGlobalStore } from '@/stores/global'
 import router from '@/router'
 
 const userStore = useUserStore()
+const globalStore = useGlobalStore()
 
 const emailInput = ref();
+const emptyInput = ref(false);
 
-async function forgetPassword() {
+function forgetPassword() {
+    if(emailInput.value == '' || emailInput.value == null) {
+        globalStore.showMessageModal('Preencha o campo de email...', 'error');
+        emptyInput.value = true;
+        return;
+    }
     const email = {
         "email": `${emailInput.value}`
     };
-    try {
-        await userStore.forgetPassword(email);
-    } catch(e) {
-        console.log(e)
-    }
+    userStore.forgetPassword(email);
 
-    router.push('/token-change-password')
+}
+
+function checkEmptyInput() {
+    if(event.target.value.length > 0) {
+        emptyInput.value = false;
+    }
 }
 </script>
 
@@ -33,12 +42,13 @@ async function forgetPassword() {
                 <p>Informe seu email para recuperar sua senha</p>
             </div>
 
-            <div class="inputEmail">
-                <input type="text" required v-model="emailInput">
+            <div class="inputEmail" :class="emptyInput ? 'empty' : ''">
+                <input type="text" required v-model="emailInput" @input="checkEmptyInput">
                 <label>Email</label>
                 <i class="bar"></i>
                 <span class="iconInput">
-                    <font-awesome-icon :icon="['fas', 'envelope']" size="xl" class="icon" style="color: var(--primary-color);"/>
+                    <font-awesome-icon :icon="['fas', 'envelope']" size="xl" class="icon" 
+                    style="color: var(--primary-color)"/>
                 </span>
             </div>
 
@@ -52,21 +62,12 @@ async function forgetPassword() {
 <style scoped>
     main {
         position: relative;
-        background-color: rgba(0, 0, 0, 0.621);
+        background-color: var(--primary-color-50);
         height: 100vh;
         width: 100vw;
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    img {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        z-index: -1;
-        opacity: 0.5;
     }
 
     .form {
@@ -78,10 +79,11 @@ async function forgetPassword() {
         justify-content: space-evenly;
         gap: 40px;
         border-radius: 10px;
-        max-width: 800px;
-        max-height: 600px;
+        width: 480px;
+        height: 520px;
         min-width: 320px;
-        min-height: 300px;
+        min-height: 380px;
+        margin: 2%;
     }
 
     .iconLock {
@@ -120,7 +122,7 @@ async function forgetPassword() {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 32px;
+        height: 40px;
         width: 80%;
         margin: auto;
         left: 10%;
@@ -134,7 +136,7 @@ async function forgetPassword() {
         padding-right: 13%;
         border-radius: 20px;
         height: 30px;
-        font-size: 1.2rem;
+        font-size: 1.6rem;
         background-color: transparent;
         z-index: 2;
         color: var(--white);
@@ -145,6 +147,7 @@ async function forgetPassword() {
         position: absolute;
         left: 5%;
         transition: all 0.5s ease;
+        font-size: 1.2rem;
     }
 
     .iconInput {
@@ -170,12 +173,12 @@ async function forgetPassword() {
     }
 
     .inputEmail input:focus + label, .inputEmail input:valid + label {
-        top: -14px;
+        top: -20px;
         color: var(--primary-color);
     }
 
     .inputEmail input:focus + label + .bar, .inputEmail input:valid + label + .bar {
-        height: 30px;
+        height: 40px;
         border-radius: 10px;
     }
 
@@ -204,5 +207,13 @@ async function forgetPassword() {
     button:hover {
         background-color: var(--white);
         color: var(--primary-color);
+    }
+
+    .empty .bar{
+        background-color: var(--error-color) !important;
+    }
+
+    .empty .iconInput > * {
+        color: var(--error-color) !important;
     }
 </style>
