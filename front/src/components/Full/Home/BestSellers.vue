@@ -15,15 +15,29 @@ const bestSellers = computed(() => {
   return books.slice(0, 5);
 });
 
-function nextSlide(index) {
-  const slides = document.querySelectorAll(".slide");
-  slides[index].scrollIntoView({
-    behavior: "smooth",
-    inline: "center",
-    block: "nearest",
-  }); 
-  currentBook.value = index + 1;
-}
+
+const containerRef = ref(null);
+
+onMounted(() => {
+  const container = containerRef.value;
+  const slides = container.querySelectorAll(".slide");
+  const slideWidth = slides[0].getBoundingClientRect().width;
+  const containerWidth = container.getBoundingClientRect().width;
+  const offset = (containerWidth - slideWidth) / 2;
+
+  // Use $nextTick to wait for the next DOM update cycle
+  // before scrolling into view
+  container.$nextTick(() => {
+    slides[currentBook.value - 1].scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "start",
+      inlineTo: "center",
+      blockTo: "center",
+      offsetLeft: offset,
+    });
+  });
+});
 
 
 const currentBook = ref(1);
@@ -32,8 +46,10 @@ const currentBook = ref(1);
 
 <template>
   <section>
-    <div class="carousel">
-      <div v-for="i in 10" :key="i" :class="currentBook == i ? 'current' : currentBook == i + 1 ? 'rightBook' : currentBook == i - 1 ? 'leftBook' : 'notCurrent'" @click="nextSlide(i - 1)">
+    <div class="carousel" ref="containerRef">
+      <div v-for="i in 10" :key="i"
+        :class="currentBook == i ? 'current' : currentBook == i + 1 ? 'rightBook' : currentBook == i - 1 ? 'leftBook' : 'notCurrent'"
+        @click="nextSlide(i - 1)">
         <div class="slide">
           <p>{{ i }}</p>
         </div>
@@ -54,28 +70,28 @@ section {
   gap: 10px;
 }
 
-.current > .slide{
-  background-color: rgb(148, 148, 246) ;
-  z-index: 9;
-  animation: current 0.5s ease-in-out;
-}
-
-.rightBook > .slide{
-  background-color: crimson;
-  width: 350px;
-  height: 350px;
-}
-
-.leftBook > .slide {
-  background-color: crimson;
-  width: 350px;
-  height: 350px;
-}
-
-.notCurrent > .slide {
+.current>.slide {
   background-color: rgb(148, 148, 246);
-  width: 300px;
+  z-index: 9;
+  animation: current 1s ease-in-out;
+}
+
+.rightBook>.slide {
+  background-color: crimson;
+  height: 350px;
+  width: 350px;
+}
+
+.leftBook>.slide {
+  background-color: crimson;
+  height: 350px;
+  width: 350px;
+}
+
+.notCurrent>.slide {
+  background-color: rgb(148, 148, 246);
   height: 300px;
+  width: 300px;
 }
 
 @keyframes current {
@@ -83,6 +99,7 @@ section {
     width: 350px;
     height: 350px;
   }
+
   100% {
     width: 500px;
     height: 500px;
@@ -107,7 +124,6 @@ section {
   height: 500px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
