@@ -1,226 +1,127 @@
 <script setup>
-import { computed, onMounted, ref, defineComponent } from "vue";
-import { useBookStore } from "@/stores/book.js";
-import { useOthersStore } from "@/stores/others.js";
-import Book3d from "../Book/Book3d.vue";
-import Book from "../Book/Book.vue";
+import { ref, onMounted } from 'vue';
+import { useBookStore } from '@/stores/book.js';
 
 const bookStore = useBookStore();
-const othersStore = useOthersStore();
 
-const bestSellers = computed(() => {
-  const books = bookStore.books.sort(
-    (livroA, livroB) => livroB.vendas - livroA.vendas
-  );
-  return books.slice(0, 5);
-});
+const currentSlide = ref(0)
+const booksBestSellers = ref([])
 
+function changeSlide(i) {
+  const slides = document.querySelectorAll('.slideBestSellers .slide')
+  if (i < 0) {
+    return;
+  }
+  else if (i > slides.length - 1) {
+    return;
+  }
+  currentSlide.value = i
+  console.log(slides[currentSlide.value])
+  setTimeout(
+    () => {
+      if (slides[currentSlide.value].classList.contains('activeSlide')) {
+        slides[currentSlide.value].scrollIntoView(
+          {
+            behavior: 'smooth',
+            inline: 'center',
+            block: 'nearest'
+          }
+        )
+      }
+    }, 300
+  )
 
-const containerRef = ref(null);
+}
 
-onMounted(() => {
-  const container = containerRef.value;
-  const slides = container.querySelectorAll(".slide");
-  const slideWidth = slides[0].getBoundingClientRect().width;
-  const containerWidth = container.getBoundingClientRect().width;
-  const offset = (containerWidth - slideWidth) / 2;
+onMounted(async () => {
+  booksBestSellers.value = await bookStore.getBestSellers();
 
-  // Use $nextTick to wait for the next DOM update cycle
-  // before scrolling into view
-  container.$nextTick(() => {
-    slides[currentBook.value - 1].scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-      inline: "start",
-      inlineTo: "center",
-      blockTo: "center",
-      offsetLeft: offset,
-    });
-  });
-});
-
-
-const currentBook = ref(1);
-
+})
 </script>
 
 <template>
-  <section>
-    <div class="carousel" ref="containerRef">
-      <div v-for="i in 10" :key="i"
-        :class="currentBook == i ? 'current' : currentBook == i + 1 ? 'rightBook' : currentBook == i - 1 ? 'leftBook' : 'notCurrent'"
-        @click="nextSlide(i - 1)">
-        <div class="slide">
-          <p>{{ i }}</p>
+  <section class="bestSellers">
+    <div class="slideBestSellers">
+      <div v-for="book, index in booksBestSellers" :key="book.id">
+        <div class="slide" :class="currentSlide == index ? 'activeSlide' : ''">
+          <p>{{ book.title }}</p>
         </div>
       </div>
+    </div>
+    <div class="pagination">
+      <span class="arrow" @click="changeSlide(currentSlide - 1)">
+        <font-awesome-icon :icon="['fas', 'arrow-left']" />
+      </span>
+      <span class="arrow" @click="changeSlide(currentSlide + 1)">
+        <font-awesome-icon :icon="['fas', 'arrow-right']" />
+      </span>
     </div>
   </section>
 </template>
 
 <style scoped>
-section {
+.bestSellers {
+  position: relative;
+  width: 80%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  border-radius: 5px;
-  margin: 20px auto;
-  gap: 10px;
+  margin: auto;
+  margin-top: 20px;
 }
 
-.current>.slide {
-  background-color: rgb(148, 148, 246);
-  z-index: 9;
-  animation: current 1s ease-in-out;
-}
-
-.rightBook>.slide {
-  background-color: crimson;
-  height: 350px;
-  width: 350px;
-}
-
-.leftBook>.slide {
-  background-color: crimson;
-  height: 350px;
-  width: 350px;
-}
-
-.notCurrent>.slide {
-  background-color: rgb(148, 148, 246);
-  height: 300px;
-  width: 300px;
-}
-
-@keyframes current {
-  0% {
-    width: 350px;
-    height: 350px;
-  }
-
-  100% {
-    width: 500px;
-    height: 500px;
-  }
-}
-
-.carousel {
+.slideBestSellers {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
   overflow-x: scroll;
   overflow-y: hidden;
-  padding: 1% 2%;
-  display: flex;
-  margin: auto;
-  width: 96%;
-  height: 600px;
-  align-items: center;
+  height: 400px;
   gap: 20px;
-  scroll-behavior: smooth;
+}
+
+.slideBestSellers::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
 }
 
 .slide {
-  width: 500px;
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  border-radius: 5px;
-  gap: 10px;
-  box-shadow: 10px 10px 15px -3px rgba(0, 0, 0, 0.185), 7px 4px 6px -4px rgb(0 0 0 / 0.1);
-}
-
-.book {
-  width: 30%;
-  height: 400px;
-  cursor: pointer;
-  transition: all 0.5s;
+  width: 300px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-radius: 10px;
-  border: 1px solid black;
-  background: var(--primary-color-50);
+  justify-content: center;
+  height: 300px;
+  background-color: var(--primary-color);
+  transition: all .3s;
 }
 
-.book img {
-  width: 100%;
+.activeSlide {
+  width: 400px;
   height: 400px;
-  transition: all 0.5s;
-  object-fit: cover;
 }
 
-.book i {
+.pagination {
   position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
-  height: 100%;
-  border-radius: 5px;
-}
-
-.book .info {
   display: flex;
-  flex-direction: column;
-  height: 50%;
-  gap: 5px;
-  display: none;
-  transition: all .5s;
-  transition-delay: 1s;
+  justify-content: space-between;
+  bottom: 0;
 }
 
-.title {
-  font-size: 2.0rem;
-  text-transform: uppercase;
-  color: var(--lime-green);
-  font-weight: bolder;
-  white-space: nowrap;
-}
-
-.author {
-  font-size: 1.2rem;
-}
-
-.price {
-  background-color: var(--lime-green);
-  padding: 1%;
-  max-width: 120px;
-  min-width: 80px;
-  text-align: center;
-  font-size: 1.6rem;
-  border-radius: 5px;
-  color: #fff;
-  font-weight: bolder;
-  margin-top: 4%;
-}
-
-.active {
-  width: 80%;
-  height: 500px;
-  padding: 5%;
-}
-
-.active img {
-  width: 100%;
+.pagination .arrow {
   height: 400px;
-  object-fit: contain;
-}
-
-.active .info {
+  background-color: #ffffffb7;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  cursor: pointer;
+  opacity: 0.3;
+  transition: all .3s;
 }
 
-.deactive {
-  width: 10% !important;
-}
-
-.book3dDeactive {
-  display: none;
-}
-
-.book3dActive {
-  display: block;
+.pagination .arrow:hover {
+  opacity: 1;
 }
 </style>

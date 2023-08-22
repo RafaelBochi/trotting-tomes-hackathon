@@ -195,8 +195,8 @@ onMounted(async () => {
 .produto .img_add img {
   z-index: 2;
   position: relative;
-  width: 240px;
-  height: 300px;
+  width: 200px;
+  height: 250px;
   transition: all 0.5s;
   margin: auto;
 }

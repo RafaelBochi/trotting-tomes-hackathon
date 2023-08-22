@@ -22,14 +22,8 @@ const popUpLogin = computed(() => userStore.popUpLogin);
     <PopUpLogin v-if="popUpLogin"/>
     <Banners />
 
-    <section class="sectionBooks">
-      <h2>
-        <p>Mais Vendidos</p>
-      </h2>
+    <BestSellers/>
 
-      <BestSellers/>
-
-    </section>
     <section class="sectionBooks">
       <h2>
         <p>Novidades</p>
