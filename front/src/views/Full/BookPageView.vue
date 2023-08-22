@@ -29,7 +29,7 @@ const book = ref({
   capa: "",
   author: {
     name: "",
-  }
+  },
 })
 
 function addToCart() {

@@ -22,7 +22,6 @@ function clearInput() {
 
 function openBookPage(id) {
   router.push({ name: 'bookPage', params: { id: id } });
-  clearInput()
 }
 
 </script>
@@ -57,9 +56,7 @@ function openBookPage(id) {
 </template>
 
 <style scoped>
-section {
-  width: 25%;
-}
+
 .searchSection {
   position: relative;
   width: 300px;
@@ -80,7 +77,7 @@ section {
   padding-left: 3%;
   padding-right: 20%;
   width: 100%;
-  height: 35px;
+  height: 32px;
 }
 
 .search .searchIcon {

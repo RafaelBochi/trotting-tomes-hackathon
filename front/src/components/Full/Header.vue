@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, onBeforeUpdate } from "vue";
 import { useRouter } from "vue-router";
-import Search from "./Search.vue";
+import Search from "./Responsive/SearchResponsive.vue";
 import { useUserStore } from "../../stores/user";
 import { useRoute } from "vue-router";
 

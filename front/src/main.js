@@ -30,6 +30,5 @@ import "vue-awesome-paginate/dist/style.css";
 app.use(createPinia())
 app.use(router)
 app.use(VueAwesomePaginate)
-app.use(VueGlide)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
