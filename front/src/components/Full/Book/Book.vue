@@ -55,7 +55,7 @@ onMounted(async () => {
   comentsBook.value = await othersStore.getComents(props.book.id);
 
   for (let coment of comentsBook.value) {
-      coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
+    coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
   }
 
   if (comentsBook.value.length > 0) {
@@ -71,61 +71,50 @@ onMounted(async () => {
   <span class="secBook">
     <div class="produto">
       <span class="favorite" @click="addFavorite">
-        <font-awesome-icon
-          v-if="favorite"
-          :icon="['fas', 'heart']"
-          style="color: var(--lime-green)"
-          class="icon"
-        />
+        <font-awesome-icon v-if="favorite" :icon="['fas', 'heart']" style="color: var(--lime-green)" class="icon" />
         <font-awesome-icon v-else :icon="['fas', 'heart']" />
       </span>
       <div @click="openBookPage">
-        <img :src="book.capa" alt="" />
+        <div class="img_add">
+          <img :src="book.capa" alt="" />
+          <button @click="addToCart">
+            <p>Adicionar</p>
+            <font-awesome-icon :icon="['fas', 'cart-arrow-down']" style="color: #ffffff" size="sm" />
+          </button>
+        </div>
         <span class="info">
           <p class="title">{{ book.title }}</p>
-            <span class="stars starsBook">
-              <input type="radio" />
-              <label :class="mediaStars > 0 ? 'true' : ''"></label>
+          <span class="stars starsBook">
+            <input type="radio" />
+            <label :class="mediaStars > 0 ? 'true' : ''"></label>
 
-              <input type="radio" />
-              <label :class="mediaStars > 1 ? 'true' : ''"></label>
+            <input type="radio" />
+            <label :class="mediaStars > 1 ? 'true' : ''"></label>
 
-              <input type="radio" />
-              <label :class="mediaStars > 2 ? 'true' : ''"></label>
+            <input type="radio" />
+            <label :class="mediaStars > 2 ? 'true' : ''"></label>
 
-              <input type="radio" />
-              <label :class="mediaStars > 3 ? 'true' : ''"></label>
+            <input type="radio" />
+            <label :class="mediaStars > 3 ? 'true' : ''"></label>
 
-              <input type="radio" />
-              <label :class="mediaStars > 4 ? 'true' : ''"></label>
+            <input type="radio" />
+            <label :class="mediaStars > 4 ? 'true' : ''"></label>
 
-              <p>
-                ({{ comentsBook.length }})
-              </p>
-            </span>
-            <p class="price">R${{ book.price }}</p>
+            <p>
+              ({{ comentsBook.length }})
+            </p>
+          </span>
+          <p class="price">R${{ book.price }}</p>
         </span>
         <i></i>
       </div>
-      <div>
-        <button @click="addToCart">
-          <p>Adicionar</p>
-          <font-awesome-icon
-            :icon="['fas', 'cart-arrow-down']"
-            style="color: #ffffff"
-            size="sm"
-          />
-        </button>
-      </div>
     </div>
   </span>
-
-
 </template>
 
 <style scoped>
 .produto {
-  width: 320px;
+  width: 250px;
   height: 500px;
   display: flex;
   flex-direction: column;
@@ -135,7 +124,6 @@ onMounted(async () => {
   overflow: hidden;
   border-radius: 5px;
   gap: 10px;
-  box-shadow: 10px 10px 15px -3px rgba(0, 0, 0, 0.185), 7px 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 .price {
@@ -204,13 +192,11 @@ onMounted(async () => {
   border-radius: 0;
 }
 
-.produto img {
+.produto .img_add img {
   z-index: 2;
   position: relative;
-  top: -14%;
-  right: 5%;
-  width: 180px;
-  height: 230px;
+  width: 240px;
+  height: 300px;
   transition: all 0.5s;
   margin: auto;
 }
@@ -229,7 +215,7 @@ onMounted(async () => {
 }
 
 .produto .info p:nth-child(1) {
-  font-size: 2rem;
+  font-size: 1.5rem;
   width: 100%;
   margin: 1%;
 }
@@ -247,9 +233,9 @@ onMounted(async () => {
   justify-content: center;
 }
 
-.stars > label::before {
+.stars>label::before {
   top: 0 !important;
-  }
+}
 
 .stars p {
   font-size: 1.4rem;
@@ -280,6 +266,9 @@ button {
   justify-content: center;
   transition: all 0.2s;
   gap: 5px;
+  position: absolute;
+  bottom: 25%;
+  z-index: 3;
 }
 
 button p {
