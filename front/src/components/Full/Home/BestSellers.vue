@@ -1,188 +1,100 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
-import { useBookStore } from "@/stores/book.js";
-import { useOthersStore } from "@/stores/others.js";
-import Book3d from "../Book/Book3d.vue";
+import { ref } from 'vue';
 
-const bookStore = useBookStore();
-const othersStore = useOthersStore();
+const currentSlide = ref(0)
 
-const bestSellers = computed(() => {
-  const books = bookStore.books.sort(
-    (livroA, livroB) => livroB.vendas - livroA.vendas
-  );
-  return books.slice(0, 5);
-});
-
-onMounted(async () => {
-  await othersStore.getComents();
-  for (let book of bestSellers.value) {
-    let comentsBook = [];
-    for (let coment of othersStore.coments) {
-      if (coment.livro.id == book.id) {
-        coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
-        comentsBook.push(coment);
+function changeSlide(i) {
+  const slides = document.querySelectorAll('.slideBestSellers .slide')
+  currentSlide.value = i
+  setTimeout(
+    () => {
+      if (slides[i].classList.contains('activeSlide')) {
+        slides[i].scrollIntoView(
+          {
+            behavior: 'smooth',
+            inline: 'center',
+            block: 'nearest'
+          }
+        )
       }
+    }, 300
+  )
 
-      let mediaStars = 0;
-      if (comentsBook.length > 0) {
-        for (let coment of comentsBook) {
-          mediaStars += coment.stars;
-        }
-        book.mediaStars = Math.ceil(mediaStars / comentsBook.length).toFixed(1);
-      }
-    }
-  }
-});
-
-function toggleActiveBook(book) {
-    if (book.active) {  
-        for (let book of bestSellers.value) {
-            book.deactive = false;
-        }
-        book.active = false;
-    } else {
-        for (let book of bestSellers.value) {
-        book.active = false;
-        book.deactive = true;
-    }
-        book.active = true;
-    }
-}
+} 
 </script>
 
 <template>
-  <section>
-    <div class="book" v-for="book, index in bestSellers" :key="book.id" :class="book.active ? 'active' : book.deactive ? 'deactive' : ''" @click="toggleActiveBook(book)">
-      <Book3d :class="book.active ? 'book3dActive' : 'book3dDeactive'" :bookNum="index + 1" :active="book.active"/>
-      <img :src="`/books3d/book${index + 1}/front.png`" alt="" v-if="book.active != true">
-      <i></i>
-      <div class="info">
-        <h3 class="title">{{ book.title }}</h3>
-        <p class="author">{{ book.author.name }}</p>
-        <div class="stars">
-          <input type="radio" />
-          <label :class="book.mediaStars > 0 ? 'true' : ''"></label>
-
-          <input type="radio" />
-          <label :class="book.mediaStars > 1 ? 'true' : ''"></label>
-
-          <input type="radio" />
-          <label :class="book.mediaStars > 2 ? 'true' : ''"></label>
-
-          <input type="radio" />
-          <label :class="book.mediaStars > 3 ? 'true' : ''"></label>
-
-          <input type="radio" />
-          <label :class="book.mediaStars > 4 ? 'true' : ''"></label>
-        </div>
-        <p class="price">R$ {{ book.price }}</p>
+  <section class="bestSellers">
+    <div class="slideBestSellers">
+    <div v-for="i in 10" :key="i">
+      <div class="slide" :class="currentSlide == i - 1 ? 'activeSlide' : ''">
+        <p>{{ i }}</p>
       </div>
+    </div>
+    </div>
+    <div class="pagination">
+      <span class="arrow" @click="changeSlide(currentSlide - 1)">
+        <font-awesome-icon :icon="['fas', 'arrow-left']"/>
+      </span>
+      <span class="arrow" @click="changeSlide(currentSlide + 1)">
+        <font-awesome-icon :icon="['fas', 'arrow-right']" />
+      </span>
     </div>
   </section>
 </template>
 
 <style scoped>
-section {
+
+.bestSellers {
+  position: relative;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  height: 500px;
-  overflow: hidden;
-  border-radius: 5px;
-  margin: 20px auto;
-  gap: 10px;
+  margin: auto;
 }
-
-.book {
+.slideBestSellers {
   position: relative;
-  width: 30%;
-  height: 400px;
-  cursor: pointer;
-  transition: all 0.5s;
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-radius: 10px;
-  background: var(--primary-color-50);
-}
-
-.book img {
-  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
   height: 400px;
-  transition: all 0.5s;
-  object-fit: cover;
-}
-.book i {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
+  gap: 20px;
+  margin-top: 20px;
 }
 
-.book .info {
-    display: flex;
-    flex-direction: column;
-    height: 50%;
-    gap: 5px;
-    display: none;
-    transition: all .5s;
-    transition-delay: 1s;
-}
-
-.title {
-    font-size: 2.0rem;
-    text-transform: uppercase;
-    color: var(--lime-green);
-    font-weight: bolder;
-    white-space: nowrap;
-}
-
-.author {
-    font-size: 1.2rem;
-}
-
-.price {
-    background-color: var(--lime-green);
-    padding: 1%;
-    max-width: 120px;
-    min-width: 80px;
-    text-align: center;
-    font-size: 1.6rem;
-    border-radius: 5px;
-    color: #fff;
-    font-weight: bolder;
-    margin-top: 4%;
-}
-
-.active {
-  width: 80%;
-  height: 500px;
-  padding: 5%;
-}
-
-.active img {
-  width: 100%;
-  height: 400px;
-  object-fit: contain;
-}
-
-.active .info {
+.slide {
+  width: 300px;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  background-color: var(--primary-color);
+  transition: all .3s;
 }
 
-.deactive {
-  width: 10% !important;
+.activeSlide {
+  width: 400px;
+  height: 400px;
 }
 
-.book3dDeactive {
-  display: none;
+.pagination {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
 }
 
-.book3dActive {
-  display: block;
+.pagination .arrow {
+  height: 400px;
+  background-color: #ffffff8b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  cursor: pointer;
 }
 </style>
