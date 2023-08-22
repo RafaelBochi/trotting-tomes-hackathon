@@ -20,7 +20,8 @@ const comentsBook = ref([]);
 const mediaStars = ref(0);
 
 function addFavorite() {
-  console.log(favorite.value)
+  if (userStore.loggedIn) {
+    console.log(favorite.value)
   if (favorite.value != true) {
     userStore.addFavorite(props.book);
     favorite.value = true;
@@ -32,6 +33,10 @@ function addFavorite() {
     userStore.deleteFavorite(id);
     favorite.value = false;
     console.log('delete')
+  }
+  }
+  else {
+    userStore.popUpLogin = true;
   }
 }
 
@@ -108,14 +113,25 @@ onMounted(async () => {
         </span>
         <i></i>
       </div>
+      <div>
+        <button @click="addToCart">
+          <p>Adicionar</p>
+          <font-awesome-icon
+            :icon="['fas', 'cart-arrow-down']"
+            style="color: #ffffff"
+            size="sm"
+            class="icon"
+          />
+        </button>
+      </div>
     </div>
   </span>
 </template>
 
 <style scoped>
 .produto {
-  width: 250px;
-  height: 500px;
+  width: 300px;
+  height: 470px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -146,7 +162,8 @@ onMounted(async () => {
   width: 35px;
   height: 35px;
   right: 4%;
-  background-color: transparent;
+  background-color: var(--primary-color);
+  border-radius: 50%;
   z-index: 4;
   cursor: pointer;
 }
@@ -277,5 +294,13 @@ button p {
 
 button:hover {
   background-color: var(--primary-color-50);
+  color: var(--primary-color);
+}
+
+button .icon {
+  transition: all 0.2s;
+}
+button:hover .icon {
+  color: var(--primary-color) !important;
 }
 </style>
