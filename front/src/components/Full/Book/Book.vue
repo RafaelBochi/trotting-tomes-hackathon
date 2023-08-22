@@ -223,8 +223,8 @@ onMounted(
   position: relative;
   top: -14%;
   right: 5%;
-  width: 180px;
-  height: 230px;
+  width: 220px;
+  height: 300px;
   transition: all 0.5s;
   margin: auto;
 }
