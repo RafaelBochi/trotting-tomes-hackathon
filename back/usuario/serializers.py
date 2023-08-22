@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SlugRelatedField
 
-from .models import Usuario, ProfileImage
+from .models import Usuario
 
 
 class UsuarioSerializer(ModelSerializer):
@@ -9,8 +9,3 @@ class UsuarioSerializer(ModelSerializer):
         model = Usuario
         fields = "__all__"
 
-class ProfileImageSerializer(ModelSerializer):
-
-    class Meta:
-        model = ProfileImage
-        fields = "__all__"

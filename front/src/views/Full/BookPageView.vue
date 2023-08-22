@@ -189,14 +189,18 @@ section > div {
   align-items: center;
   justify-content: space-around;
   margin-top: 2%;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 section > div img {
-  width: 25%;
+  width: 30%;
+  min-width: 300px;
 }
 
 .info {
   width: 40%;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
 }
@@ -275,7 +279,8 @@ section > div img {
   flex-direction: column;
   align-items: start;
   padding: 2%;
-  width: 80%;
+  width: 100%;
+  max-width: 900px;
   background-color: var(--cinza);
   border-radius: 5px;
   gap: 20px;
@@ -285,7 +290,7 @@ section > div img {
 .details > div {
   display: flex;
   justify-content: space-between;
-  width: 50%;
+  width: 300px;
 }
 
 </style>

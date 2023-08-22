@@ -159,7 +159,7 @@ export const useUserStore = defineStore('user', {
     },
     async addBookCart(book, quantidade){
       try {
-        console.log('add in')
+        console.log(book)
         const values = {
           carrinho: this.cartId,
           livro: book,
@@ -174,7 +174,7 @@ export const useUserStore = defineStore('user', {
     async deleteBookCart(id){
       try {
         const data = await userService.deleteBookCart(id);
-        this.getBookCart()
+        this.getBooksCart()
       } catch (error) {
         console.log(error); // Lidar com exceções
       }

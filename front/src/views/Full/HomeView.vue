@@ -37,7 +37,7 @@ const popUpLogin = computed(() => userStore.popUpLogin);
         <p>50% OFF</p>
       </h2>
 
-      <SlideBooks :slideNum="1"/>
+      <SlideBooks :slideNum="2"/>
     </section>
 
     <section class="sectionBooks">
@@ -45,7 +45,7 @@ const popUpLogin = computed(() => userStore.popUpLogin);
         <p>Melhores avaliações</p>
       </h2>
 
-      <SlideBooks :slideNum="1"/>
+      <SlideBooks :slideNum="3"/>
     </section>
 
     <section class="sectionBooks">
@@ -53,7 +53,7 @@ const popUpLogin = computed(() => userStore.popUpLogin);
         <p>Trending</p>
       </h2>
 
-      <SlideBooks :slideNum="1"/>
+      <SlideBooks :slideNum="4"/>
     </section>
   </main>
 </template>

@@ -177,11 +177,13 @@ function toggleFormComent() {
   justify-content: space-evenly;
   padding: 2% 4%;
   width: 80%;
+  min-width: 400px;
   background-color: #fff;
   font-size: 1.5rem;
   gap: 20px;
   box-shadow: 0px 1px 20px -9px rgba(52, 71, 52, 1);
   height: 70%;
+  min-height: 450px;
 }
 
 .sec-coments div:nth-child(1) {

@@ -2,8 +2,8 @@ import pytz
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Usuario, ProfileImage
-from .serializers import UsuarioSerializer, ProfileImageSerializer
+from .models import Usuario
+from .serializers import UsuarioSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework.decorators import (
@@ -26,9 +26,6 @@ class UsuarioViewSet(ModelViewSet):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
 
-class ProfileImageViewSet(ModelViewSet):
-    queryset = ProfileImage.objects.all()
-    serializer_class = ProfileImageSerializer
 
 
 @api_view(["POST"])
@@ -71,11 +68,13 @@ def register(request):
 def login(request):
     value = request.data.get("value")
     password = request.data.get("password")
+    print(value, password)
 
     if value is not None and password is not None:
         try:
             user = User.objects.get(Q(username=value) | Q(email=value))
             username = user.username
+            print('a')
             user = authenticate(username=username, password=password)
         except User.DoesNotExist:
             user = None
@@ -84,20 +83,17 @@ def login(request):
             {"message": "Credenciais inválidas!"}, status=status.HTTP_400_BAD_REQUEST
         )
 
+    print(user)
+
     if user is not None:
         refresh = RefreshToken.for_user(user)
         access = AccessToken.for_user(user)
-
-        if(ProfileImage.objects.filter(user=user).exists()):
-            profile_image = ProfileImage.objects.get(user=user)
-            profile_image = profile_image.url
 
         response_data = {
             "refresh": str(refresh),
             "access": str(access),
             "username": user.username,
             "email": user.email,
-            "image": profile_image,
             "id": user.id,
             "message": "Login realizado com sucesso!"
             # Adicione outros campos do usuário que você deseja retornar

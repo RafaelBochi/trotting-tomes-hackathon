@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useBookStore } from '@/stores/book.js';
+import router from '@/router/index.js';
 
 const bookStore = useBookStore();
 
@@ -9,13 +10,13 @@ const booksBestSellers = ref([])
 
 function changeSlide(i) {
   const slides = document.querySelectorAll('.slideBestSellers .slide')
+  currentSlide.value = i
   if (i < 0) {
-    return;
+    currentSlide.value = slides.length - 1
   }
   else if (i > slides.length - 1) {
-    return;
+    currentSlide.value = 0
   }
-  currentSlide.value = i
   console.log(slides[currentSlide.value])
   setTimeout(
     () => {
@@ -33,6 +34,11 @@ function changeSlide(i) {
 
 }
 
+function openBookPage(id) {
+  console.log(id)
+  router.push({ name: 'bookPage', params: { id: id } });
+}
+
 onMounted(async () => {
   booksBestSellers.value = await bookStore.getBestSellers();
 
@@ -43,26 +49,22 @@ onMounted(async () => {
   <section class="bestSellers">
     <div class="slideBestSellers">
       <div v-for="book, index in booksBestSellers" :key="book.id">
-        <div class="slide" :class="currentSlide == index ? 'activeSlide' : ''">
-          <p>{{ book.title }}</p>
-        </div>
+        <img :src="book.capa" alt="" class="slide" :class="currentSlide == index ? 'activeSlide' : ''" @click="openBookPage(book.id)">
       </div>
     </div>
-    <div class="pagination">
-      <span class="arrow" @click="changeSlide(currentSlide - 1)">
+      <span class="arrow arrowBack" @click="changeSlide(currentSlide - 1)">
         <font-awesome-icon :icon="['fas', 'arrow-left']" />
       </span>
-      <span class="arrow" @click="changeSlide(currentSlide + 1)">
+      <span class="arrow arrowNext" @click="changeSlide(currentSlide + 1)">
         <font-awesome-icon :icon="['fas', 'arrow-right']" />
       </span>
-    </div>
   </section>
 </template>
 
 <style scoped>
 .bestSellers {
   position: relative;
-  width: 80%;
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,7 +79,7 @@ onMounted(async () => {
   align-items: center;
   overflow-x: scroll;
   overflow-y: hidden;
-  height: 400px;
+  height: 500px;
   gap: 20px;
 }
 
@@ -87,30 +89,25 @@ onMounted(async () => {
 }
 
 .slide {
-  width: 300px;
+  width: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 300px;
   background-color: var(--primary-color);
   transition: all .3s;
+  z-index: 8;
+  cursor: pointer;
 }
 
 .activeSlide {
-  width: 400px;
+  width: 300px;
   height: 400px;
 }
 
-.pagination {
-  position: absolute;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  bottom: 0;
-}
 
-.pagination .arrow {
-  height: 400px;
+.arrow {
+  height: 500px;
   background-color: #ffffffb7;
   display: flex;
   align-items: center;
@@ -119,9 +116,21 @@ onMounted(async () => {
   cursor: pointer;
   opacity: 0.3;
   transition: all .3s;
+  width: 30px;
+  z-index: 9;
 }
 
-.pagination .arrow:hover {
+.arrowBack {
+  position: absolute;
+  left: 0;
+}
+
+.arrowNext {
+  position: absolute;
+  right: 0;
+}
+
+.arrow:hover {
   opacity: 1;
 }
 </style>
