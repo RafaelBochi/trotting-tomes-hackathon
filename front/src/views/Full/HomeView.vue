@@ -37,6 +37,30 @@ const popUpLogin = computed(() => userStore.popUpLogin);
 
       <SlideBooks :slideNum="1"/>
     </section>
+
+    <section class="sectionBooks">
+      <h2>
+        <p>50% OFF</p>
+      </h2>
+
+      <SlideBooks :slideNum="1"/>
+    </section>
+
+    <section class="sectionBooks">
+      <h2>
+        <p>Melhores avaliações</p>
+      </h2>
+
+      <SlideBooks :slideNum="1"/>
+    </section>
+
+    <section class="sectionBooks">
+      <h2>
+        <p>Trending</p>
+      </h2>
+
+      <SlideBooks :slideNum="1"/>
+    </section>
   </main>
 </template>
 
