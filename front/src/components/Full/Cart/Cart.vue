@@ -34,7 +34,7 @@ function deleteBookCart(id) {
 .cart {
   max-width: 400px;
   min-width: 200px;
-  width: 400px;
+  width: 360px;
   height: 100%;
   background-color: #fff;
   position: fixed;
@@ -79,5 +79,12 @@ h2 {
   top: 3%;
   right: 3%;
   cursor: pointer;
+}
+
+@media screen and (max-width: 620px) {
+  .cart {
+    top: 105px;
+    padding-top: 10px;
+  }
 }
 </style>

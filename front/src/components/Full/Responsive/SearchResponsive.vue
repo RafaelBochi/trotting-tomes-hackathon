@@ -156,4 +156,32 @@ section {
     font-weight: bolder;
     color: var(--primary-color);
 }
+
+@media screen and (max-width: 620px) {
+  section {
+    position: absolute;
+    left: 0;
+    top: 60px;
+    width: 100vw;
+    background-color: #fff;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    border-top: 2px solid #d2d2d2;
+    box-shadow: 0px 1px 20px -9px rgba(52, 71, 52, 1);
+  }
+  .searchSection {
+    width: 250px;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    position: relative;
+    top: 8px;
+  }
+
+  .search {
+    align-items: center;
+    justify-content: center;
+  }
+}
 </style>

@@ -7,6 +7,7 @@ import PopUpSettings from '../components/Full/PopUpSettings.vue';
 import Account from '../components/Full/Account/Account.vue';
 import { ref, onMounted } from 'vue';
 import { useUserStore } from '../stores/user';
+import MenuResponsive from '../components/Full/Responsive/MenuResponsive.vue';
 
 const userStore = useUserStore();
 
@@ -101,11 +102,12 @@ onMounted(() => {
   <main>
     <HeaderResponsive @toggle-cart="toggleCart" v-if="headerResponsive"/>
     <Header @toggle-cart="toggleCart" @toggle-settings="toggleSettings" :links="links" v-else/>
-    <Cart v-if="showCart" @close="toggleCart" :class="closeCart != false ? 'closeCart' : ''"/>
-    <Favorites v-if="showFavorites" @close="toggleFavorites" :class="closeFavorites != false ? 'closeFavorites' : ''"/>
-    <RouterView/>
+    <Cart v-if="showCart" @close="toggleCart" :class="closeCart != false ? 'closeCart' : ''" class="cart"/>
+    <Favorites v-if="showFavorites" @close="toggleFavorites" :class="closeFavorites != false ? 'closeFavorites' : ''" class="favorites"/>
+    <RouterView class="view"/>
     <PopUpSettings v-if="showSettings"  @toggle-favorites="toggleFavorites" @logout="userStore.logout" :class="closeSettings != false ? 'closeSettings' : ''" @toggle-account="toggleAccount"/>
     <Account  v-if="showAccount" @toggle-account="toggleAccount"/>
+    <MenuResponsive/>
   </main>
 </template>
 
@@ -134,6 +136,12 @@ onMounted(() => {
   }
   100% {
     opacity: 0;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .view {
+    padding-top: 40px;
   }
 }
 </style>

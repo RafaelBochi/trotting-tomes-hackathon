@@ -80,4 +80,11 @@ h2 {
   right: 3%;
   cursor: pointer;
 }
+
+@media screen and (max-width: 620px) {
+  .favorites {
+    top: 105px;
+    padding-top: 10px;
+  }
+}
 </style>

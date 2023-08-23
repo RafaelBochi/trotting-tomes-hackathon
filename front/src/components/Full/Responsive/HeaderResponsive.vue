@@ -67,7 +67,7 @@ header {
   justify-content: space-between;
   box-shadow: 0px 1px 20px -9px rgba(52, 71, 52, 1);
   position: sticky;
-  top: -2px;
+  top: -4px;
   z-index: 11;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -103,6 +103,7 @@ header {
   color: #000;
   font-size: 1.3rem;
   width: 15%;
+  margin-right: 20px;
 }
 .auth button {
   border: none;
@@ -127,18 +128,24 @@ header {
   text-transform: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 .actions {
-    position: relative;
     width: 80%;
-    right: 5%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
+    padding-right: 4%;
 }
 
-@media max-width: 620px {
-  
-}
+@media screen and (max-width: 620px) {
+  .actions {
+    width: 200px;
+    justify-content: space-evenly;
+  }
+} 
 
 </style>
