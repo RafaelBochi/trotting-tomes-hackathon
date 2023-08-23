@@ -57,9 +57,13 @@ function openBookPage(id) {
 
 <style scoped>
 
+section {
+  width: 80%;
+  min-width: 200px;
+  max-width: 600px;
+}
 .searchSection {
-  position: relative;
-  width: 300px;
+  width: 100%;
 }
 .search {
     width: 100%;

@@ -17,10 +17,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import { faEyeSlash, faEye, faLock, faUser, faCartShopping, faCartArrowDown, faHeart, faChevronLeft, faChevronRight, faFilter, faChevronDown, faChevronUp, faArrowRight, faXmarkCircle, faCaretUp, faCaretDown, faArrowLeft, faStar, faGear, faArrowRightFromBracket, faXmark, faCamera, faEnvelope, faX, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faEyeSlash, faEye, faLock, faUser, faCartShopping, faCartArrowDown, faHeart, faChevronLeft, faChevronRight, faFilter, faChevronDown, faChevronUp, faArrowRight, faXmarkCircle, faCaretUp, faCaretDown, faArrowLeft, faStar, faGear, faArrowRightFromBracket, faXmark, faCamera, faEnvelope, faX, faMagnifyingGlass, faBars} from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
-library.add(faEyeSlash, faEye, faLock, faUser, faCartShopping, faCartArrowDown, faHeart, faChevronLeft, faChevronRight, faFilter, faChevronDown, faChevronUp, faArrowRight, faXmarkCircle, faCaretUp, faCaretDown, faArrowLeft, faStar, faGear, faArrowRightFromBracket, faXmark, faCamera, faEnvelope, faX, faMagnifyingGlass )
+library.add(faEyeSlash, faEye, faLock, faUser, faCartShopping, faCartArrowDown, faHeart, faChevronLeft, faChevronRight, faFilter, faChevronDown, faChevronUp, faArrowRight, faXmarkCircle, faCaretUp, faCaretDown, faArrowLeft, faStar, faGear, faArrowRightFromBracket, faXmark, faCamera, faEnvelope, faX, faMagnifyingGlass, faBars )
 
 import VueAwesomePaginate from "vue-awesome-paginate";
 

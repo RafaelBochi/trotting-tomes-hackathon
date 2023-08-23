@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, onBeforeUpdate } from "vue";
 import { useRouter } from "vue-router";
-import Search from "./Responsive/SearchResponsive.vue";
+import Search from "./Search.vue";
 import { useUserStore } from "../../stores/user";
 import { useRoute } from "vue-router";
 
@@ -84,7 +84,6 @@ router.afterEach((to) => {
       </router-link>
     </div>
 
-    <div class="actions">
       <div class="links">
         <router-link
           v-for="(link, index) in links"
@@ -103,10 +102,11 @@ router.afterEach((to) => {
         <div class="animation-bar" :style="animationBarStyle"></div>
       </div>
 
-      <Search />
+      <div class="actions">
+        <Search />
 
-      <div class="auth">
-        <router-link to="/login" v-if="userStore.loggedIn != true">
+      <div class="auth"  v-if="userStore.loggedIn != true">
+        <router-link to="/login">
           <button>
             <font-awesome-icon
               :icon="['fas', 'user']"
@@ -117,18 +117,6 @@ router.afterEach((to) => {
             <p>Entrar</p>
           </button>
         </router-link>
-
-        <div class="user" v-else>
-          <img :src="userStore.user.image" alt="" />
-          <span>
-            <p class="name">
-              {{ userStore.user.username }}
-            </p>
-            <p class="email">
-              {{ userStore.user.email }}
-            </p>
-          </span>
-        </div>
       </div>
 
       <div class="carrinho" @click="$emit('toggleCart')">
@@ -156,10 +144,10 @@ header {
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   box-shadow: 0px 1px 20px -9px rgba(52, 71, 52, 1);
   position: sticky;
-  top: 0;
+  top: -2px;
   z-index: 11;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -171,18 +159,10 @@ header {
   align-items: center;
   justify-content: center;
   position: relative;
-  left: 2%;
 }
 
 .logo img {
   width: 100%;
-}
-
-.actions {
-  width: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
 }
 
 .links {
@@ -217,6 +197,15 @@ header {
   transition: 0.5s all;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 600px;
+  min-width: 400px;
+  gap: 20px;
+}
+
 .auth {
   position: relative;
   display: flex;
@@ -249,22 +238,6 @@ header {
   text-transform: none;
 }
 
-.auth .user {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.auth .user .name {
-  font-size: 1.2rem;
-  font-weight: bolder;
-}
-.auth .user .email {
-  font-size: 1rem;
-  color: #00000090;
-}
-
 a {
   text-decoration: none;
 }
@@ -275,7 +248,6 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  right: 1%;
   cursor: pointer;
   transition: 0.5s;
 }
@@ -286,8 +258,5 @@ a {
 
 .settings:hover {
   transform: scale(1.2) rotate(180deg);
-}
-.user img {
-  width: 35px;
 }
 </style>

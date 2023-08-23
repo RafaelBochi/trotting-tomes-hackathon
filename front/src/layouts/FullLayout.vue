@@ -1,10 +1,11 @@
 <script setup>
 import Header from '@/components/Full/Header.vue';
+import HeaderResponsive from '@/components/Full/Responsive/HeaderResponsive.vue'
 import Cart from '@/components/Full/Cart/Cart.vue';
 import Favorites from '@/components/Full/Favorites/Favorites.vue';
 import PopUpSettings from '../components/Full/PopUpSettings.vue';
 import Account from '../components/Full/Account/Account.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from '../stores/user';
 
 const userStore = useUserStore();
@@ -77,11 +78,29 @@ function toggleAccount() {
     document.querySelector('#app').style.overflow = 'hidden';
   }
 }
+
+const headerResponsive = ref(false)
+
+function checkHeaderResponsive() {
+  if(window.innerWidth <= 1100) {
+    headerResponsive.value = true
+  }
+  else {
+    headerResponsive.value = false
+  }
+}
+
+window.addEventListener('resize', checkHeaderResponsive)
+
+onMounted(() => {
+  checkHeaderResponsive()
+})
 </script>
 
 <template>
   <main>
-    <Header @toggle-cart="toggleCart" @toggle-settings="toggleSettings" :links="links" />
+    <HeaderResponsive @toggle-cart="toggleCart" v-if="headerResponsive"/>
+    <Header @toggle-cart="toggleCart" @toggle-settings="toggleSettings" :links="links" v-else/>
     <Cart v-if="showCart" @close="toggleCart" :class="closeCart != false ? 'closeCart' : ''"/>
     <Favorites v-if="showFavorites" @close="toggleFavorites" :class="closeFavorites != false ? 'closeFavorites' : ''"/>
     <RouterView/>

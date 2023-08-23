@@ -41,7 +41,7 @@ function deleteBookCart(id) {
   right: 0;
   z-index: 10;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  padding: 1%;
+  padding: 1% 3%;
   animation: cart 0.5s forwards;
 }
 
