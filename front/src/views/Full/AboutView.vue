@@ -21,15 +21,9 @@ window.addEventListener("scroll", reveal);
 <template>
   <body>
     <header class="hero">
-        <div class="section1">
-  <div class="text">PARALLAX</div>
-</div>
-<div class="section2">
-  <div class="text">NORMAL</div>
-</div>
         
         <div class="textos-hero">
-            <h1>AAAAAAAAAAAAAAAAA</h1>
+            <h1>Sobre</h1>
             <p>HACKATON</p>
             <p>2INFO3</p>
             <a class="btn" href="#sobre">Sobre</a>
@@ -44,17 +38,21 @@ window.addEventListener("scroll", reveal);
 
     <section class="wave-conteudo website container reveal">
         
+        
         <div class="conteudo-textos-main text-box">
             
             <h1>AAAAAAAAAAAAAAAAAAA</h1>
         </div>
+        
     </section>
 
     <section class="info ">
+        
+        
         <div class="container1">
   <div class="content">
-    <h1>Pratham</h1>
-    <h3>I love designing websites and keep things as simple as possible. My goals is to focus on minimalism and conveying the message that you want to send</h3>
+    <h1>blablalba</h1>
+    <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum adipisci mollitia animi eveniet optio repellat. Officia a quas iure beatae fuga, autem at animi officiis id quibusdam vitae nulla consequuntur!</h3>
   </div>
   <div class="flap"></div>
 </div>
@@ -70,7 +68,7 @@ window.addEventListener("scroll", reveal);
 <div id="sobre" class="about-container reveal">
     
     <div class="image-container">
-        <img src="" alt="">
+        <img src="../../../public/curiosity-amico.png" alt="">
         
     </div>
 
@@ -84,9 +82,11 @@ window.addEventListener("scroll", reveal);
 </div>
 
     <div class="main">
+        
+        <div class="box">        
         <h1>Transição de Imagem</h1>
-        <div class="box"></div>
     </div>
+</div>
     
     
 
@@ -110,38 +110,38 @@ window.addEventListener("scroll", reveal);
     </section>
 
     <footer class="footer">
-  	 <div class="container">
+  	 <div style="background-color: rgb(45, 45, 46);" class="container">
   	 	<div class="row">
   	 		<div class="footer-col">
-  	 			<h4>company</h4>
+  	 			<h4>Compania</h4>
   	 			<ul>
-  	 				<li><a href="#">about us</a></li>
-  	 				<li><a href="#">our services</a></li>
-  	 				<li><a href="#">privacy policy</a></li>
-  	 				<li><a href="#">affiliate program</a></li>
+  	 				<li><a href="#">Sobre</a></li>
+  	 				<li><a href="#">Nossos serviços</a></li>
+  	 				<li><a href="#">Privacidade e Política</a></li>
+  	 				<li><a href="#">Afiliados</a></li>
   	 			</ul>
   	 		</div>
   	 		<div class="footer-col">
-  	 			<h4>get help</h4>
+  	 			<h4>Ajuda</h4>
   	 			<ul>
   	 				<li><a href="#">FAQ</a></li>
-  	 				<li><a href="#">shipping</a></li>
-  	 				<li><a href="#">returns</a></li>
-  	 				<li><a href="#">order status</a></li>
-  	 				<li><a href="#">payment options</a></li>
+  	 				<li><a href="#">Produtos</a></li>
+  	 				<li><a href="#">Retornos</a></li>
+  	 				<li><a href="#">Status de Pedidos</a></li>
+  	 				<li><a href="#">Opções de Pagamento</a></li>
   	 			</ul>
   	 		</div>
   	 		<div class="footer-col">
-  	 			<h4>online shop</h4>
+  	 			<h4>Loja Online</h4>
   	 			<ul>
-  	 				<li><a href="#">watch</a></li>
-  	 				<li><a href="#">bag</a></li>
-  	 				<li><a href="#">shoes</a></li>
-  	 				<li><a href="#">dress</a></li>
+  	 				<li><a href="#">Romance</a></li>
+  	 				<li><a href="#">Ação</a></li>
+  	 				<li><a href="#">Ficção</a></li>
+  	 				<li><a href="#">Fantasia</a></li>
   	 			</ul>
   	 		</div>
   	 		<div class="footer-col">
-  	 			<h4>follow us</h4>
+  	 			<h4>Siga-nos</h4>
   	 			<div class="social-links">
   	 				<a href="#"><i class="fab fa-facebook-f"></i></a>
   	 				<a href="#"><i class="fab fa-twitter"></i></a>
@@ -173,6 +173,75 @@ window.addEventListener("scroll", reveal);
 body {
   background: #f2f2f2;
 }
+
+
+/* Estilos gerais */
+
+.container,
+.wave-conteudo{
+    background-color: #b3ee83;
+    display: flex;
+    width: 90%;
+    max-width: 1000px;
+    overflow: hidden;
+    margin: auto;
+    padding: 0 0 80px 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.conteudo-textos-main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    place-content: center;
+    text-align: center;
+}
+
+span {
+    color: #ee9106;
+}
+.container{
+    padding: 90px 0;
+}
+
+.cont2{
+    position: absolute;
+    width: 140px;
+    border-radius: 30px;
+    margin-left: 40px;
+}
+
+.titulo{
+    font-weight: 300;
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.titulo.left{
+    text-align: left;
+}
+
+.titulo.right{
+    text-align: right;
+}
+.ex {
+    position: absolute;
+transition: 1s;
+}
+
+.ex:hover{
+    transform: translateZ(60%);
+}
+
+.child {
+    width: 300px;
+    display: flex;
+    justify-content: left;
+}
+
 
 .container1  {
   position: relative;
@@ -250,12 +319,26 @@ h3 {
     min-height: 100vh;
     background: rgb(248, 248, 248)(98, 7, 189, 0.726);
     backdrop-filter: blur(20px);
-    flex-direction: column;
+    flex-direction: row;
+    transition: 1s;
 }
 .main h1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
     margin: 20px 0px;
     font-size: 50px;
     color:  white;
+    transition: 1s;
+    overflow: 1;
+}
+
+.main:hover{
+    transform: translateX(20%);
+}
+.main h1:hover{
+    transform: translateX(50%);   
 }
 .box{
     width: 50%;
@@ -389,10 +472,12 @@ h3 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-size: con;
+    background-size: cover;
+    
 }
 .image-container img {
-    width: 500px;
+    position: relative;
+    width: 30%;
     height: 500px;
     margin: 20px;
     border-radius: 10px;
@@ -414,7 +499,7 @@ h3 {
     text-decoration: none;
     padding: 12px;
     margin: 50px 0px;
-    background-color: rebeccapurple;
+    background-color: #b3ee83;
     border: 2px solid transparent;
     color: white;
     border-radius: 5px;
@@ -423,7 +508,7 @@ h3 {
 .text-container a:hover{
     background-color: transparent;
     color: black;
-    border: 2px solid rebeccapurple;
+    border: 2px solid #b3ee83;;
 }
 @media screen and (max-width: 1600px){
     .about-container{
@@ -465,7 +550,7 @@ html{
     scroll-behavior: smooth;
 }
 .hero{
-    background-image: linear-gradient(10deg, rgba(81, 138, 29, 0.699) 20%, rgba(228, 224, 225, 0.692) 100%), url(../../../public/banner1.png);
+    background-image: linear-gradient(10deg, rgba(81, 138, 29, 0.699) 20%, rgba(228, 224, 225, 0.692) 100%), url(../../../public/biblioteca.jpg);
     width: 100%;
     height: 650px;
     background-repeat: no-repeat;
@@ -514,56 +599,6 @@ html{
     width: 100%;
 }
 
-/* Estilos gerais */
-
-.container,
-.wave-conteudo{
-    width: 90%;
-    max-width: 1000px;
-    overflow: hidden;
-    margin: auto;
-    padding: 0 0 80px 0;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.conteudo-textos-main{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    place-content: center;
-    text-align: center;
-}
-
-span {
-    color: #ee9106;
-}
-.container{
-    padding: 90px 0;
-}
-
-.cont2{
-    position: absolute;
-    width: 140px;
-    border-radius: 30px;
-    margin-left: 40px;
-}
-
-.titulo{
-    font-weight: 300;
-    font-size: 35px;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.titulo.left{
-    text-align: left;
-}
-
-.titulo.right{
-    text-align: right;
-}
 
 /* Section */
 
