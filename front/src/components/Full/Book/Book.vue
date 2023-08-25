@@ -284,7 +284,8 @@ onMounted(
   z-index: 2;
 }
 
-.produto .price-sale:nth-child() {
+.produto .price-sale:nth-child(1) {
+  font-size: 1.0rem;
 }
 
 .produto .vendas {
