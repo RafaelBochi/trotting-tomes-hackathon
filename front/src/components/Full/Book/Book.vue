@@ -28,15 +28,12 @@ const mediaStars = ref(0);
 onMounted(async () => {
   comentsBook.value = await othersStore.getComents(props.book.id);
   
-  console.log(comentsBook.value)
-  if (comentsBook.value.length > 0) {
-    console.log('a')
+  if (comentsBook.value.length > 0) { 
     for (let coment of comentsBook.value) {
       mediaStars.value += coment.stars
     }
     mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
   }
-  console.log(mediaStars.value)
 })
 
 function addFavorite() {
@@ -116,7 +113,13 @@ onMounted(
                 ({{ comentsBook.length }})
               </p>
             </span>
-            <p class="price">R${{ book.price }}</p>
+            <p class="price-sale" v-if="book.desconto > 0">
+              <p>R$ {{ book.price }}</p>
+              <p>
+                R$ {{ (book.price - (book.price * book.desconto) / 100).toFixed(2) }}
+              </p>
+            </p>
+            <p class="price" v-else>R${{ book.price }}</p>
             <p class="vendas">{{ book.vendas }} vendidos</p>
         </span>
         <i></i>
@@ -279,6 +282,9 @@ onMounted(
   padding: 4% 5% 1% 5%;
   background-color: #fff;
   z-index: 2;
+}
+
+.produto .price-sale:nth-child() {
 }
 
 .produto .vendas {

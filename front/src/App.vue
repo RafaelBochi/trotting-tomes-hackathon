@@ -20,7 +20,7 @@ const showPreloader = computed(() => globalStore.showPreloader);
 
 onBeforeMount(
   async () => {
-    showPreloader.value = true;
+    globalStore.showPreloader = true;
     await bookStore.getBooks();
     await othersStore.getGenres();
     await othersStore.getAuthors();
@@ -31,7 +31,7 @@ onBeforeMount(
       await cartStore.getCart()
       await cartStore.getBooksCart()
     }
-    showPreloader.value = false;
+    globalStore.showPreloader = false;
   }
 )
 </script>

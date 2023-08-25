@@ -15,6 +15,8 @@ function deleteBookCart(id) {
 
 function changeQuantity(id, item, book, quantidade) {
   console.log(id)
+  if(item.quantidade == 1 && quantidade == -1) return;
+  else if(item.quantidade == book.stock && quantidade == 1) return;
   cartStore.changeQuantity(id, item, book, quantidade);
 }
 </script>

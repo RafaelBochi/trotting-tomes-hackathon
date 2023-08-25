@@ -73,8 +73,6 @@ const editAccount = () => {
                     <font-awesome-icon :icon="['fas', 'gear']" size="lg" />
                 </span>
 
-                <i class="bar"></i>
-
                 <span class="exit">
                     <p>
                         Sair
@@ -145,7 +143,7 @@ aside {
     position: relative;
     width: 300px;
     height: 100%;
-    border-right: 5px solid var(--lime-green);
+    border-right: 5px solid var(--primary-color);
     display: flex;
     flex-direction: column;
     align-items: end;
@@ -158,12 +156,13 @@ aside .links {
     gap: 80px;
     font-size: 2.0rem;
     width: 95%;
+    color: #fff;
 }
 
 aside .links span {
     display: flex;
     gap: 10px;
-    background-color: var(--lime-green);
+    background-color: var(--primary-color);
     padding: 10px 20px;
     align-items: center;
     justify-content: center;
@@ -176,16 +175,9 @@ aside .links .exit {
     bottom: 10px;
     right: 10px;
     background-color: transparent;
+    color: #000;
 }
 
-aside .links .bar {
-    width: 300px;
-    height: 2px;
-    background-color: var(--lime-green);
-    position: absolute;
-    bottom: 60px;
-    left: 0;
-}
 
 .contentEditAccount {
     display: flex;
@@ -199,7 +191,7 @@ aside .links .bar {
 .contentEditAccount h2 {
     font-size: 2.5rem;
     font-weight: bolder;
-    color: var(--lime-green);
+    color: var(--primary);
     margin-bottom: 30px;
 }
 
@@ -233,7 +225,7 @@ aside .links .bar {
     border: none;
     outline: none;
     border-radius: 50%;
-    background-color: var(--lime-green);
+    background-color: var(--primary-color);
     color: #fff;
     cursor: pointer;
     transition: all .5s ease;

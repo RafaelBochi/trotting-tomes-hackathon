@@ -4,7 +4,6 @@ import HeaderResponsive from '@/components/Full/Responsive/HeaderResponsive.vue'
 import Cart from '@/components/Full/Cart/Cart.vue';
 import Favorites from '@/components/Full/Favorites/Favorites.vue';
 import PopUpSettings from '../components/Full/PopUpSettings.vue';
-import Account from '../components/Full/Account/Account.vue';
 import { ref, onMounted } from 'vue';
 import { useUserStore } from '../stores/user';
 import MenuResponsive from '../components/Full/Responsive/MenuResponsive.vue';
@@ -121,9 +120,8 @@ onMounted(() => {
 
     <RouterView class="view"/>
 
-    <PopUpSettings v-if="showSettings"  @toggle-favorites="toggleFavorites" @logout="userStore.logout" :class="closeSettings != false ? 'closeSettings' : ''" @toggle-account="toggleAccount"/>
+    <PopUpSettings v-if="showSettings"  @toggle-favorites="toggleFavorites" @logout="userStore.logout" :class="closeSettings != false ? 'closeSettings' : ''"/>
 
-    <Account  v-if="showAccount" @toggle-account="toggleAccount"/>
 
     <MenuResponsive v-if="showMenuResponsive" :class="closeMenuResponsive != false ? 'closeMenuResponsive' : ''" @toggle-menu="toggleMenu"/>
   </main>

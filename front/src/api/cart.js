@@ -32,7 +32,7 @@ class CartService {
             accept: 'application/json', },
             
         };
-        const { data } = await axios.put(`/carrinhoLivros/${id}/`, values, config )
+        const { data } = await axios.patch(`/carrinhoLivros/${id}/`, values, config )
         console.log(data)
         return data;
     }

@@ -8,16 +8,6 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits(["changeQuantity"]);
-
-function changeQuantity(quantidade) {
-    if (props.item.quantidade == 1) return;
-    else if (props.item.quantidade == props.item.livro.stock) return;
-    else {
-        props.item.quantidade += quantidade;
-        emits("changeQuantity", props.item.id, props.item.livro, quantidade);
-    }
-}
 </script>
 
 <template>

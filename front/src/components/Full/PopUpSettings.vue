@@ -1,10 +1,12 @@
 <script setup>
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 </script>
 
 <template>
     <section>
-        <div class="account" @click="$emit('toggleAccount')">
+        <div class="account" @click="router.push('/settings')">
             <p>Perfil</p>
             <font-awesome-icon :icon="['fas', 'user']" style="color: var(--lime-green);" size="xl"/>
         </div>
