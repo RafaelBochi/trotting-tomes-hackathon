@@ -5,9 +5,6 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-
-import VueGlide from 'vue-glide-js'
-import 'vue-glide-js/dist/vue-glide.css'
  
 
 const app = createApp(App)
