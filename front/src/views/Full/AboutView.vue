@@ -458,7 +458,7 @@ h3 {
     background-color: rgb(216, 216, 216);
 }
 .about-container{
-    width: 400px;
+    width: 70%;
     position: absolute;
     background-color: white;
     display: flex;
@@ -474,10 +474,11 @@ h3 {
     align-items: center;
     background-size: cover;
     
+    
 }
 .image-container img {
     position: relative;
-    width: 30%;
+    width: 80%;
     height: 500px;
     margin: 20px;
     border-radius: 10px;
