@@ -10,6 +10,9 @@ const props = defineProps({
   slideNum: {
     type: Number,
   },
+  sort: {
+    type: Array,
+  },
 });
 
 const books = computed(() => bookStore.books);
@@ -19,6 +22,11 @@ const slideNum = ref(props.slideNum);
 const currentPage = ref(1);
 const itemsPerPage = ref(3);
 
+
+// Below is the const that will give a new index for each element of the books array, with 21 values
+
+const sortedBooks = props.sort.map(index => books.value[index])
+
 const totalPages = computed(() => {
   return Math.ceil(books.value.length / itemsPerPage.value);
 });
@@ -27,7 +35,7 @@ const changePage = (page) => {
   const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
   currentPage.value = page;
   console.log(page)
-  if(page == 1) {
+  if (page == 1) {
     active.value = 0
     items[0].scrollIntoView({
       behavior: 'smooth',
@@ -39,7 +47,7 @@ const changePage = (page) => {
 
   active.value = ((page - 1) * itemsPerPage.value);
 
-  if(itemsPerPage.value % 2 == 0) {
+  if (itemsPerPage.value % 2 == 0) {
     items[active.value].scrollIntoView({
       behavior: 'smooth',
       inline: 'start',
@@ -60,20 +68,20 @@ const nextBook = () => {
   if (currentPage.value < totalPages.value) {
     console.log(itemsPerPage.value)
     active.value++;
-    if(itemsPerPage.value <= 1) {
+    if (itemsPerPage.value <= 1) {
       items[active.value].scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
     }
     else {
-    items[active.value + 1].scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-  }
+      items[active.value + 1].scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
     if (active.value % itemsPerPage.value == 0) {
       currentPage.value = active.value / itemsPerPage.value + 1;
     }
@@ -82,22 +90,22 @@ const nextBook = () => {
 
 const previousBook = () => {
   const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
-  if(active.value == 0) {
+  if (active.value == 0) {
     console.log(items[0])
-        items[0].scrollIntoView({
-        behavior: "smooth",
-        inline: "start",
-        block: "nearest",
-      });
-      }
+    items[0].scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest",
+    });
+  }
   if (currentPage.value > 0) {
-      active.value--;
-      
-      items[active.value].scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-        block: "nearest",
-      });
+    active.value--;
+
+    items[active.value].scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
     if ((active.value + 1) % itemsPerPage.value == 0) {
       currentPage.value--;
     }
@@ -107,15 +115,15 @@ const previousBook = () => {
 let widthSecBooks;
 
 function getWidthSecBooks() {
-  const items = document.querySelectorAll(`.books.books${slideNum.value} > *`); 
+  const items = document.querySelectorAll(`.books.books${slideNum.value} > *`);
   const secBooks = document.querySelector(`.books${slideNum.value}`)
-  if(secBooks) {
+  if (secBooks) {
     widthSecBooks = secBooks.getBoundingClientRect().width;
   }
 
   itemsPerPage.value = Math.floor(widthSecBooks / 300);
-  
-  if(itemsPerPage.value > 3) {
+
+  if (itemsPerPage.value > 3) {
     itemsPerPage.value = 3;
   }
 }
@@ -124,7 +132,7 @@ function getWidthSecBooks() {
 window.addEventListener("resize", getWidthSecBooks);
 
 onMounted(
-  ()=> {
+  () => {
     getWidthSecBooks();
   }
 )
@@ -133,27 +141,17 @@ onMounted(
 <template>
   <section>
     <div class="books" :class="`books${slideNum}`">
-      <Book v-for="book in books" :key="book.id" :book="book" class="book"/>
+      <Book v-for="book in sortedBooks" :key="book.id" :book="book" class="book" />
     </div>
 
     <div class="pages" v-if="itemsPerPage > 1">
-      <span
-        v-for="(page, index) in totalPages"
-        :key="index"
-        :class="currentPage == page ? 'activate' : ''"
-        class="page"
-        @click="changePage(page)"
-      >
+      <span v-for="(page, index) in totalPages" :key="index" :class="currentPage == page ? 'activate' : ''" class="page"
+        @click="changePage(page)">
       </span>
     </div>
 
-    <Pagination
-      :active="active"
-      :itemsPerPage="itemsPerPage"
-      @next-book="nextBook"
-      :books="books"
-      @previous-book="previousBook"
-    />
+    <Pagination :active="active" :itemsPerPage="itemsPerPage" @next-book="nextBook" :books="books"
+      @previous-book="previousBook" />
   </section>
 </template>
 
@@ -184,6 +182,7 @@ section {
 .books::-webkit-scrollbar {
   display: none;
 }
+
 .pages {
   display: flex;
   gap: 10px;

@@ -6,6 +6,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from .autor import Autor
 from .genero import Genero
 
+import random
+
 
 class Livro(models.Model):
     title = models.CharField(max_length=100)
@@ -27,6 +29,7 @@ class Livro(models.Model):
     def save(self, *args):
         if self.desconto > 0:
             self.price = self.price - (self.price * (self.desconto/100))
+        self.paginas = random.randint(150, 500)
         super(Livro, self).save(*args)
     
 @receiver(post_save, sender=Livro)
