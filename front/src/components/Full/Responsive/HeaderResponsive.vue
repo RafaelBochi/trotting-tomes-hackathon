@@ -7,8 +7,19 @@ const userStore = useUserStore()
 
 const windowWidth = ref(window.innerWidth);
 
+const showLogoMini = ref(false);
+
 window.addEventListener('resize', ()=> {
-  windowWidth.value = window.innerWidth
+  windowWidth.value = window.innerWidth;
+  if(windowWidth.value < 740) {
+    showLogoMini.value = true;
+  }
+  if (windowWidth.value < 620) {
+    showLogoMini.value = false;
+  }
+  if (windowWidth.value < 350) {
+    showLogoMini.value = true;
+  }
 })
 </script>
 
@@ -18,7 +29,7 @@ window.addEventListener('resize', ()=> {
       <router-link to="/home">
         <a href="">
           <p>
-            <img src="/logo-mini.png" alt="" class="imgMini" v-if="windowWidth < 1000"/>
+            <img src="/logo-mini.png" alt="" class="imgMini" v-if="showLogoMini"/>
             <img src="/logo-principal-green.png" alt="" class="imgClassic" v-else>
           </p>
         </a>
@@ -49,7 +60,7 @@ window.addEventListener('resize', ()=> {
           style="color: var(--primary-color)"
         />
         </div>   
-        <div class="menu">
+        <div class="menu" @click="$emit('toggleMenu')">
             <font-awesome-icon :icon="['fas', 'bars']" size="2xl" style="color: var(--primary-color)"/>
         </div> 
     </div>
@@ -103,7 +114,7 @@ header {
   color: #000;
   font-size: 1.3rem;
   width: 15%;
-  margin-right: 20px;
+  margin: 0 20px;
 }
 .auth button {
   border: none;
@@ -139,6 +150,14 @@ a {
     justify-content: space-between;
     gap: 20px;
     padding-right: 4%;
+}
+
+.menu {
+  cursor: pointer;
+}
+
+.carrinho {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 620px) {

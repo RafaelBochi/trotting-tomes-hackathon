@@ -29,6 +29,7 @@ export const useOthersStore = defineStore("others", {
         async getComents(id) {
             try {
                 const data = await othersService.getComents(id);
+                console.log(data)
                 return data;
             } catch (e) {
                 console.log(e);
@@ -38,6 +39,7 @@ export const useOthersStore = defineStore("others", {
             try {
                 const data = await othersService.addComent(coment);
                 this.getComents();
+                window.location.reload();
             } catch (e) {
                 console.log(e);
             }

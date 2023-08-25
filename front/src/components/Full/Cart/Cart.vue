@@ -1,14 +1,21 @@
 <script setup>
 import Item from './Item.vue';
 import { useUserStore } from '@/stores/user.js';
+import { useCartStore } from "@/stores/cart"
 import { computed } from 'vue';
 
 const userStore = useUserStore();
+const cartStore = useCartStore();
 
-const booksCart = computed(() => userStore.booksCart);
+const booksCart = computed(() => cartStore.booksCart);
 
 function deleteBookCart(id) {
-  userStore.deleteBookCart(id);
+  cartStore.deleteBookCart(id);
+}
+
+function changeQuantity(id, item, book, quantidade) {
+  console.log(id)
+  cartStore.changeQuantity(id, item, book, quantidade);
 }
 </script>
 
@@ -17,7 +24,7 @@ function deleteBookCart(id) {
     <h2>Carrinho de Itens</h2>
 
     <div class="itens" v-if="booksCart.length > 0">
-        <item v-for="item in booksCart" :key="item.id" :item="item" @delete-book-cart="deleteBookCart"/>
+        <item v-for="item in booksCart" :key="item.id" :item="item" @delete-book-cart="deleteBookCart" @change-quantity="changeQuantity"/>
     </div>
 
     <h3 v-else>
@@ -34,14 +41,14 @@ function deleteBookCart(id) {
 .cart {
   max-width: 400px;
   min-width: 200px;
-  width: 360px;
+  width: 400px;
   height: 100%;
   background-color: #fff;
   position: fixed;
   right: 0;
   z-index: 10;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  padding: 1% 3%;
+  padding: 1% 10px;
   animation: cart 0.5s forwards;
 }
 
@@ -59,7 +66,7 @@ h2 {
   font-size: 2rem;
   font-weight: bolder;
   text-transform: uppercase;
-  color: var(--lime-green);
+  color: var(--primary-color);
   padding: 0% 2%;
   margin-bottom: 20px;
 }

@@ -486,4 +486,10 @@ section {
   align-items: center;
   justify-content: space-between;
 }
+
+@media screen and (max-width: 620px) {
+  .form {
+    padding-top: 50px !important;
+  }
+}
 </style>

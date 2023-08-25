@@ -1,5 +1,8 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
 
 const activeRoute = ref();
 const links = ["home", "products", "about"];
@@ -7,10 +10,17 @@ const links = ["home", "products", "about"];
 function setActiveLink(link) {
     activeRoute.value = link;
 }
+
+onMounted(() => {
+    setActiveLink(route.name);
+})
 </script>
 
 <template>
     <aside>
+        <span class="close" @click="$emit('toggleMenu')">
+            <font-awesome-icon :icon="['fas', 'xmark']" size="xl"/>
+        </span>
         <div class="links">
         <router-link
           v-for="(link, index) in links"
@@ -20,11 +30,9 @@ function setActiveLink(link) {
           class="link"
           @click="setActiveLink(link)"
         >
-          <a href="">
             <p>
               {{ link }}
             </p>
-          </a>
         </router-link>
         </div>
 
@@ -44,11 +52,22 @@ aside {
     left: 0;
     z-index: 10;
     padding: 1% 0;
-    border-left: 5px solid var(--primary-color);
+    border-left: 6px solid var(--primary-color);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    animation: openMenu forwards .5s;
+}
+
+@keyframes openMenu {
+    0% {
+        left: 100%;
+    }
+
+    100% {
+        left: 0;
+    }
 }
 
 .links {
@@ -76,10 +95,9 @@ a {
 
 #active-link {
     background-color: var(--primary-color);
-    color: var(--white) !important;
+    color: #fff !important;
     border-radius: 0px 10px 10px 0px;
     animation: activate forwards .5s;
-    position: relative;
 }
 
 @keyframes activate {
@@ -96,5 +114,9 @@ a {
     position: absolute;
 }
 
-
+.close {
+    position: absolute;
+    right: 20px;
+    top: 130px;
+}
 </style>

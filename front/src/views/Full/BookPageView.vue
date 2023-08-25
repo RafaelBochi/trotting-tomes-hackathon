@@ -2,9 +2,9 @@
 import { useUserStore } from "@/stores/user.js";
 import { useOthersStore } from "@/stores/others";
 import { useBookStore } from "@/stores/book";
-import { useGlobalStore } from "../../stores/global";
+import { useGlobalStore } from "@/stores/global";
+import { useCartStore } from "../../stores/cart";
 import { onMounted, ref } from "vue";
-import { onBeforeRouteUpdate } from "vue-router";
 import ComentsBook from "@/components/Full/Book/ComentsBook.vue";
 import router from "@/router";
 
@@ -12,6 +12,7 @@ const userStore = useUserStore();
 const othersStore = useOthersStore();
 const bookStore = useBookStore();
 const globalStore = useGlobalStore();
+const cartStore = useCartStore();
 
 const props = defineProps({
   id: {
@@ -20,6 +21,7 @@ const props = defineProps({
   },
 });
 
+const quantCart = ref(1)
 const comentsBook = ref([]);
 const mediaStars = ref(0);
 const book = ref({
@@ -30,11 +32,12 @@ const book = ref({
   author: {
     name: "",
   },
+  stock: 0,
 })
 
 function addToCart() {
   if (userStore.loggedIn) {
-    console.log("teste");
+    cartStore.addBookCart(book.value.id, quantCart.value)
   } else {
     userStore.popUpLogin = true;
   }
@@ -54,6 +57,19 @@ router.afterEach(async (to) => {
   }, 1000)
   
 });
+
+function plusQuantCart() {
+  if(quantCart.value == book.value.stock) {
+    return;
+  }
+  quantCart.value++
+}
+
+function minusQuantCart() {
+  if (quantCart.value > 1) {
+    quantCart.value--
+  }
+}
 
 onMounted(async () => {
   book.value = await bookStore.getBookId(props.id);
@@ -123,13 +139,16 @@ onMounted(async () => {
 
         <div class="actions">
           <span>
-            <p>1</p>
+            <p>{{ quantCart }}</p>
             <i>
-              <font-awesome-icon :icon="['fas', 'caret-up']" size="xl" />
-              <font-awesome-icon :icon="['fas', 'caret-down']" size="xl" />
+              <font-awesome-icon :icon="['fas', 'caret-up']" size="xl" @click="plusQuantCart"/>
+              <font-awesome-icon :icon="['fas', 'caret-down']" size="xl" @click="minusQuantCart"/>
             </i>
           </span>
           <button @click="addToCart">Adicionar ao Carrinho</button>
+          <p>
+            {{ book.stock }} restantes
+          </p>
         </div>
       </div>
     </div>

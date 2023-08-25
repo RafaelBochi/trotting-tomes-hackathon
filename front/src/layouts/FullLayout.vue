@@ -18,6 +18,8 @@ const closeSettings = ref(false)
 const showFavorites = ref(false)
 const closeFavorites = ref(false)
 const showAccount = ref(false)
+const closeMenuResponsive = ref(false)
+const showMenuResponsive = ref(false)
 const links = ['home', 'products', 'about']
 
 
@@ -93,6 +95,15 @@ function checkHeaderResponsive() {
 
 window.addEventListener('resize', checkHeaderResponsive)
 
+function toggleMenu() {
+  if(showMenuResponsive.value) {
+    showMenuResponsive.value = false
+  }
+  else {
+    showMenuResponsive.value = !showMenuResponsive.value;
+  }
+}
+
 onMounted(() => {
   checkHeaderResponsive()
 })
@@ -100,20 +111,27 @@ onMounted(() => {
 
 <template>
   <main>
-    <HeaderResponsive @toggle-cart="toggleCart" v-if="headerResponsive"/>
+    <HeaderResponsive @toggle-cart="toggleCart" v-if="headerResponsive" @toggle-menu="toggleMenu"/>
+
     <Header @toggle-cart="toggleCart" @toggle-settings="toggleSettings" :links="links" v-else/>
+
     <Cart v-if="showCart" @close="toggleCart" :class="closeCart != false ? 'closeCart' : ''" class="cart"/>
+
     <Favorites v-if="showFavorites" @close="toggleFavorites" :class="closeFavorites != false ? 'closeFavorites' : ''" class="favorites"/>
+
     <RouterView class="view"/>
+
     <PopUpSettings v-if="showSettings"  @toggle-favorites="toggleFavorites" @logout="userStore.logout" :class="closeSettings != false ? 'closeSettings' : ''" @toggle-account="toggleAccount"/>
+
     <Account  v-if="showAccount" @toggle-account="toggleAccount"/>
-    <MenuResponsive/>
+
+    <MenuResponsive v-if="showMenuResponsive" :class="closeMenuResponsive != false ? 'closeMenuResponsive' : ''" @toggle-menu="toggleMenu"/>
   </main>
 </template>
 
 <style scoped>
 
-.closeFavorites, .closeCart {
+.closeFavorites, .closeCart, .closeMenuResponsive {
   animation: closeSections .5s forwards;
 }
 
@@ -141,7 +159,7 @@ onMounted(() => {
 
 @media screen and (max-width: 620px) {
   .view {
-    padding-top: 40px;
+    padding-top: 60px;
   }
 }
 </style>

@@ -4,6 +4,8 @@ import { useBookStore } from '@/stores/book.js';
 import { useOthersStore } from '@/stores/others.js';
 import { useUserStore } from './stores/user';
 import { useGlobalStore } from './stores/global';
+import { useFavoriteStore } from './stores/favorite';
+import { useCartStore } from './stores/cart';
 import MessageModalVue from './components/MessageModal.vue';
 import PreLoaderVue from './components/PreLoader.vue';
 
@@ -11,6 +13,8 @@ const bookStore = useBookStore();
 const othersStore = useOthersStore();
 const userStore = useUserStore();
 const globalStore = useGlobalStore();
+const favoriteStore = useFavoriteStore();
+const cartStore = useCartStore();
 
 const showPreloader = computed(() => globalStore.showPreloader);
 
@@ -23,9 +27,9 @@ onBeforeMount(
     await othersStore.getComents();
 
     if(userStore.loggedIn) {
-      await userStore.getFavorites();
-      await userStore.getCart()
-      await userStore.getBooksCart()
+      await favoriteStore.getFavorites();
+      await cartStore.getCart()
+      await cartStore.getBooksCart()
     }
     showPreloader.value = false;
   }

@@ -12,9 +12,6 @@ export const useUserStore = defineStore('user', {
     userId: useStorage("userId", Number),
     tokenResetPassword: useStorage("tokenResetPassword", null),
     popUpLogin: false,
-    favorites: useStorage("favorites", []),
-    booksCart: useStorage("booksCart", []),
-    cartId: useStorage("cart", Number),
   }),
   actions: {
     async login(user) {
@@ -103,80 +100,6 @@ export const useUserStore = defineStore('user', {
         console.log(e)
         useGlobalStore().showPreloader = false;
         return false;
-      }
-    },
-    async getFavorites(){
-      try {
-        const data = await userService.getFavorites(this.user.id);
-        for (let item of data) {
-          item.book.capa = "http://127.0.0.1:8000/" + item.book.capa;
-        }
-        this.favorites = data;
-      } catch (error) {
-        console.log(error); // Lidar com exceções
-      }
-    },
-    async addFavorite(book){
-      try {
-        const values = {
-          user: this.user.id,
-          book: book.id,
-        }
-        const data = await userService.addFavorite(values);
-        this.getFavorites()
-      } catch (error) {
-        console.log(error); // Lidar com exceções
-      }
-    },
-    async deleteFavorite(id){
-      try {
-        const data = await userService.deleteFavorite(id);
-        this.getFavorites()
-      } catch (error) {
-        console.log(error); // Lidar com exceções
-      }
-    },
-    async getCart() {
-      try{
-        const data = await userService.getCart(this.user.id)
-        this.cartId = data[0].id
-        
-      } catch(error) {
-        console.log(error)
-      }
-    },
-    async getBooksCart(){
-      try {
-        const data = await userService.getBooksCart(this.cartId);
-        for (let item of data) {
-          item.livro.capa = "http://127.0.0.1:8000/" + item.livro.capa;
-        }
-        this.booksCart = data;
-        
-      } catch (error) {
-        console.log(error); // Lidar com exceções
-      }
-    },
-    async addBookCart(book, quantidade){
-      try {
-        console.log(book)
-        const values = {
-          carrinho: this.cartId,
-          livro: book,
-          quantidade: quantidade
-        }
-        const data = await userService.addBookCart(values);
-        this.getBooksCart()
-      } catch (error) {
-        console.log(error); // Lidar com exceções
-      }
-    },
-    async deleteBookCart(id){
-      try {
-        const data = await userService.deleteBookCart(id);
-        this.getBooksCart()
-      } catch (error) {
-        console.log(error); // Lidar com exceções
       }
     },
     async editAccount(values, image){

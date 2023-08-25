@@ -59,7 +59,7 @@ h2 {
   font-size: 2rem;
   font-weight: bolder;
   text-transform: uppercase;
-  color: var(--lime-green);
+  color: var(--primary-color);
   padding: 0% 2%;
   margin-bottom: 20px;
 }

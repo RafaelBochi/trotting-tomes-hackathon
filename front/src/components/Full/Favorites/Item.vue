@@ -18,7 +18,7 @@ const props = defineProps({
         </div>
 
         <span class="delete" @click="$emit('deleteFavorite', item.id) ">
-            Delete
+            <font-awesome-icon :icon="['fas', 'trash']" />
         </span>
     </div>
 </template>
@@ -28,12 +28,12 @@ const props = defineProps({
         position: relative;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 10px;
+        gap: 40px;
         height: 80px;
         width: 100%;
-        background: var(--lime-green);
+        background: var(--primary-color);
         padding: 1% 5%;
+        color: #fff;
     }
 
     .item img {
@@ -69,10 +69,15 @@ const props = defineProps({
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #000;
+        color: var(--error-color);
         font-size: 1.3rem;
-        right: 2%;
-        bottom: 1%;
+        right: 10px;
+        bottom: 10px;
         cursor: pointer;
+        transition: .5s all;
+    }
+
+    .item .delete:hover {  
+        transform: scale(1.2);
     }
 </style>

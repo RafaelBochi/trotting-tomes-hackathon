@@ -53,18 +53,23 @@ async function addComent(comentInputs) {
   await othersStore.addComent(coment)
   toggleFormComent();
   props.coments = await othersStore.getComents(props.book.id);
-  window.location.reload()
 }
 
+const showComents = ref(true)
+
 function filterComentsFunc(stars) {
-  console.log(props.coments)
+  console.log(stars)
   filterComents.value = [];
+  if(stars == 0) filterComents.value = props.coments;
   for (let coment of props.coments) {
     if (coment.stars == stars) {
       coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
       filterComents.value.push(coment);
     }
   }
+  if (filterComents.value.length == 0) showComents.value = false;
+  else showComents.value = true;
+  console.log(filterComents.value.length)
 }
 
 function toggleFormComent() {
@@ -79,9 +84,13 @@ function toggleFormComent() {
 <template>
   <FormComent v-if="showFormComent" @close-form="toggleFormComent" @add-coment="addComent"/>
   <div class="sec-coments">
-    <div>
-      <h2>Avaliações</h2>
+    <div class="secInfos">
+      <div class="title">
+        <h2>Avaliações</h2>
+        <button @click="toggleFormComent">Adicionar Avaliação</button>
+      </div>
 
+      <div class="info">
       <div class="stars-coments">
         <p>{{ mediaStars }}</p>
         <div>
@@ -124,12 +133,12 @@ function toggleFormComent() {
             <label :class="i > 4 ? 'true' : ''"></label>
           </span>
         </div>
-        <div @click="filterComents = props.coments">Todos</div>
+        <div @click="filterComentsFunc(0)">Todos</div>
       </div>
-      <button @click="toggleFormComent">Adicionar Avaliação</button>
+      </div>
     </div>
 
-    <div class="coments" v-if="filterComents.length > 0">
+    <div class="coments" v-if="showComents">
       <div class="coment" v-for="coment in filterComents" :key="coment.id">
         <h3>{{ coment.title }}</h3>
 
@@ -177,19 +186,40 @@ function toggleFormComent() {
   justify-content: space-evenly;
   padding: 2% 4%;
   width: 80%;
-  min-width: 400px;
+  min-width: 360px;
   background-color: #fff;
   font-size: 1.5rem;
   gap: 20px;
   box-shadow: 0px 1px 20px -9px rgba(52, 71, 52, 1);
-  height: 70%;
-  min-height: 450px;
+  height: 100%;
+  min-height: 500px;
+  flex-wrap: wrap;
 }
 
-.sec-coments div:nth-child(1) {
+
+.secInfos {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  align-items: center;
+  justify-content: space-around;
+  min-width: 300px;
+}
+
+.secInfos .title {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.secInfos .info {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: auto;
+  width: 80%;
 }
 
 .stars-coments {
@@ -222,9 +252,10 @@ function toggleFormComent() {
   align-items: start;
   width: 80%;
   overflow-y: auto;
-  height: 100%;
+  height: 60%;
   gap: 20px;
   padding: 1%;
+  min-width: 320px;
 }
 
 .coment {
@@ -238,6 +269,8 @@ function toggleFormComent() {
   gap: 20px;
   font-size: 1.5rem;
   padding: 2% 4%;
+  min-width: 320px;
+
 }
 
 .coment .user {
@@ -267,11 +300,30 @@ function toggleFormComent() {
 
 .filters {
   display: flex;
-  flex-direction: column-reverse;
-  align-items: start;
-  width: 100%;
+  flex-direction: row-reverse;
+  width: 600px;
   gap: 10px;
   padding: 1%;
+  overflow-x: auto;
+  align-items: center;
+  overflow-y: hidden;
+  height: 40px;
+  min-width: 300px;
+}
+
+.filters::-webkit-scrollbar {
+  height: 5px;
+  width: 100%;
+}
+
+.filters::-webkit-scrollbar-track {
+  background: var(--cinza);
+  border-radius: 5px;
+}
+
+.filters::-webkit-scrollbar-thumb {
+  background: var(--lime-green);
+  border-radius: 5px;
 }
 
 .filters div {
@@ -283,10 +335,11 @@ function toggleFormComent() {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  height: 40px;
 }
 
 .filters div span {
-  margin-top: 5%;
+  margin-top: 10px;
   cursor: pointer;
 }
 
@@ -295,7 +348,7 @@ function toggleFormComent() {
 }
 
 .sec-coments button {
-  width: 200px;
+  width: 150px;
   height: 30px;
   background: var(--lime-green);
   color: #fff;
@@ -304,12 +357,10 @@ function toggleFormComent() {
   font-size: 1.5rem;
   font-weight: 400;
   cursor: pointer;
-  margin-top: 4%;
 }
 
 h2 {
-  width: 80%;
+  width: 30%;
   text-align: center;
-  padding-top: 3%;
 }
 </style>

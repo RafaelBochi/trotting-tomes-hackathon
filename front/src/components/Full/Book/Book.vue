@@ -4,9 +4,13 @@ import BookPage from "../../../views/Full/BookPageView.vue";
 import { useUserStore } from "@/stores/user.js";
 import { useOthersStore } from "@/stores/others.js";
 import { useRouter } from "vue-router";
+import { useFavoriteStore } from "@/stores/favorite.js";
+import { useCartStore } from "@/stores/cart.js";
 
 const userStore = useUserStore();
 const othersStore = useOthersStore();
+const favoriteStore = useFavoriteStore();
+const cartStore = useCartStore();
 const router = useRouter();
 
 const props = defineProps({
@@ -18,39 +22,34 @@ const props = defineProps({
 
 const favorite = ref(false);
 
-const showBookPage = ref(false);
-
 const comentsBook = ref([]);
 const mediaStars = ref(0);
 
 onMounted(async () => {
-  await othersStore.getComents();
-  for (let coment of othersStore.coments) {
-    if (coment.livro.id == props.book.id) {
-      coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
-      comentsBook.value.push(coment);
-    }
-  }
-
+  comentsBook.value = await othersStore.getComents(props.book.id);
+  
+  console.log(comentsBook.value)
   if (comentsBook.value.length > 0) {
+    console.log('a')
     for (let coment of comentsBook.value) {
       mediaStars.value += coment.stars
     }
     mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
   }
+  console.log(mediaStars.value)
 })
 
 function addFavorite() {
   console.log(favorite.value)
   if (favorite.value != true) {
-    userStore.addFavorite(props.book);
+    favoriteStore.addFavorite(props.book);
     favorite.value = true;
     console.log('add')
   }
   else {
-    const id = userStore.favorites.find(item => item.book.id == props.book.id).id;
+    const id = favoriteStore.favorites.find(item => item.book.id == props.book.id).id;
     console.log(id)
-    userStore.deleteFavorite(id);
+    favoriteStore.deleteFavorite(id);
     favorite.value = false;
     console.log('delete')
   }
@@ -58,7 +57,7 @@ function addFavorite() {
 
 function addToCart() {
   if (userStore.loggedIn) {
-    userStore.addBookCart(props.book.id, 1)
+    cartStore.addBookCart(props.book.id, 1)
   }
   else {
     userStore.popUpLogin = true;
@@ -71,7 +70,7 @@ function openBookPage() {
 
 onMounted(
   () => {
-    if (userStore.favorites.find(item => item.book.id == props.book.id)) {
+    if (favoriteStore.favorites.find(item => item.book.id == props.book.id)) {
       favorite.value = true;
     }
     else {
@@ -118,6 +117,7 @@ onMounted(
               </p>
             </span>
             <p class="price">R${{ book.price }}</p>
+            <p class="vendas">{{ book.vendas }} vendidos</p>
         </span>
         <i></i>
       </div>
@@ -240,6 +240,7 @@ onMounted(
   align-items: flex-start;
   justify-content: space-between;
   padding-bottom: 2%;
+  width: 90%;
 }
 
 .produto .info p:nth-child(1) {
@@ -278,6 +279,13 @@ onMounted(
   padding: 4% 5% 1% 5%;
   background-color: #fff;
   z-index: 2;
+}
+
+.produto .vendas {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 1.2rem;
 }
 
 button {
