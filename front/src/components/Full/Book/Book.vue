@@ -114,8 +114,8 @@ onMounted(
               </p>
             </span>
             <p class="price-sale" v-if="book.desconto > 0">
-              <p>R$ {{ book.price }}</p>
-              <p>
+              <p class="priceReal">R$ {{ book.price }}</p>
+              <p class="priceDescount">
                 R$ {{ (book.price - (book.price * book.desconto) / 100).toFixed(2) }}
               </p>
             </p>
@@ -284,8 +284,8 @@ onMounted(
   z-index: 2;
 }
 
-.produto .price-sale:nth-child(1) {
-  font-size: 1.0rem;
+.price-sale .priceReal {
+  font-size: 0.5rem;
 }
 
 .produto .vendas {
