@@ -21,20 +21,27 @@ window.addEventListener("scroll", reveal);
 <template>
   <body>
     <header class="hero">
+        <div class="section1">
+  <div class="text">PARALLAX</div>
+</div>
+<div class="section2">
+  <div class="text">NORMAL</div>
+</div>
+        
         <div class="textos-hero">
             <h1>AAAAAAAAAAAAAAAAA</h1>
             <p>HACKATON</p>
             <p>2INFO3</p>
+            <a class="btn" href="#sobre">Sobre</a>
         </div>
         <div class="svg-hero" style="height: 150px; overflow: hidden;"><svg viewBox="0 0 500 150" preserveAspectRatio="none"
                 style="height: 100%; width: 100%;">
                 <path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
                     style="stroke: none; fill: #fff;"></path>
         </svg></div>
+    
     </header>
-    <div>
-        <img class="livro1 reveal" src="../../../public/Livro-Logo-SEEL.png" alt="">
-    </div>
+
     <section class="wave-conteudo website container reveal">
         
         <div class="conteudo-textos-main text-box">
@@ -44,24 +51,47 @@ window.addEventListener("scroll", reveal);
     </section>
 
     <section class="info ">
+        <div class="container1">
+  <div class="content">
+    <h1>Pratham</h1>
+    <h3>I love designing websites and keep things as simple as possible. My goals is to focus on minimalism and conveying the message that you want to send</h3>
+  </div>
+  <div class="flap"></div>
+</div>
        
     </section>
-    <section class="container1">
-        <div class="slider-wrapper">
-        <div class="slider">
-            <img id="slide-1" src="https://moewalls.com/wp-content/uploads/2021/08/baal-and-kokomi-genshin-impact-thumb.jpg" alt="">
-            <img id="slide-2" src="https://wallpaperwaifu.com/wp-content/uploads/2021/09/hu-tao-genshin-impact-4k-thumb.jpg" alt="">
-            <img id="slide-3" src="https://wallpaperaccess.com/full/8314405.jpg" alt="">
-        </div>
-        <div class="slider-nav">
-            <a href="#slider-1"></a>
-            <a href="#slider-2"></a>
-            <a href="#slider-3"></a>
-        </div>
-       </div>
-    </section>
+    <div class="wrapper">
+
+<div class="background-container">
+    <div class="bg-1"></div>
+    <div class="bg-2"></div>
+
+</div>
+<div id="sobre" class="about-container reveal">
+    
+    <div class="image-container">
+        <img src="" alt="">
+        
+    </div>
+
+    <div class="text-container">
+        <h1>About us</h1>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi porro rerum cupiditate expedita <br> distinctio nisi nulla ipsum libero molestiae minima Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid,ipsum libero molestiae</p>
+        <a href="">Read More</a>
+    </div>
+    
+</div>
+</div>
+
+    <div class="main">
+        <h1>Transição de Imagem</h1>
+        <div class="box"></div>
+    </div>
+    
+    
 
     <section class="info" style="background-color: #fff; height: 400px;">
+        
        
     </section>
 
@@ -74,16 +104,54 @@ window.addEventListener("scroll", reveal);
             <svg viewBox="0 0 500 150" preserveAspectRatio="none"
             style="height: 100%; width: 100%;">
             <path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
-                style="stroke: none; fill: #9ef557;"></path>
+                style="stroke: none; fill: rgba(255,255,255,0.2);"></path>
         </svg>
     </div>
     </section>
 
-    <footer id="contato">
-        <div class="container">
-            
-        </div>
-    </footer>
+    <footer class="footer">
+  	 <div class="container">
+  	 	<div class="row">
+  	 		<div class="footer-col">
+  	 			<h4>company</h4>
+  	 			<ul>
+  	 				<li><a href="#">about us</a></li>
+  	 				<li><a href="#">our services</a></li>
+  	 				<li><a href="#">privacy policy</a></li>
+  	 				<li><a href="#">affiliate program</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>get help</h4>
+  	 			<ul>
+  	 				<li><a href="#">FAQ</a></li>
+  	 				<li><a href="#">shipping</a></li>
+  	 				<li><a href="#">returns</a></li>
+  	 				<li><a href="#">order status</a></li>
+  	 				<li><a href="#">payment options</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>online shop</h4>
+  	 			<ul>
+  	 				<li><a href="#">watch</a></li>
+  	 				<li><a href="#">bag</a></li>
+  	 				<li><a href="#">shoes</a></li>
+  	 				<li><a href="#">dress</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>follow us</h4>
+  	 			<div class="social-links">
+  	 				<a href="#"><i class="fab fa-facebook-f"></i></a>
+  	 				<a href="#"><i class="fab fa-twitter"></i></a>
+  	 				<a href="#"><i class="fab fa-instagram"></i></a>
+  	 				<a href="#"><i class="fab fa-linkedin-in"></i></a>
+  	 			</div>
+  	 		</div>
+  	 	</div>
+  	 </div>
+  </footer>
     </body>
 
     
@@ -100,53 +168,289 @@ window.addEventListener("scroll", reveal);
   font-family: "Asap", sans-serif;
 }
 
-.container1{
-    padding: 2rem;
-}
-.slider-wrapper {
-    position: relative;
-    max-width: 108rem;
-    margin: 0 auto;
-}
-.slider{
-    display: flex;
-    aspect-ratio: 16/ 9;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
-    border-radius: 0.5rem;
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;900&display=swap');
+
+body {
+  background: #f2f2f2;
 }
 
-.slider img{
-    flex: 1 0 100%;
-    scroll-snap-align: start;
-    object-fit: cover;
+.container1  {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 400px;
+  width: 600px;
+  background: #f2f2f2;
+  overflow: hidden;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 0 20px 8px #d0d0d0;
 }
-.slider-nav{
+
+.content {
+  position: absolute;
+  top: 50%;
+  transform: translatey(-50%);
+  text-align: justify;
+  color: black;
+  padding: 40px;
+  font-family: 'Merriweather', serif;
+}
+
+h1 {
+  font-weight: 900;
+  text-align: center;
+}
+
+h3 {
+  font-weight: 300;
+}
+
+.flap {
+  width: 100%;
+  height: 100%;
+}
+
+.flap::before {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 50%;
+  background: url("https://pbs.twimg.com/profile_images/1347260174176710658/2GfSZ1i__400x400.jpg") white;
+  background-position: 100px;
+  background-repeat: no-repeat;
+  transition: 1s;
+}
+
+.flap::after {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 50%;
+  right: 0;
+  background: url("https://pbs.twimg.com/profile_images/1347260174176710658/2GfSZ1i__400x400.jpg") white;
+  background-position: -200px;
+  background-repeat: no-repeat;
+  transition: 1s;
+}
+
+.container1:hover .flap::after {
+  transform: translatex(300px);
+}
+
+.container1:hover .flap::before{
+  transform: translatex(-300px);
+}
+.main{
     display: flex;
     justify-content: center;
     align-items: center;
-    column-gap: 1rem;
+    width: 100%;
+    min-height: 100vh;
+    background: rgb(248, 248, 248)(98, 7, 189, 0.726);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+}
+.main h1{
+    margin: 20px 0px;
+    font-size: 50px;
+    color:  white;
+}
+.box{
+    width: 50%;
+    min-height: 60vh;
+    background-color: #fff;
+    animation: changebg 50s ease-in-out infinite;
+    border-radius: 20px;
+}
+@keyframes changebg{
+    0%{
+        
+        background: url(https://i.pinimg.com/736x/ea/80/03/ea8003eda835af024292148060887ed4.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    10%{
+        
+        background: url(https://i.pinimg.com/736x/ea/80/03/ea8003eda835af024292148060887ed4.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    20%{
+        
+        background: url(https://i.pinimg.com/736x/ea/80/03/ea8003eda835af024292148060887ed4.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    30%{
+        
+        background: url(https://i.pinimg.com/736x/ea/80/03/ea8003eda835af024292148060887ed4.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    40%{
+        
+        background: url(https://cutewallpaper.org/21/4k-night-wallpaper/2222724160.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    50%{
+        
+        background: url(https://i.pinimg.com/736x/ea/80/03/ea8003eda835af024292148060887ed4.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    60%{
+        
+        background: url(https://cutewallpaper.org/21/4k-night-wallpaper/2222724160.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    70%{
+        
+        background: url(https://i.pinimg.com/736x/ea/80/03/ea8003eda835af024292148060887ed4.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    80%{
+        
+        background: url(https://cutewallpaper.org/21/4k-night-wallpaper/2222724160.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    90%{
+        
+        background: url(https://i.pinimg.com/736x/ea/80/03/ea8003eda835af024292148060887ed4.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    100%{
+        
+        background: url(https://cutewallpaper.org/21/4k-night-wallpaper/2222724160.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+@media screen and (max-width: 1368px){
+    .box{
+        width: 80%;
+        height: 70vh;
+    }
+}
+@media screen and (max-width: 500px){
+    .box{
+        width: 80%;
+        height: 60vh;
+    }
+}
+.wrapper{
     position: relative;
-    bottom: 1.25rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.slider-nav a{
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
+.background-container{
+    width: 100%;
+    min-height: 100vh;
+    display: flex; 
+}
+.bg-1{
+    flex: 1;
+    background-color: rgb(216, 216, 216);
+}
+.bg-2{
+    flex: 1;
+    background-color: rgb(216, 216, 216);
+}
+.about-container{
+    width: 400px;
+    position: absolute;
     background-color: white;
-    opacity: 0.75;
-    transition: opacity ease 250ms;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 40px;
+    border-radius: 40px;
 }
-.slider-nav a:hover{
-    opacity: 1;
+.image-container{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: con;
+}
+.image-container img {
+    width: 500px;
+    height: 500px;
+    margin: 20px;
+    border-radius: 10px;
+    background-size: contain;
+}
+.text-container{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    font-size: 22px;
+}
+.text-container h1{
+    font-size: 70px;
+    padding: 20px 0px;
+}
+.text-container a{
+    text-decoration: none;
+    padding: 12px;
+    margin: 50px 0px;
+    background-color: rebeccapurple;
+    border: 2px solid transparent;
+    color: white;
+    border-radius: 5px;
+    transition: .3s all ease;
+}
+.text-container a:hover{
+    background-color: transparent;
+    color: black;
+    border: 2px solid rebeccapurple;
+}
+@media screen and (max-width: 1600px){
+    .about-container{
+        width: 90%;
+    }
+    .image-container img{
+        width: 400px;
+        height: 400px;
+    }
+    .text-container h1{
+        font-size: 50px;
+    }
+}
+@media screen and (max-width: 1100px){
+    .about-container{
+        flex-direction: column;
+    }
+    .image-container img{
+        width: 300px;
+        height: 300px;
+    }
+    .text-container {
+        align-items: center;
+    }
 }
 .reveal{
-  position: relative;
+  
   transform: translateY(150px);
   opacity: 0;
   transition: 1s all ease;
@@ -299,7 +603,7 @@ span {
 /* Info */
 
 .info{
-    height: 200px;
+    
     background-color: #b3ee83;
     color: #fff;
 }
@@ -350,12 +654,6 @@ span {
 }
 
 
-/* footer */
-
-footer{
-    background: #9ef557;
-    color: #fff;
-}
 
 
 @media screen and (max-width:800px){
@@ -391,12 +689,6 @@ footer{
         width: 100%;
     }
 
-    /* Cards */
-
-    .card{
-        width: 90%;
-        margin-bottom: 20px;
-    }
 
 
     /* last */
@@ -443,4 +735,85 @@ h1 {
     justify-content: end;
     margin-bottom: 300px;
 }
+
+.row{
+	display: flex;
+	flex-wrap: wrap;
+}
+ul{
+	list-style: none;
+}
+.footer{
+	background-color: #242b26;
+    padding: 70px 0;
+}
+.footer-col{
+   width: 25%;
+   padding: 0 15px;
+}
+.footer-col h4{
+	font-size: 18px;
+	color: #ffffff;
+	text-transform: capitalize;
+	margin-bottom: 35px;
+	font-weight: 500;
+	position: relative;
+}
+.footer-col h4::before{
+	content: '';
+	position: absolute;
+	left:0;
+	bottom: -10px;
+	background-color: #e91e63;
+	height: 2px;
+	box-sizing: border-box;
+	width: 50px;
+}
+.footer-col ul li:not(:last-child){
+	margin-bottom: 10px;
+}
+.footer-col ul li a{
+	font-size: 16px;
+	text-transform: capitalize;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 300;
+	color: #bbbbbb;
+	display: block;
+	transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+	color: #ffffff;
+	padding-left: 8px;
+}
+.footer-col .social-links a{
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	background-color: rgba(255,255,255,0.2);
+	margin:0 10px 10px 0;
+	text-align: center;
+	line-height: 40px;
+	border-radius: 50%;
+	color: #ffffff;
+	transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+	color: #242b26;
+	background-color: #ffffff;
+}
+
+/*responsive*/
+@media(max-width: 767px){
+  .footer-col{
+    width: 50%;
+    margin-bottom: 30px;
+}
+}
+@media(max-width: 574px){
+  .footer-col{
+    width: 100%;
+}
+}
+
 </style>
