@@ -35,7 +35,7 @@ window.addEventListener("scroll", reveal);
         >
           <path
             d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
-            style="stroke: none; fill: #fff"
+            style="stroke: none; fill: #FFFFFF"
           ></path>
         </svg>
       </div>
@@ -88,7 +88,7 @@ window.addEventListener("scroll", reveal);
 
     <section
       class="info"
-      style="background-color: #fff; height: 400px"
+      style="background-color: #FFFFFF; height: 400px"
     ></section>
 
     <div class="tester">
@@ -108,14 +108,14 @@ window.addEventListener("scroll", reveal);
         >
           <path
             d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
-            style="stroke: none; fill: rgba(255, 255, 255, 0.2)"
+            style="stroke: none; fill: #A8A8A8"
           ></path>
         </svg>
       </div>
     </section>
 
     <footer class="footer">
-      <div style="background-color: rgb(45, 45, 46)" class="container">
+      <div style="background-color: #A8A8A8" class="container">
         <div class="row">
           <div class="footer-col">
             <h4>Compania</h4>
@@ -172,14 +172,14 @@ window.addEventListener("scroll", reveal);
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@300;900&display=swap");
 
 body {
-  background: #f2f2f2;
+  background: #FFFFFF;
 }
 
 /* Estilos gerais */
 
 .container,
 .wave-conteudo {
-  background-color: #b3ee83;
+  background-color: #4BA78A;
   display: flex;
   width: 90%;
   max-width: 1000px;
@@ -249,7 +249,7 @@ span {
   transform: translate(-50%, -50%);
   height: 400px;
   width: 600px;
-  background: #f2f2f2;
+  background: #FFFFFF;
   overflow: hidden;
   border-radius: 20px;
   cursor: pointer;
@@ -261,7 +261,7 @@ span {
   top: 50%;
   transform: translatey(-50%);
   text-align: justify;
-  color: black;
+  color: #000000;
   padding: 40px;
   font-family: "Merriweather", serif;
 }
@@ -286,7 +286,7 @@ h3 {
   height: 100%;
   width: 50%;
   background: url("https://pbs.twimg.com/profile_images/1347260174176710658/2GfSZ1i__400x400.jpg")
-    white;
+  #FFFFFF;
   background-position: 100px;
   background-repeat: no-repeat;
   transition: 1s;
@@ -299,7 +299,7 @@ h3 {
   width: 50%;
   right: 0;
   background: url("https://pbs.twimg.com/profile_images/1347260174176710658/2GfSZ1i__400x400.jpg")
-    white;
+  #FFFFFF;
   background-position: -200px;
   background-repeat: no-repeat;
   transition: 1s;
@@ -318,7 +318,7 @@ h3 {
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  background: rgb(248, 248, 248) (98, 7, 189, 0.726);
+  background: #FFFFFF;
   backdrop-filter: blur(20px);
   flex-direction: row;
   transition: 1s;
@@ -330,7 +330,7 @@ h3 {
 
   margin: 20px 0px;
   font-size: 50px;
-  color: white;
+  color: #FFFFFF;
   transition: 1s;
   overflow: 1;
 }
@@ -344,7 +344,7 @@ h3 {
 .box {
   width: 50%;
   min-height: 60vh;
-  background-color: #fff;
+  background-color: #FFFFFF;
   animation: changebg 50s ease-in-out infinite;
   border-radius: 20px;
 }
@@ -441,16 +441,16 @@ h3 {
 }
 .bg-1 {
   flex: 1;
-  background-color: rgb(216, 216, 216);
+  background-color: #FFFFFF;
 }
 .bg-2 {
   flex: 1;
-  background-color: rgb(216, 216, 216);
+  background-color: #FFFFFF;
 }
 .about-container {
   width: 70%;
   position: absolute;
-  background-color: white;
+  background-color: #FFFFFF;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -488,16 +488,16 @@ h3 {
   text-decoration: none;
   padding: 12px;
   margin: 50px 0px;
-  background-color: #b3ee83;
+  background-color: #A8CE66;
   border: 2px solid transparent;
-  color: white;
+  color: #FFFFFF;
   border-radius: 5px;
   transition: 0.3s all ease;
 }
 .text-container a:hover {
   background-color: transparent;
   color: black;
-  border: 2px solid #b3ee83;
+  border: 2px solid #A8CE66;
 }
 @media screen and (max-width: 1600px) {
   .about-container {
@@ -540,8 +540,8 @@ html {
 .hero {
   background-image: linear-gradient(
       10deg,
-      rgba(81, 138, 29, 0.699) 20%,
-      rgba(228, 224, 225, 0.692) 100%
+      #5b5b5b 20%,
+      #A8A8A8 100%
     ),
     url(../../../public/biblioteca.jpg);
   width: 100%;
@@ -556,7 +556,7 @@ html {
 
 .textos-hero {
   height: 500px;
-  color: #fff;
+  color: #FFFFFF;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -579,7 +579,7 @@ html {
   padding: 12px 15px;
   background: #a18cd1;
   border-radius: 8px;
-  color: #fff;
+  color: #FFFFFF;
 }
 
 .textos-hero a:hover {
@@ -625,7 +625,7 @@ html {
   );
   padding: 12px 15px;
   border-radius: 8px;
-  color: #fff;
+  color: #FFFFFF;
   margin: 10px;
 }
 
@@ -636,8 +636,8 @@ html {
 /* Info */
 
 .info {
-  background-color: #b3ee83;
-  color: #fff;
+  background-color: #A8CE66;
+  color: #FFFFFF;
 }
 
 /* Cards */
@@ -653,13 +653,13 @@ html {
   width: 30%;
   text-align: center;
   height: 300px;
-  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 3px 0 #000000;
   transform: scale(1);
   transition: transform 0.6s;
 }
 
 .card:hover {
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 6px 0 #000000;
   transform: scale(1.03);
   cursor: pointer;
 }
@@ -779,7 +779,7 @@ ul {
 }
 .footer-col h4 {
   font-size: 18px;
-  color: #ffffff;
+  color: #FFFFFF;
   text-transform: capitalize;
   margin-bottom: 35px;
   font-weight: 500;
@@ -801,7 +801,7 @@ ul {
 .footer-col ul li a {
   font-size: 16px;
   text-transform: capitalize;
-  color: #ffffff;
+  color: #FFFFFF;
   text-decoration: none;
   font-weight: 300;
   color: #bbbbbb;
@@ -809,24 +809,24 @@ ul {
   transition: all 0.3s ease;
 }
 .footer-col ul li a:hover {
-  color: #ffffff;
+  color: #FFFFFF;
   padding-left: 8px;
 }
 .footer-col .social-links a {
   display: inline-block;
   height: 40px;
   width: 40px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #A8A8A8;
   margin: 0 10px 10px 0;
   text-align: center;
   line-height: 40px;
   border-radius: 50%;
-  color: #ffffff;
+  color: #FFFFFF;
   transition: all 0.5s ease;
 }
 .footer-col .social-links a:hover {
   color: #242b26;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
 }
 
 /*responsive*/
