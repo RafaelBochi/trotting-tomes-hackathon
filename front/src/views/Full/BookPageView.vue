@@ -33,6 +33,7 @@ const book = ref({
     name: "",
   },
   stock: 0,
+  paginas: 0,
 })
 
 function addToCart() {
@@ -69,6 +70,10 @@ function minusQuantCart() {
   if (quantCart.value > 1) {
     quantCart.value--
   }
+}
+
+function gerarPaginas() {
+  return ((Math.random() + 200)).toFixed(0)
 }
 
 onMounted(async () => {
@@ -170,13 +175,13 @@ onMounted(async () => {
 
       <div>
         <p>Número de Páginas</p>
-        <p>360</p>
+        <p>{{ book.paginas }}</p>
       </div>
 
       <div>
         <p>ISBN</p>
         <p>
-          {{ book.isbn }}
+          978-8535908064
         </p>
       </div>
     </div>

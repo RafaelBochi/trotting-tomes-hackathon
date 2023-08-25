@@ -26,7 +26,7 @@ onBeforeMount(
     await othersStore.getAuthors();
     await othersStore.getComents();
 
-    if(userStore.loggedIn) {
+    if (userStore.loggedIn) {
       await favoriteStore.getFavorites();
       await cartStore.getCart()
       await cartStore.getBooksCart()
@@ -37,10 +37,11 @@ onBeforeMount(
 </script>
 
 <template>
-    <PreLoaderVue v-if="showPreloader"/>
+  <div>
+    <PreLoaderVue v-if="showPreloader" />
     <MessageModalVue />
     <RouterView />
+  </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
