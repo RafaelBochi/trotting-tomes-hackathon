@@ -153,8 +153,8 @@ h2 {
     width: 100px;
     height: 30px;
     background: transparent;
-    color: rgb(137, 17, 17);
-    border: 2px solid rgb(158, 16, 16);
+    color: var(--error-color);
+    border: 2px solid var(--error-color);
     border-radius: 3px;
     font-size: 1.4rem;
     font-weight: bold;

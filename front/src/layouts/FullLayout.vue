@@ -70,17 +70,6 @@ function toggleCart() {
   
 }
 
-function toggleAccount() {
-  if(showAccount.value) {
-    showAccount.value = !showAccount.value
-    document.querySelector('#app').style.overflow = 'auto';
-  }
-  else {
-    showAccount.value = !showAccount.value;
-    document.querySelector('#app').style.overflow = 'hidden';
-  }
-}
-
 const headerResponsive = ref(false)
 
 function checkHeaderResponsive() {

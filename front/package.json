@@ -16,7 +16,6 @@
     "@glidejs/glide": "^3.6.0",
     "@vueuse/core": "^10.2.0",
     "axios": "^1.4.0",
-    "glidejs": "^2.1.0",
     "pinia": "^2.1.3",
     "surge": "^0.23.1",
     "three": "^0.155.0",

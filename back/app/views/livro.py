@@ -48,6 +48,7 @@ def getBooksOfFilters(request):
     order = request.GET.get("order")
     genres_id = request.GET.getlist("genres[]")
     authors_id = request.GET.getlist("authors[]")
+    print(authors_id)
 
     if len(genres_id) > 0:
         livros = Livro.objects.filter(genre__in=genres_id).distinct()
@@ -63,7 +64,7 @@ def getBooksOfFilters(request):
         livros = livros.exclude(author__in=authors_to_exclude)
 
     if len(authors_id) > 0 and len(genres_id) == 0:
-        livros = Livro.objects.filter(authors__in=authors_id).distinct()
+        livros = Livro.objects.filter(author__in=authors_id).distinct()
 
     if len(genres_id) == 0 and len(authors_id) == 0:
         livros = Livro.objects.all()

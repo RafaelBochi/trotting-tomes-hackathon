@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref, onMounted } from "vue";
-import BookPage from "../../../views/Full/BookPageView.vue";
 import { useUserStore } from "@/stores/user.js";
 import { useOthersStore } from "@/stores/others.js";
 import { useRouter } from "vue-router";
@@ -134,6 +133,9 @@ onMounted(
           />
         </button>
       </div>
+      <span class="sale" v-if="book.desconto > 0">
+        <img src="/desconto.webp" alt="">
+      </span>
     </div>
   </span>
 
@@ -284,8 +286,18 @@ onMounted(
   z-index: 2;
 }
 
+.price-sale {
+  padding-top: 5px;
+}
+
 .price-sale .priceReal {
-  font-size: 0.5rem;
+  font-size: 1rem !important;
+  text-decoration: line-through;
+}
+
+.price-sale .priceDescount {
+  font-size: 1.6rem !important;
+  color: var(--lime-green);
 }
 
 .produto .vendas {
@@ -318,5 +330,16 @@ button p {
 
 button:hover {
   background-color: var(--primary-color-50);
+}
+
+.sale {
+  position: absolute;
+  top: 20px;
+  left: 0px;
+}
+
+.sale img {
+  width: 120px;
+  height: 50px;
 }
 </style>

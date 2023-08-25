@@ -1,14 +1,14 @@
 <script setup>
 import Item from './Item.vue';
-import { useUserStore } from '@/stores/user.js';
 import { computed } from 'vue';
+import { useFavoriteStore } from '@/stores/favorite'
 
-const userStore = useUserStore();
+const favoriteStore = useFavoriteStore();
 
-const favorites = computed(() => userStore.favorites);
+const favorites = computed(() => favoriteStore.favorites);
 
 function deleteFavorite(id) {
-  userStore.deleteFavorite(id);
+  favoriteStore.deleteFavorite(id);
 } 
 </script>
 
