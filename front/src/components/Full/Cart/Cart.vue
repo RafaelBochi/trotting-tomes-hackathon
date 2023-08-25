@@ -36,6 +36,10 @@ function changeQuantity(id, item, book, quantidade) {
     <span class="close" @click="$emit('close')">
       <font-awesome-icon :icon="['fas', 'xmark']" size="xl"/>
     </span>
+
+    <div class="buyButton">
+      <button>Comprar</button>
+    </div>
   </section>
 </template>
 
@@ -44,7 +48,7 @@ function changeQuantity(id, item, book, quantidade) {
   max-width: 400px;
   min-width: 200px;
   width: 400px;
-  height: 100%;
+  height: calc(100% - 65px);
   background-color: #fff;
   position: fixed;
   right: 0;
@@ -95,5 +99,17 @@ h2 {
     top: 105px;
     padding-top: 10px;
   }
+}
+
+.buyButton {
+  position: absolute;
+  bottom: 0%;
+  height: 50px;
+  width: 100%;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 </style>
