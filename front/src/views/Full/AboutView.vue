@@ -1,13 +1,14 @@
 <script setup>
 import HeaderResponsive from '@/components/Full/Responsive/HeaderResponsive.vue';
 
+
 </script>
 
 <template>
 <main>
   <div class="Informacoes">
     <div class="Imagem">
-      <img src="../Full/" alt="Imagem">
+      <img src="book.capa.url" alt="Imagem">
     </div>
     <div class="Conteudo">
       <h1>Sobre a Trotting Tomes</h1>
@@ -17,6 +18,7 @@ import HeaderResponsive from '@/components/Full/Responsive/HeaderResponsive.vue'
     <h3> REDES SOCIAIS FORMAS DE CONTATO</h3>
     <p> trottingtomes@gmail.com</p>
     <p>  +55 (99) 9999-9999</p>
+    
   </div>
 </main>
 </template>
