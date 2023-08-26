@@ -34,6 +34,7 @@ const book = ref({
   },
   stock: 0,
   paginas: 0,
+  desconto: 0
 })
 
 function addToCart() {
@@ -102,7 +103,20 @@ onMounted(async () => {
           {{ book.title }}
         </h2>
 
-        <p class="price">R$ {{ book.price }}</p>
+        <div class="sale" v-if="book.desconto > 0">
+          <p class="priceSale">
+            R$ {{ book.price }}
+          </p>
+          <p class="priceReal">
+            R$ {{ (Number(book.price / (1-(book.desconto/100)))).toFixed(2) }}
+          </p>
+          <i class="bar"></i>
+          <p class="descount">
+            {{ Number(book.desconto).toFixed(0) }}% OFF
+          </p>
+        </div>
+        <p class="price" v-else>R$ {{ book.price }}</p>
+
 
         <div class="starsBook">
           <span class="stars" @click="goToComents">
@@ -151,7 +165,7 @@ onMounted(async () => {
             </i>
           </span>
           <button @click="addToCart">Adicionar ao Carrinho</button>
-          <p>
+          <p class="restantes">
             {{ book.stock }} restantes
           </p>
         </div>
@@ -235,8 +249,10 @@ section > div img {
 }
 
 .info .price {
-  font-size: 2rem;
-  font-weight: 400;
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  font-weight: bolder;
+  margin: 10px 0;
 }
 
 .info .starsBook {
@@ -252,7 +268,7 @@ section > div img {
 }
 
 .info .description {
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   font-weight: 400;
   text-align: justify;
   margin: 4% 0;
@@ -298,6 +314,10 @@ section > div img {
   cursor: pointer;
 }
 
+.info .actions .restantes {
+  font-size: 1.3rem;
+}
+
 .details {
   display: flex;
   flex-direction: column;
@@ -315,6 +335,40 @@ section > div img {
   display: flex;
   justify-content: space-between;
   width: 300px;
+}
+
+.sale {
+  display: flex;
+  gap: 5px;
+  align-items: end;
+  margin: 10px 0;
+}
+
+.sale .priceSale {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  font-weight: bolder;
+  height: 18px;
+}
+
+.sale .priceReal {
+  color: var(--primary-color-50);
+  font-size: 1.2rem;
+  font-weight: bolder;
+  text-decoration: line-through;
+}
+
+.sale .descount {
+  color: var(--lime-green);
+  font-size: 1.2rem;
+  font-weight: bolder;
+}
+
+.sale .bar {
+  width: 1px;
+  height: 20px;
+  background-color: var(--primary-color-50);
+  margin: 0 5px;
 }
 
 </style>

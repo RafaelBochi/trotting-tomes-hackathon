@@ -113,9 +113,9 @@ onMounted(
               </p>
             </span>
             <p class="price-sale" v-if="book.desconto > 0">
-              <p class="priceReal">R$ {{ book.price }}</p>
+              <p class="priceReal">R$ {{ (Number(book.price / (1-(book.desconto/100)))).toFixed(2) }}</p>
               <p class="priceDescount">
-                R$ {{ (book.price - (book.price * book.desconto) / 100).toFixed(2) }}
+                R$ {{ book.price }}
               </p>
             </p>
             <p class="price" v-else>R${{ book.price }}</p>
@@ -135,6 +135,9 @@ onMounted(
       </div>
       <span class="sale" v-if="book.desconto > 0">
         <img src="/desconto.webp" alt="">
+        <div class="text">
+          <p>{{ Number(book.desconto).toFixed(0) }}%</p>
+        </div>
       </span>
     </div>
   </span>
@@ -341,5 +344,22 @@ button:hover {
 .sale img {
   width: 120px;
   height: 50px;
+}
+
+.sale .text {
+  position: relative;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: -5px;
+}
+
+.sale .text p {
+  font-size: 2rem;
+  font-weight: bolder;
+  color: #fff;
+  z-index: 2;
+  padding-bottom: 3px;
 }
 </style>

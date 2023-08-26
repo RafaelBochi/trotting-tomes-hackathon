@@ -2,7 +2,7 @@
 import Item from './Item.vue';
 import { useUserStore } from '@/stores/user.js';
 import { useCartStore } from "@/stores/cart"
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const userStore = useUserStore();
 const cartStore = useCartStore();
@@ -19,6 +19,24 @@ function changeQuantity(id, item, book, quantidade) {
   else if(item.quantidade == book.stock && quantidade == 1) return;
   cartStore.changeQuantity(id, item, book, quantidade);
 }
+
+const heightHeader = ref(0);
+
+function getHeigthHeader() {
+  const header = document.querySelector('header');
+  if (header) {
+    heightHeader.value = header.offsetHeight;
+    const cart = document.querySelector('.cart');
+    if (cart) {
+      cart.style.top = `${heightHeader.value}px`;
+      cart.style.height = `calc(100% - ${heightHeader.value}px)`;
+    }
+  }
+}
+
+onMounted(()=> {
+  getHeigthHeader();
+})
 </script>
 
 <template>
@@ -38,7 +56,9 @@ function changeQuantity(id, item, book, quantidade) {
     </span>
 
     <div class="buyButton">
-      <button>Comprar</button>
+      <button>
+        <p>Comprar (R$ {{ cartStore.cart.total }})</p>
+      </button>
     </div>
   </section>
 </template>
@@ -104,12 +124,29 @@ h2 {
 .buyButton {
   position: absolute;
   bottom: 0%;
-  height: 50px;
+  height: 70px;
   width: 100%;
-  padding: 5px 10px;
+  padding: 15px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.buyButton button {
+  width: 80%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: bolder;
+  font-size: 1.5rem;
+  cursor: pointer;
+  text-align: start;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

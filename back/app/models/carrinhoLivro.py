@@ -14,7 +14,7 @@ class CarrinhoLivro(models.Model):
         verbose_name_plural = "CarrinhoLivros"
 
     def __str__(self):
-        return self.livro.title
+        return f'{self.quantidade} - {self.livro}'
     
 @receiver(post_save, sender=CarrinhoLivro)
 def create_carrinhoLivro(sender, instance=None, created=False, **kwargs):

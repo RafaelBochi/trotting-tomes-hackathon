@@ -22,7 +22,7 @@ export const useFavoriteStore = defineStore("favorite", {
           async addFavorite(book){
             try {
               const values = {
-                user: this.user.id,
+                user: useUserStore().user.id,
                 book: book.id,
               }
               const data = await favoriteService.addFavorite(values);

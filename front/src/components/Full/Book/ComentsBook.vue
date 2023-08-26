@@ -18,7 +18,7 @@ const props = defineProps({
   },
 });
 
-const filterComents = ref([]);
+const filterComents = ref();
 const mediaStars = computed(()=> {
   if (props.coments.length == 0) {
     return 0;
@@ -38,10 +38,6 @@ const mediaStars = computed(()=> {
 });
 const showFormComent = ref(false);
 
-onUpdated( () => {
-  filterComents.value = props.coments;
-});
-
 async function addComent(comentInputs) {
   const coment = {
     title: comentInputs.title,
@@ -58,18 +54,13 @@ async function addComent(comentInputs) {
 const showComents = ref(true)
 
 function filterComentsFunc(stars) {
-  console.log(stars)
+  console.log(filterComents.value)
   filterComents.value = [];
   if(stars == 0) filterComents.value = props.coments;
-  for (let coment of props.coments) {
-    if (coment.stars == stars) {
-      coment.date = coment.date.split("T")[0].split("-").reverse().join("/");
-      filterComents.value.push(coment);
-    }
-  }
+  else filterComents.value = props.coments.filter(coment => coment.stars === stars);
   if (filterComents.value.length == 0) showComents.value = false;
   else showComents.value = true;
-  console.log(filterComents.value.length)
+  console.log(filterComents.value)
 }
 
 function toggleFormComent() {
@@ -79,6 +70,10 @@ function toggleFormComent() {
     userStore.popUpLogin = true;
   }
 }
+
+onMounted(()=> {
+  filterComentsFunc(0);
+})
 </script>
 
 <template>
@@ -115,6 +110,8 @@ function toggleFormComent() {
       </div>
 
       <div class="filters">
+
+        <div @click="filterComentsFunc(0)">Todos</div>
         <div v-for="i in 5" :key="i">
           <span class="stars" @click="filterComentsFunc(i)">
             <input type="radio" />
@@ -133,7 +130,6 @@ function toggleFormComent() {
             <label :class="i > 4 ? 'true' : ''"></label>
           </span>
         </div>
-        <div @click="filterComentsFunc(0)">Todos</div>
       </div>
       </div>
     </div>
@@ -300,7 +296,7 @@ function toggleFormComent() {
 
 .filters {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   width: 600px;
   gap: 10px;
   padding: 1%;

@@ -33,12 +33,10 @@ class CartService {
             
         };
         const { data } = await axios.patch(`/carrinhoLivros/${id}/`, values, config )
-        console.log(data)
         return data;
     }
     async addBookCart(values) {
         const userStore = useUserStore();
-        
         const config = {
             headers: { Authorization: `Bearer ${userStore.user.token}`,  
             'Content-Type': 'multipart/form-data',

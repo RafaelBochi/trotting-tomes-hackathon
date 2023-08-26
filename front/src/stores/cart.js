@@ -6,14 +6,15 @@ import { useUserStore } from "./user";
 export const useCartStore = defineStore("cart", {
     state: () => ({
         booksCart: useStorage("booksCart", []),
-        cartId: useStorage("cart", Number),
+        cartId: useStorage("cartId", Number),
+        cart: useStorage("cart", []),
     }),
     actions: {
         async getCart() {
             try{
               const data = await cartService.getCart(useUserStore().user.id)
               this.cartId = data[0].id
-              
+              this.cart = data[0]
             } catch(error) {
               console.log(error)
             }
@@ -39,7 +40,7 @@ export const useCartStore = defineStore("cart", {
               }
               const data = await cartService.changeQuantity(values, id);
               this.getBooksCart(this.cartId)
-              console.log('a')
+              this.getCart()
             } catch (error) {
               console.log(error); // Lidar com exceções
             }
@@ -47,7 +48,6 @@ export const useCartStore = defineStore("cart", {
           ,
           async addBookCart(book, quantidade){
             try {
-              console.log(book)
               const values = {
                 carrinho: this.cartId,
                 livro: book,
@@ -63,6 +63,7 @@ export const useCartStore = defineStore("cart", {
               }
               const data = await cartService.addBookCart(values);
               this.getBooksCart()
+              this.getCart()
             } catch (error) {
               console.log(error); // Lidar com exceções
             }
@@ -71,6 +72,7 @@ export const useCartStore = defineStore("cart", {
             try {
               const data = await cartService.deleteBookCart(id);
               this.getBooksCart()
+              this.getCart()
             } catch (error) {
               console.log(error); // Lidar com exceções
             }
