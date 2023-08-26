@@ -96,7 +96,7 @@ onMounted(async () => {
 <template>
   <section>
     <div>
-      <img :src="book.capa" alt="" />
+      <img :src="book.capa.url" alt="" />
 
       <div class="info">
         <h2>

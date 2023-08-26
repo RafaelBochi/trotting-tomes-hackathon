@@ -7,4 +7,3 @@ from .compra import CompraViewSet
 from .compraLivro import CompraLivroViewSet
 from .coment import ComentViewSet
 from .favorite import FavoriteViewSet
-from .images import ImagesViewSet

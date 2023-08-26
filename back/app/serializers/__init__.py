@@ -7,4 +7,3 @@ from .compra import CompraSerializer, CompraSerializerCreate
 from .compraLivro import CompraLivroSerializer, CompraLivroSerializerCreate
 from .coment import ComentSerializer, ComentSerializerCreate
 from .favorite import FavoriteSerializer, FavoriteSerializerCreate
-from .images import ImagesSerializer

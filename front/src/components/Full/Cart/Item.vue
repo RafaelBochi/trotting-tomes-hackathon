@@ -10,7 +10,7 @@ const props = defineProps({
 
 <template>
     <div class="item">
-        <img :src="item.livro.capa" alt="">
+        <img :src="item.livro.capa.url" alt="">
 
         <div class="info">
             <h3>{{ item.livro.title }}</h3>

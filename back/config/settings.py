@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'uploader',
     'app',
     'usuario',
     'rest_framework',
@@ -152,7 +153,10 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'trottingtomes@gmail.com'
 EMAIL_HOST_PASSWORD = 'trottingtomes1?'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# App Uploader settings
+MEDIA_URL = "http://localhost:8000/media/"
+MEDIA_ENDPOINT = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+FILE_UPLOAD_PERMISSIONS = 0o640
 
 APPEND_SLASH=False

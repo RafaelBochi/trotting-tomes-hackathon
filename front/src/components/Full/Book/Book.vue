@@ -89,7 +89,7 @@ onMounted(
         <font-awesome-icon v-else :icon="['fas', 'heart']" />
       </span>
       <div @click="openBookPage">
-        <img :src="book.capa" alt="" />
+        <img :src="book.capa.url" alt="" />
         <span class="info">
           <p class="title">{{ book.title }}</p>
             <span class="stars starsBook">

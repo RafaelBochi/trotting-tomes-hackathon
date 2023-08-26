@@ -22,11 +22,7 @@ export const useCartStore = defineStore("cart", {
           async getBooksCart(){
             try {
               const data = await cartService.getBooksCart(this.cartId);
-              for (let item of data) {
-                item.livro.capa = "http://127.0.0.1:8000/" + item.livro.capa;
-              }
               this.booksCart = data;
-              
             } catch (error) {
               console.log(error); // Lidar com exceções
             }

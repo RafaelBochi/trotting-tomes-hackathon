@@ -20,9 +20,6 @@ export const useBookStore = defineStore("book", {
         console.log(filters);
 
         const data = await bookService.getBooksFilter(filters);
-        for (let livros of data) {
-          livros.capa = "http://127.0.0.1:8000/" + livros.capa;
-        }
         this.books = data;
       } catch (e) {
         console.log(e);
@@ -31,9 +28,6 @@ export const useBookStore = defineStore("book", {
     async getSearchBooks(search) {
       try {
         const data = await bookService.getSearchBooks(search);
-        for (let livros of data) {
-          livros.capa = "http://127.0.0.1:8000/" + livros.capa;
-        }
         this.searchBooks = data;
       } catch (e) {
         console.log(e);

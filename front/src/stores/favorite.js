@@ -11,9 +11,6 @@ export const useFavoriteStore = defineStore("favorite", {
         async getFavorites(){
             try {
               const data = await favoriteService.getFavorites(useUserStore().user.id);
-              for (let item of data) {
-                item.book.capa = "http://127.0.0.1:8000/" + item.book.capa;
-              }
               this.favorites = data;
             } catch (error) {
               console.log(error); // Lidar com exceções
