@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "vue-material-design-icons": "^5.2.0"
   }
 }
