@@ -49,7 +49,7 @@ onMounted(async () => {
   <section class="bestSellers">
     <div class="slideBestSellers">
       <div v-for="book, index in booksBestSellers" :key="book.id">
-        <img :src="book.capa" alt="" class="slide" :class="currentSlide == index ? 'activeSlide' : ''" @click="currentSlide == index ? openBookPage(book.id) : changeSlide(index)">
+        <img :src="book.capa.url" alt="" class="slide" :class="currentSlide == index ? 'activeSlide' : ''" @click="currentSlide == index ? openBookPage(book.id) : changeSlide(index)">
       </div>
     </div>
       <span class="arrow arrowBack" @click="changeSlide(currentSlide - 1)">
