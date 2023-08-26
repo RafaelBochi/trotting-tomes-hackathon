@@ -25,7 +25,6 @@ window.addEventListener("scroll", reveal);
         <h1>Sobre</h1>
         <p>HACKATON</p>
         <p>2INFO3</p>
-        <a class="btn" href="#sobre">Sobre</a>
       </div>
       <div class="svg-hero" style="height: 150px; overflow: hidden">
         <svg
@@ -75,7 +74,6 @@ window.addEventListener("scroll", reveal);
             hoje em dia tem alguma forma de se conectar a internet, a partir
             desse ponto decidimos fazer a loja virtual Trotting Tomes
           </p>
-          <a href="">Read More</a>
         </div>
       </div>
     </div>
