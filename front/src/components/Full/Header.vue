@@ -84,54 +84,49 @@ router.afterEach((to) => {
       </router-link>
     </div>
 
-      <div class="links">
-        <router-link
-          v-for="(link, index) in links"
-          :to="`/${link}`"
-          :key="link"
-          :class="{ 'active-link': activeRoute == link }"
-          :id="`link${index}`"
-          @click="setActiveLink(index)"
-        >
-          <a href="">
-            <p>
-              {{ link }}
-            </p>
-          </a>
-        </router-link>
-        <div class="animation-bar" :style="animationBarStyle"></div>
-      </div>
+    <div class="links">
+      <router-link v-for="(link, index) in links" :to="`/${link}`" :key="link"
+        :class="{ 'active-link': activeRoute == link }" :id="`link${index}`" @click="setActiveLink(index)">
+        <a href="">
+          <p>
+            {{ link }}
+          </p>
+        </a>
+      </router-link>
+      <div class="animation-bar" :style="animationBarStyle"></div>
+    </div>
 
-      <div class="actions">
-        <Search />
+    <div class="actions">
+      <Search />
 
-      <div class="auth"  v-if="userStore.loggedIn != true">
+      <div class="auth" v-if="userStore.loggedIn != true">
         <router-link to="/login">
           <button>
-            <font-awesome-icon
-              :icon="['fas', 'user']"
-              size="xl"
-              style="color: #fff"
-            />
+            <font-awesome-icon :icon="['fas', 'user']" size="xl" style="color: #fff" />
 
             <p>Entrar</p>
           </button>
         </router-link>
       </div>
 
+      <div class="userInfo" v-else>
+        <!-- <img src="/userIcon.png" alt="Icone Usuario"> -->
+        <div>
+          <p class="name">
+            {{ userStore.user.username }}
+          </p>
+
+          <p class="email">
+            {{ userStore.user.email }}
+          </p>
+        </div>
+      </div>
+
       <div class="carrinho" @click="$emit('toggleCart')">
-        <font-awesome-icon
-          :icon="['fas', 'shopping-cart']"
-          size="2xl"
-          style="color: var(--primary-color)"
-        />
+        <font-awesome-icon :icon="['fas', 'shopping-cart']" size="2xl" style="color: var(--primary-color)" />
       </div>
       <div class="settings" @click="$emit('toggleSettings')">
-        <font-awesome-icon
-          :icon="['fas', 'gear']"
-          size="2xl"
-          style="color: var(--primary-color)"
-        />
+        <font-awesome-icon :icon="['fas', 'gear']" size="2xl" style="color: var(--primary-color)" />
       </div>
     </div>
   </header>
@@ -215,6 +210,7 @@ header {
   font-size: 1.3rem;
   width: 15%;
 }
+
 .auth button {
   border: none;
   background-color: var(--lime-green);
@@ -242,6 +238,42 @@ a {
   text-decoration: none;
 }
 
+.userInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.userInfo img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userInfo .name {
+  white-space: nowrap;
+  /* Impede que o texto seja quebrado em várias linhas */
+  overflow: hidden;
+  /* Oculta o conteúdo que excede o contêiner */
+  text-overflow: ellipsis;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  text-transform: uppercase;
+  color: var(--primary-color);
+  width: 150px;
+}
+
+.userInfo .email {
+  white-space: nowrap;
+  /* Impede que o texto seja quebrado em várias linhas */
+  overflow: hidden;
+  /* Oculta o conteúdo que excede o contêiner */
+  text-overflow: ellipsis;
+  width: 150px;
+}
+
 .carrinho,
 .settings {
   position: relative;
@@ -250,6 +282,7 @@ a {
   justify-content: center;
   cursor: pointer;
   transition: 0.5s;
+  padding-right: 10px;
 }
 
 .carrinho:hover {

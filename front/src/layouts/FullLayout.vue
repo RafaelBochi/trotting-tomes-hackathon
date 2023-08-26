@@ -100,8 +100,9 @@ onMounted(() => {
 <template>
   <main>
     <HeaderResponsive @toggle-cart="toggleCart" v-if="headerResponsive" @toggle-menu="toggleMenu"/>
-
     <Header @toggle-cart="toggleCart" @toggle-settings="toggleSettings" :links="links" v-else/>
+
+    <MenuResponsive v-if="showMenuResponsive" :class="closeMenuResponsive != false ? 'closeMenuResponsive' : ''" @toggle-menu="toggleMenu"/>
 
     <Cart v-if="showCart" @close="toggleCart" :class="closeCart != false ? 'closeCart' : ''" class="cart"/>
 
@@ -112,7 +113,7 @@ onMounted(() => {
     <PopUpSettings v-if="showSettings"  @toggle-favorites="toggleFavorites" @logout="userStore.logout" :class="closeSettings != false ? 'closeSettings' : ''"/>
 
 
-    <MenuResponsive v-if="showMenuResponsive" :class="closeMenuResponsive != false ? 'closeMenuResponsive' : ''" @toggle-menu="toggleMenu"/>
+    
   </main>
 </template>
 

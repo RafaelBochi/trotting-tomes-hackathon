@@ -18,6 +18,7 @@ from datetime import datetime
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from uploader.models import Image
 
 User = get_user_model()
 
@@ -260,17 +261,38 @@ def change_password(request):
         {"message": "Senha atualizada com sucesso."}, status=status.HTTP_200_OK
     )
 
-@api_view(["PATCH"])
+def upload_user_foto(user_id, image):
+    user = User.objects.get(id=user_id)
+
+    if user.foto is not None:
+        existing_foto = Image.objects.get(attachment_key=user.foto.attachment_key)
+        existing_foto.delete()
+
+    # Agora, crie um novo registro de imagem para a foto enviada
+    new_foto = Image.objects.create(file=image, description=f"Foto de perfil do usuário - {user.username}")
+    user.foto = new_foto
+    user.save()
+    print(user.foto)
+
+
+    response_data = {
+        "foto": "Foto excluída com sucesso.",
+    }
+
+    return Response(response_data, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
 @authentication_classes([])
 @permission_classes([])
 def edit_account(request):
     print(request.data.get("image"))
     print(request.data)
     user_id = request.data.get('user_id')
-    username = request.data.get("values[username]")
-    email = request.data.get("values[email]")
-    password = request.data.get("values[password]")
+    username = request.data.get("username")
+    email = request.data.get("email")
+    password = request.data.get("password")
     image = request.FILES.get("image")
+
 
     user = User.objects.get(id=user_id)
 
@@ -282,17 +304,15 @@ def edit_account(request):
 
     if password != '' and password is not None and password != user.password:
         user.set_password(password)
+        
 
-    if image is not None:
-        user.image.delete()  # Exclui a imagem anterior, se houver
-        user.image = image  # Adiciona a nova imagem
-        print('aaaa')
-        user.save()
-
-    print(user.image)
+    # upload_user_foto(user_id, image)
+    user.save()
 
     response_data = {
         "message": "Usuário atualizado com sucesso.",
+        "username": user.username,
+        "email": user.email,
     }
 
     return Response(response_data, status=status.HTTP_200_OK)

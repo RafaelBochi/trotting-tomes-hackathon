@@ -26,7 +26,7 @@ class UserService {
         const { data } = await axios.post("/api/change_password/", values )
         return data;
     }
-    async uploadImage(image) {
+    async editAccount(values) {
         const userStore = useUserStore();
         const config = {
             headers: { Authorization: `Bearer ${userStore.user.token}`,  
@@ -34,29 +34,8 @@ class UserService {
             accept: 'application/json', },
             
         };
-        console.log(image)
-        const { data } = await axios.post("/api/profileImages/", {
-            url: image,
-            user: userStore.user.id,
-            name: userStore.user.name + userStore.user.id,
-        }, config ).then((response) => {
-            console.log(response)
-        }).catch((error) => {
-            console.log(error)
-        })
+        const { data } = await axios.post(`/api/edit_account/`,values, config )
         return data;
-    }
-    async editAccount(userId, values, image) {
-        const userStore = useUserStore();
-        const config = {
-            headers: { Authorization: `Bearer ${userStore.user.token}`,  
-            'Content-Type': 'multipart/form-data',
-            accept: 'application/json', },
-            
-        };
-        if (image) {
-            this.uploadImage(image)
-        }
     }
 }
 

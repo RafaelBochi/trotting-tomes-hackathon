@@ -17,39 +17,35 @@ onMounted(() => {
 </script>
 
 <template>
-    <aside>
+    <div class="menu"> 
         <span class="close" @click="$emit('toggleMenu')">
-            <font-awesome-icon :icon="['fas', 'xmark']" size="xl"/>
+            <font-awesome-icon :icon="['fas', 'xmark']" size="xl" />
         </span>
         <div class="links">
-        <router-link
-          v-for="(link, index) in links"
-          :to="`/${link}`"
-          :key="link"
-          :id="activeRoute == link ? 'active-link' : 'noactive-link'"
-          class="link"
-          @click="setActiveLink(link)"
-        >
-            <p>
-              {{ link }}
-            </p>
-        </router-link>
+            <router-link v-for="(link, index) in links" :to="`/${link}`" :key="link"
+                :id="activeRoute == link ? 'active-link' : 'noactive-link'" class="link" @click="setActiveLink(link)">
+                <p>
+                    {{ link }}
+                </p>
+            </router-link>
         </div>
 
         <div class="actions">
 
         </div>
-    </aside>
+    </div>
 </template>
 
 <style scoped>
-aside {
-    width: 100%;
-    height: 100%;
+.menu {
+    max-width: 400px;
+    min-width: 200px;
+    width: 400px;
+    height: calc(100% - 50px);
     background-color: #fff;
     position: fixed;
-    top: 0;
-    left: 0;
+    left: calc(100% - 400px) !important;
+    top: 50px;
     z-index: 10;
     padding: 1% 0;
     border-left: 6px solid var(--primary-color);
@@ -66,7 +62,7 @@ aside {
     }
 
     100% {
-        left: 0;
+        left: calc(100% - 400px) !important;
     }
 }
 

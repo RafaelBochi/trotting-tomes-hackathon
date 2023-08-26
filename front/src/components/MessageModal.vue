@@ -41,7 +41,7 @@ onMounted(() => {
         position: fixed;
         top: 10vh;
         right: 0;
-        width: 250px;
+        width: 280px;
         height: 35px;
         background-color: #ffffff77;
         z-index: 100;

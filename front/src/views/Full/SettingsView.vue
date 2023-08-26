@@ -13,26 +13,10 @@ const inputEmail = ref(userStore.user.email)
 const inputPassword = ref('')
 const inputPasswordConfirm = ref('')
 const imageInput = ref(null)
+const selectedImage = ref(null)
 
-async function loadImage(e) {
-    const formData = new FormData();
-    const selectedFile = e.target.files[0];
-    formData.append('image', selectedFile );
-    const config = {
-            headers: { Authorization: `Bearer ${userStore.user.token}`,  
-            'Content-Type': 'multipart/form-data'}
-            
-        };
-        const { data } = await axios.post("/api/profileImages/", {
-            url: formData,
-            user: userStore.user.id,
-            name: userStore.user.name + userStore.user.id,
-        }, config ).then((response) => {
-            console.log(response)
-        }).catch((error) => {
-            console.log(error)
-        })
-    imageInput.value = formData;
+async function loadImage(event) {
+    selectedImage.value = event.target.files[0];
 }
 
 function verificationInputs() {
@@ -44,14 +28,23 @@ function verificationInputs() {
 }
 
 const editAccount = () => {
+    console.log(selectedImage.value)
     if (!verificationInputs()) return;
+    let formData = new FormData();
+    formData.append('file', selectedImage.value);
     const values = {
         username: inputName.value,
         email: inputEmail.value,
         password: inputPassword.value,
     }
-    userStore.editAccount(values, imageInput.value);
-    console.log(imageInput.value)
+    userStore.editAccount(values, formData);
+    console.log(formData)
+            // const fd = new FormData();
+            // fd.append('image', selectedImage.value)
+            // axios.patch(`http://127.0.0.1:8000/api/usuarios/31/`, fd)
+            // .then(response =>{
+            //     console.log(response);
+            // })
 }
 </script>
 
@@ -85,15 +78,15 @@ const editAccount = () => {
         <div class="contentEditAccount">
             <h2>Edite Sua Conta</h2>
             <div class="form">
-                <div class="userImg">
+                <!-- <div class="userImg">
                     <img :src="imageInput != '' ? imageInput : userStore.user.image" alt="">
 
                     <label for="imageInput" >
                         <font-awesome-icon :icon="['fas', 'camera']" size="xl" />
                     </label>
 
-                    <input id="imageInput" type="file" accept="image/*" @change="loadImage">
-                </div>
+                    <input id="imageInput" type="file" accept="image/jpeg, image/jpg, image/png" @change="loadImage">
+                </div> -->
 
                 <div class="inputs">
                     <div class="inputName">

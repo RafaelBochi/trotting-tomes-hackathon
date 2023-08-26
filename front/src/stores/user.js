@@ -23,7 +23,6 @@ export const useUserStore = defineStore('user', {
         this.user = {
           username: data.username,
           email: data.email,
-          image: "http://localhost:8000/media/" + data.image,
           id: data.id,
           token: data.access
         }
@@ -102,11 +101,18 @@ export const useUserStore = defineStore('user', {
         return false;
       }
     },
-    async editAccount(values, image){
+    async editAccount(dados, image){
       try {
-        console.log(values)
-        const data = await userService.editAccount(this.user.id, values, image);
-        console.log(data)
+        const values = {
+          user_id: this.user.id,
+          username: dados.username,
+          email: dados.email,
+          image: image
+        }
+        const data = await userService.editAccount(values);
+        this.user.username = data.username;
+        this.user.email = data.email;
+        useGlobalStore().showMessageModal(data.message, "success")
       } catch (error) {
         console.log(error); // Lidar com exceções
       }
