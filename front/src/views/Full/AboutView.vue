@@ -9,7 +9,7 @@ import Horse3d from "@/components/Full/About/Horse3d.vue";
         <Horse3d/>
       </div>
       <div class="Conteudo">
-        <h1>Sobre a <span>Trotting Tomes</span></h1>
+      <h1>Sobre a <span class="title">Trotting Tomes</span></h1>
         <p class="paragrafo">Na <span>Trotting Tomes</span>, não apenas vendemos livros - compartilhamos histórias,
           exploramos universos e alimentamos mentes curiosas. Somos mais do que uma loja virtual de livros; somos um
           refúgio para os amantes da literatura.</p> <br>
@@ -49,10 +49,10 @@ import Horse3d from "@/components/Full/About/Horse3d.vue";
     </div>
 
       <div class="icones">
-        <font-awesome-icon :icon="['fab', 'facebook']" class="icone" style="color: var(--primary-color)" size="2xl" />
-        <font-awesome-icon :icon="['fab', 'instagram']" class="icone" style="color: var(--primary-color)" size="2xl" />
-        <font-awesome-icon :icon="['fab', 'twitter']" class="icone" style="color: var(--primary-color)" size="2xl" />
-        <font-awesome-icon :icon="['fab', 'youtube']" class="icone" style="color: var(--primary-color)" size="2xl" />
+        <img src="/icones/facebook.png" alt="" width="100px">
+        <img src="/icones/instagram.png" alt=""  width="80px">
+        <img src="/icones/twitter.png" alt=""  width="100px">
+        <img src="/icones/youtube.png" alt=""  width="100px">
       </div>
     </div>
   </main>
@@ -161,5 +161,9 @@ span {
 
 .email {
   margin-left: 2%;
+}
+
+.title {
+  text-decoration: none !important;
 }
 </style>
