@@ -126,7 +126,7 @@ router.afterEach((to) => {
         <font-awesome-icon :icon="['fas', 'shopping-cart']" size="2xl" style="color: var(--primary-color)" />
       </div>
       <div class="settings" @click="$emit('toggleSettings')">
-        <font-awesome-icon :icon="['fas', 'gear']" size="2xl" style="color: var(--primary-color)" />
+        <font-awesome-icon :icon="['fas', 'gear']" size="2xl" style="color: var(--primary-color)" class="icon"/>
       </div>
     </div>
   </header>
@@ -285,11 +285,15 @@ a {
   padding-right: 10px;
 }
 
+.settings .icon {
+  transition: 0.5s all;
+}
+
 .carrinho:hover {
   transform: scale(1.2);
 }
 
-.settings:hover {
+.settings:hover > .icon {
   transform: scale(1.2) rotate(180deg);
 }
 </style>

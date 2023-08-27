@@ -1,4 +1,6 @@
 <script setup>
+import { defineProps, onMounted } from 'vue';
+
 const props = defineProps({
     item: {
         type: Object,
@@ -6,11 +8,14 @@ const props = defineProps({
     },
 });
 
+onMounted(() => {
+    console.log(props.item);
+})
 </script>
 
 <template>
     <div class="item">
-        <img :src="item.livro.capa.url" alt="">
+        <img :src="item.livro.capa.file" alt="">
 
         <div class="info">
             <h3>{{ item.livro.title }}</h3>

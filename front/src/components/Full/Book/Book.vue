@@ -26,7 +26,7 @@ const mediaStars = ref(0);
 
 onMounted(async () => {
   comentsBook.value = await othersStore.getComents(props.book.id);
-  
+  console.log(props.book)
   if (comentsBook.value.length > 0) { 
     for (let coment of comentsBook.value) {
       mediaStars.value += coment.stars

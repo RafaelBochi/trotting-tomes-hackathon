@@ -72,7 +72,8 @@ function toggleFormComent() {
 }
 
 onMounted(()=> {
-  filterComentsFunc(0);
+  filterComents.value = props.coments;
+  showComents.value = true;
 })
 </script>
 

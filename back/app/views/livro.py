@@ -97,8 +97,11 @@ def getBooksOfFilters(request):
             'author': livro.author,
             'genre': livro.genre.all(),
             'capa': livro.capa,
+            'desconto': livro.desconto,
+            'vendas': livro.vendas, 
         }
         data.append(livro_data)
+
 
     serializer = LivroSerializer(data, many=True)
     return Response(serializer.data, status=200)
@@ -125,6 +128,8 @@ def searchBooks(request):
             'author': livro.author,
             'genre': livro.genre.all(),
             'capa': livro.capa,
+            'desconto': livro.desconto,
+            'vendas': livro.vendas,
         }
         data.append(livro_data)
 

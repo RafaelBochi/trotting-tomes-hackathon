@@ -23,6 +23,7 @@ export const useCartStore = defineStore("cart", {
             try {
               const data = await cartService.getBooksCart(this.cartId);
               this.booksCart = data;
+              console.log(this.booksCart) 
             } catch (error) {
               console.log(error); // Lidar com exceções
             }
