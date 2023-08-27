@@ -60,9 +60,12 @@ main {
 }
 
 .Imagem img {
+  max-width: 100%;
   height: auto;
   display: block;
   transform: scaleX(-1);
+  margin: auto;
+
 }
 
 .Conteudo {
@@ -88,39 +91,54 @@ span {
 .Contato {
   font-size: 22px;
   margin-top: 4%;
-  grid-column: span 2;
   align-items: center;
 }
 
 .Contato h3{
   text-align: center;
 }
-.ContatoItem1 {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px; 
-  border-top: 2px solid black; 
-  padding-top: 10px; 
-  font-size: 20px;
-}
 
-.ContatoItem1 font-awesome-icon {
-  margin-right: 10px; 
-}
-
+.ContatoItem1,
 .ContatoItem2 {
   display: flex;
   align-items: center;
-  margin-bottom: 10px; 
-  border-bottom: 2px solid black; 
-  padding-bottom: 10px; 
+  margin-bottom: 10px;
   font-size: 20px;
+  margin-left: 4%;
+  margin-right: 4%;
+
 }
 
+.ContatoItem1{
+  border-top: 2px solid black; 
+}
+
+.ContatoItem2{
+  border-bottom: 2px solid black; 
+}
+.ContatoItem1 font-awesome-icon,
 .ContatoItem2 font-awesome-icon {
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
+.ContatoItem1 p,
+.ContatoItem2 p {
+  margin-left: 2%;
+}
+
+.icones {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 4%;
+}
+
+.icone {
+  font-size: 60px;
+  margin-left: 3%;
+  margin-right: 3%; 
+  margin-top: 10px;
+}
 .telefone{
   margin-left: 2%;
 }
@@ -129,15 +147,24 @@ span {
   margin-left: 2%;
 }
 
-.icones {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end; 
-  align-items: center; 
+
+@media screen and (min-width: 768px) {
+  main {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .Informacoes {
+    grid-template-columns: 1fr;
+  }
+
+  .Imagem img {
+    margin: 0;
+  }
+
+  .Contato {
+    font-size: 18px;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-.icone {
-  font-size: 60px; 
-  margin-left: 20px;
-}
 </style>
