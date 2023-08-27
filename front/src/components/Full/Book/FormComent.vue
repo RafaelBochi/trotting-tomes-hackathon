@@ -94,6 +94,7 @@ h2 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
 }
 
 .title {
@@ -107,6 +108,7 @@ h2 {
     padding: 2%;
     width: 100%;
     height: 35px;
+    font-size: 1.3rem;
 }
 
 .coment {
@@ -117,11 +119,11 @@ h2 {
     outline: 0;
     border-radius: 5px;
     border: black 2px solid;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     padding: 2%;
     resize: none;
-    overflow: hidden;
     height: 105px;
+
 }
 
 .inputs label {

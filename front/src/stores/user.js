@@ -4,6 +4,8 @@ import { useStorage } from '@vueuse/core'
 import userService from "@/api/user"
 import router from '../router';
 import { useGlobalStore } from './global';
+import { useFavoriteStore } from './favorite';
+import { useCartStore } from './cart';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -26,12 +28,14 @@ export const useUserStore = defineStore('user', {
           id: data.id,
           token: data.access
         }
-        console.log(this.user)
-        router.push('/')
+        router.go(-1)
+        await useFavoriteStore().getFavorites();
+        await useCartStore().getCart()
+        await useCartStore().getBooksCart()
         useGlobalStore().showMessageModal(data.message, "success")
       } catch(e) {
         useGlobalStore().showPreloader = false;
-        useGlobalStore().showMessageModal(e.response.data.error, "error")
+        useGlobalStore().showMessageModal(e.response.data.message, "error")
         console.log(e)
       }
     },
@@ -55,7 +59,13 @@ export const useUserStore = defineStore('user', {
     logout() {
       this.loggedIn = false;
       this.user = {};
-      router.push('/login');
+      useCartStore().cart = [];
+      useCartStore().booksCart = [];
+      useCartStore().cartId = null;
+      useFavoriteStore().favorites = [];
+      router.push('/login');  
+
+      window.location.reload()
     },
     async forgetPassword(email){
       try {

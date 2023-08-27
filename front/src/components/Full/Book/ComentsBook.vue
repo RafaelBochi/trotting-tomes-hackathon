@@ -72,8 +72,12 @@ function toggleFormComent() {
 }
 
 onMounted(()=> {
+  setTimeout(()=> {
+    if(props.coments.length == 0) showComents.value = false;
+  else showComents.value = true;
   filterComents.value = props.coments;
-  showComents.value = true;
+  }, 500)
+  
 })
 </script>
 
@@ -145,7 +149,7 @@ onMounted(()=> {
 
         <div class="user">
           <img
-            src="https://avatars.githubusercontent.com/u/60052506?v=4"
+            src="/userIcon.png"
             alt=""
           />
 

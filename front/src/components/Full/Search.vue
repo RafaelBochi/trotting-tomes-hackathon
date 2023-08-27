@@ -44,8 +44,8 @@ function openBookPage(id) {
     </div>
 
   <div class="searchBooks" v-if="inputText != ``">
-    <div v-for="book in searchBooks" :key="book.id" @click="openBookPage(book.id)">
-      <img :src="book.capa" alt="" />
+    <div v-for="book in searchBooks" :key="book.id" @click="openBookPage(book.id)" class="book">
+      <img :src="book.capa.url" alt="" />
       <div class="info">
         <h3>{{ book.title }}</h3>
         <p>R$ {{ book.price }}</p>
@@ -135,6 +135,7 @@ section {
     margin-bottom: 2%;
     gap: 10px;
   background-color: #fff;
+  cursor: pointer;
 }
 
 .searchBooks > div img {

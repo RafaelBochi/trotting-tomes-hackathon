@@ -5,24 +5,24 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: { name: 'home' },
+      redirect: { name: 'inicio' },
       component: () => import('@/layouts/FullLayout.vue'),
       children: [
         {
-          path: 'home',
-          name: 'home',
+          path: 'inicio',
+          name: 'inicio',
           component: () => import('../views/Full/HomeView.vue'),
           exact: true
         },
         {
-          path: 'products',
-          name: 'products',
+          path: 'produtos',
+          name: 'produtos',
           component: () => import('../views/Full/ProductsView.vue'),
           exact: true
         },
         {
-          path: 'about',
-          name: 'about',
+          path: 'sobre',
+          name: 'sobre',
           component: () => import('../views/Full/AboutView.vue'),
         },
         {

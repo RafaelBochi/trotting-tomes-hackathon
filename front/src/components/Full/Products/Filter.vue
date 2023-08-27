@@ -228,7 +228,7 @@ function cleanFilters() {
       </div>
     </div>
       <span class="searchButton">
-        <button @click="getBookFilters">
+        <button @click="toggleFilters">
           <p>Filtrar ({{ searchBooks }})</p>
           <font-awesome-icon :icon="['fas', 'arrow-right']" />
         </button>
@@ -269,7 +269,6 @@ section {
   width: 100vw;
   height: 100%;
   z-index: 9;
-  backdrop-filter: blur(2px);
   display: flex;
 }
 
@@ -279,7 +278,6 @@ section {
   left: 0;
   width: 100vw;
   height: 100vh;
-  backdrop-filter: blur(2px);
   z-index: -1;
 }
 

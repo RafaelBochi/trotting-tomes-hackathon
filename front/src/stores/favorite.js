@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import favoriteService from "@/api/favorite";
 import { useStorage } from "@vueuse/core";
 import { useUserStore } from "@/stores/user";
+import { useBookStore } from "@/stores/book";
 
 export const useFavoriteStore = defineStore("favorite", {
     state: () => ({
@@ -24,6 +25,7 @@ export const useFavoriteStore = defineStore("favorite", {
               }
               const data = await favoriteService.addFavorite(values);
               this.getFavorites()
+              useBookStore().getBooks()
             } catch (error) {
               console.log(error); // Lidar com exceções
             }
@@ -32,6 +34,7 @@ export const useFavoriteStore = defineStore("favorite", {
             try {
               const data = await favoriteService.deleteFavorite(id);
               this.getFavorites()
+              useBookStore().getBooks()
             } catch (error) {
               console.log(error); // Lidar com exceções
             }

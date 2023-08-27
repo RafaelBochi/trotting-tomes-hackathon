@@ -75,10 +75,10 @@ def login(request):
         try:
             user = User.objects.get(Q(username=value) | Q(email=value))
             username = user.username
-            print('a')
             user = authenticate(username=username, password=password)
         except User.DoesNotExist:
             user = None
+            
     else:
         return Response(
             {"message": "Credenciais inválidas!"}, status=status.HTTP_400_BAD_REQUEST
@@ -102,7 +102,7 @@ def login(request):
         return Response(response_data, status=status.HTTP_200_OK)
     else:
         return Response(
-            {"message": "Falha na autenticação!"}, status=status.HTTP_401_UNAUTHORIZED
+            {"message": "Credenciais inválidas!"}, status=status.HTTP_400_BAD_REQUEST
         )
 
 
@@ -114,7 +114,7 @@ def enviar_email(destinatario, assunto, token, name):
     remetente = "trottingtomes@gmail.com"
     senha = "xektjmzuaveczuhh"
 
-    with open('/home/faelbochi/Documentos/dev/ifc/hackathon/back/usuario/email/token_change_password.html', 'r') as file:
+    with open('/home/faelbochi/Documentos/ifc/trabalhos/hackathon/back/usuario/email/token_change_password.html', 'r') as file:
         conteudo_html = file.read()
 
     conteudo_html = conteudo_html.replace('{name}', name)

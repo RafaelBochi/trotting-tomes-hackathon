@@ -8,7 +8,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const activeRoute = ref();
-const links = ["home", "products", "about"];
+const links = ["inicio", "produtos", "sobre"];
 const linkSizes = [];
 const activeLink = ref(0);
 const userStore = useUserStore();
@@ -31,7 +31,6 @@ function getLeftDifference(index) {
   const left1 = link1.left;
   const left2 = link2.left;
   const leftDifference = left1 - left2;
-  console.log(left1 - leftDifference / 2);
   return left1 - 10;
 }
 
@@ -122,10 +121,10 @@ router.afterEach((to) => {
         </div>
       </div>
 
-      <div class="carrinho" @click="$emit('toggleCart')">
+      <div class="carrinho" @click="$emit('toggleCart')" v-if="userStore.loggedIn == true">
         <font-awesome-icon :icon="['fas', 'shopping-cart']" size="2xl" style="color: var(--primary-color)" />
       </div>
-      <div class="settings" @click="$emit('toggleSettings')">
+      <div class="settings" @click="$emit('toggleSettings')" v-if="userStore.loggedIn == true">
         <font-awesome-icon :icon="['fas', 'gear']" size="2xl" style="color: var(--primary-color)" class="icon"/>
       </div>
     </div>

@@ -37,6 +37,7 @@ onMounted(async () => {
 
 function addFavorite() {
   console.log(favorite.value)
+  if(userStore.loggedIn == true) {
   if (favorite.value != true) {
     favoriteStore.addFavorite(props.book);
     favorite.value = true;
@@ -50,12 +51,18 @@ function addFavorite() {
     console.log('delete')
   }
 }
+else {
+  userStore.popUpLogin = true;
+}
+}
 
 function addToCart() {
-  if (userStore.loggedIn) {
+  console.log(userStore.loggedIn)
+  if (userStore.loggedIn == true) {
     cartStore.addBookCart(props.book.id, 1)
   }
   else {
+    console.log('s')
     userStore.popUpLogin = true;
   }
 }

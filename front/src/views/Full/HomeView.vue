@@ -6,7 +6,6 @@ import BestSellers from "../../components/Full/Home/BestSellers.vue";
 import { computed, ref } from "vue";
 import { useBookStore } from "@/stores/book.js";
 import { useUserStore } from "@/stores/user.js";
-import Book3d from "../../components/Full/Book/Book3d.vue";
 
 const userStore = useUserStore();
 const bookStore = useBookStore();

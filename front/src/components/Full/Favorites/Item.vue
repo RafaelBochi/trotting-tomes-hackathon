@@ -1,15 +1,22 @@
 <script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 const props = defineProps({
     item: {
         type: Object,
         required: true,
     },
 });
+
+function openBookPage() {
+    router.push({ name: 'bookPage', params: { id: props.item.book.id } });
+}
 </script>
 
 <template>
     <div class="item">
-        <img :src="item.book.capa.file" alt="">
+        <img :src="item.book.capa.file" alt="" @click="openBookPage">
 
         <div class="info">
             <h3>{{ item.book.title }}</h3>
@@ -34,10 +41,12 @@ const props = defineProps({
         background: var(--primary-color);
         padding: 1% 5%;
         color: #fff;
+        cursor: pointer;
     }
 
     .item img {
         height: 70px;
+        cursor: pointer;
     }
 
     .item .info {
@@ -75,6 +84,7 @@ const props = defineProps({
         bottom: 10px;
         cursor: pointer;
         transition: .5s all;
+        z-index: 2;
     }
 
     .item .delete:hover {  

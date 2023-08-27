@@ -15,6 +15,7 @@ export const useCartStore = defineStore("cart", {
               const data = await cartService.getCart(useUserStore().user.id)
               this.cartId = data[0].id
               this.cart = data[0]
+              console.log(this.cart)
             } catch(error) {
               console.log(error)
             }
@@ -23,7 +24,6 @@ export const useCartStore = defineStore("cart", {
             try {
               const data = await cartService.getBooksCart(this.cartId);
               this.booksCart = data;
-              console.log(this.booksCart) 
             } catch (error) {
               console.log(error); // Lidar com exceções
             }

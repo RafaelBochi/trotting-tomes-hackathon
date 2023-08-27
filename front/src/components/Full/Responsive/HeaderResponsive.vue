@@ -53,7 +53,7 @@ window.addEventListener('resize', ()=> {
           </button>
         </router-link>
       </div>
-        <div class="carrinho" @click="$emit('toggleCart')">
+        <div class="carrinho" @click="$emit('toggleCart')" v-if="userStore.loggedIn">
         <font-awesome-icon
           :icon="['fas', 'shopping-cart']"
           size="2xl"

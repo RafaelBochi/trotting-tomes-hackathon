@@ -4,9 +4,13 @@ import HeaderResponsive from '@/components/Full/Responsive/HeaderResponsive.vue'
 import Cart from '@/components/Full/Cart/Cart.vue';
 import Favorites from '@/components/Full/Favorites/Favorites.vue';
 import PopUpSettings from '../components/Full/PopUpSettings.vue';
-import { ref, onMounted } from 'vue';
+import PopUpLogin from '../components/Full/PopUpLogin.vue';
+import { ref, onMounted, computed } from 'vue';
 import { useUserStore } from '../stores/user';
 import MenuResponsive from '../components/Full/Responsive/MenuResponsive.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const userStore = useUserStore();
 
@@ -19,6 +23,8 @@ const closeFavorites = ref(false)
 const showAccount = ref(false)
 const closeMenuResponsive = ref(false)
 const showMenuResponsive = ref(false)
+const showPopPupLogin = computed(() => userStore.popUpLogin)
+
 const links = ['home', 'products', 'about']
 
 
@@ -79,6 +85,7 @@ function checkHeaderResponsive() {
   else {
     headerResponsive.value = false
   }
+  console.log(headerResponsive.value)
 }
 
 window.addEventListener('resize', checkHeaderResponsive)
@@ -91,6 +98,19 @@ function toggleMenu() {
     showMenuResponsive.value = !showMenuResponsive.value;
   }
 }
+
+function logout() {
+  userStore.logout();
+  showSettings.value = false;
+  router.push('/login');
+}
+
+router.afterEach(() => {
+  showMenuResponsive.value = false;
+  showCart.value = false;
+  showFavorites.value = false;
+  showSettings.value = false;
+})
 
 onMounted(() => {
   checkHeaderResponsive()
@@ -110,9 +130,9 @@ onMounted(() => {
 
     <RouterView class="view"/>
 
-    <PopUpSettings v-if="showSettings"  @toggle-favorites="toggleFavorites" @logout="userStore.logout" :class="closeSettings != false ? 'closeSettings' : ''"/>
+    <PopUpSettings v-if="showSettings"  @toggle-favorites="toggleFavorites" @logout="logout" :class="closeSettings != false ? 'closeSettings' : ''"/>
 
-
+    <PopUpLogin v-if="showPopPupLogin"/>
     
   </main>
 </template>

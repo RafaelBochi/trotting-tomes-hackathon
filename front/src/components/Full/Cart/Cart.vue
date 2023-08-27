@@ -24,15 +24,27 @@ const heightHeader = ref(0);
 
 function getHeigthHeader() {
   const header = document.querySelector('header');
-  if (header) {
+  const searchResponsive = document.querySelector('.searchResponsive');
+  if (header && searchResponsive) {
+    heightHeader.value = header.offsetHeight + searchResponsive.offsetHeight;
+    const cart = document.querySelector('.cart');
+    if (cart) {
+      cart.style.top = `${heightHeader.value}px !important`;
+      cart.style.height = `calc(100% - ${heightHeader.value}px) !important`;
+    }
+  }
+  else if (header) {
     heightHeader.value = header.offsetHeight;
     const cart = document.querySelector('.cart');
     if (cart) {
-      cart.style.top = `${heightHeader.value}px`;
-      cart.style.height = `calc(100% - ${heightHeader.value}px)`;
+      cart.style.top = `${heightHeader.value}px !important`;
+      cart.style.height = `calc(100% - ${heightHeader.value}px) !important`;
     }
   }
+  console.log(heightHeader.value) 
 }
+
+window.addEventListener('resize', getHeigthHeader);
 
 onMounted(()=> {
   getHeigthHeader();
@@ -68,7 +80,7 @@ onMounted(()=> {
   max-width: 400px;
   min-width: 200px;
   width: 400px;
-  height: calc(100% - 65px);
+  height: calc(100vh - 50px);
   background-color: #fff;
   position: fixed;
   right: 0;
@@ -126,11 +138,12 @@ h2 {
   bottom: 0%;
   height: 70px;
   width: 100%;
-  padding: 15px 10px;
+  padding: 25px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin-bottom: 10px;
 }
 
 .buyButton button {
@@ -148,5 +161,6 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
 }
 </style>
