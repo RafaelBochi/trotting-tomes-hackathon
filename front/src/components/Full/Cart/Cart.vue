@@ -38,10 +38,9 @@ function getHeigthHeader() {
     const cart = document.querySelector('.cart');
     if (cart) {
       cart.style.top = `${heightHeader.value}px !important`;
-      cart.style.height = `calc(100% - ${heightHeader.value}px) !important`;
+      cart.style.height = `calc(100vh - ${heightHeader.value}px) !important`;
     }
   }
-  console.log(heightHeader.value) 
 }
 
 window.addEventListener('resize', getHeigthHeader);
@@ -80,9 +79,9 @@ onMounted(()=> {
   max-width: 400px;
   min-width: 200px;
   width: 400px;
-  height: calc(100vh - 50px);
   background-color: #fff;
   position: fixed;
+  height: calc(100vh - 90px);
   right: 0;
   z-index: 10;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

@@ -185,9 +185,9 @@ onMounted(()=> {
   display: flex;
   align-items: start;
   justify-content: space-evenly;
-  padding: 2% 4%;
-  width: 80%;
-  min-width: 360px;
+  padding: 4% 4%;
+  width: 100%;
+  min-width: 320px;
   background-color: #fff;
   font-size: 1.5rem;
   gap: 20px;
@@ -220,7 +220,7 @@ onMounted(()=> {
   gap: 20px;
   flex-wrap: wrap;
   margin: auto;
-  width: 80%;
+  width: 100%;
 }
 
 .stars-coments {
@@ -270,7 +270,7 @@ onMounted(()=> {
   gap: 20px;
   font-size: 1.5rem;
   padding: 2% 4%;
-  min-width: 320px;
+  min-width: 220px;
 
 }
 
@@ -302,7 +302,7 @@ onMounted(()=> {
 .filters {
   display: flex;
   flex-direction: row;
-  width: 600px;
+  width: 100%;
   gap: 10px;
   padding: 1%;
   overflow-x: auto;
@@ -310,6 +310,7 @@ onMounted(()=> {
   overflow-y: hidden;
   height: 40px;
   min-width: 300px;
+  margin: auto;
 }
 
 .filters::-webkit-scrollbar {
@@ -319,12 +320,12 @@ onMounted(()=> {
 
 .filters::-webkit-scrollbar-track {
   background: var(--cinza);
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 .filters::-webkit-scrollbar-thumb {
   background: var(--lime-green);
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 .filters div {

@@ -219,6 +219,7 @@ section {
   align-items: center;
   box-shadow: inset rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   overflow-y: scroll;
+  overflow-x: hidden;
   gap: 10%;
 }
 

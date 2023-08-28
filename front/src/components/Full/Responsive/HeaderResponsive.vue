@@ -60,6 +60,9 @@ window.addEventListener('resize', ()=> {
           style="color: var(--primary-color)"
         />
         </div>   
+        <div class="favorites" @click="$emit('toggleFavorites')" v-if="userStore.loggedIn">
+            <font-awesome-icon :icon="['fas', 'heart']" style="color: var(--primary-color);" size="2xl"/>
+        </div>
         <div class="menu" @click="$emit('toggleMenu')">
             <font-awesome-icon :icon="['fas', 'bars']" size="2xl" style="color: var(--primary-color)"/>
         </div> 

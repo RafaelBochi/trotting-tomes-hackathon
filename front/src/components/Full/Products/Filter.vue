@@ -268,6 +268,7 @@ section {
   right: 0;
   width: 100vw;
   height: 100%;
+  min-height: 300px;
   z-index: 9;
   display: flex;
 }
@@ -286,7 +287,7 @@ section {
   right: 0;
   top: 0;
   background-color: #fff;
-  max-width: 400px;
+  max-width: 380px;
   min-width: 200px;
   width: 400px;
   height: 100%;
@@ -335,25 +336,29 @@ section {
   padding: 2% 2%;
   padding-right: 6%;
   border-bottom: 2px solid var(--cinza);
+  width: 100%;
 }
 
 .title > h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bolder;
   text-align: center;
   text-transform: uppercase;
   color: var(--lime-green);
   padding: 0% 2%;
+  width: 80%;
+  white-space: nowrap;
 }
 
 .title > p {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bolder;
   text-align: center;
   text-transform: uppercase;
   color: var(--primary-color);
   padding: 0% 2%;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .filters {

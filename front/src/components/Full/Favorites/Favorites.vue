@@ -32,7 +32,7 @@ function deleteFavorite(id) {
 
 <style scoped>
 .favorites {
-  max-width: 400px;
+  max-width: 380px;
   min-width: 200px;
   width: 400px;
   height: 100%;
@@ -43,6 +43,7 @@ function deleteFavorite(id) {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   padding: 1%;
   animation: favorite 0.5s forwards;
+  padding: 0 20px;
 }
 
 @keyframes favorite {

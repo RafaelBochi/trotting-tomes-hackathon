@@ -1,11 +1,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from 'vue-router';
+import { useUserStore } from "../../../stores/user";
 
+const userStore = useUserStore();
 const route = useRoute();
 
 const activeRoute = ref();
-const links = ["home", "products", "about"];
+const links = ["inicio", "produtos", "sobre"];
 
 function setActiveLink(link) {
     activeRoute.value = link;
@@ -30,9 +32,13 @@ onMounted(() => {
             </router-link>
         </div>
 
-        <div class="actions">
-
+        <div class="logout" @click="$emit('logout')" v-if="userStore.loggedIn">
+            <p>
+                Sair
+            </p>
+            <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']"  size="xl"/>
         </div>
+
     </div>
 </template>
 
@@ -44,7 +50,7 @@ onMounted(() => {
     height: calc(100% - 50px);
     background-color: #fff;
     position: fixed;
-    left: calc(100% - 400px) !important;
+    left: calc(100% - 390px) !important;
     top: 50px;
     z-index: 10;
     padding: 1% 0;
@@ -113,6 +119,18 @@ a {
 .close {
     position: absolute;
     right: 20px;
-    top: 130px;
+    top: 80px;
+}
+
+.logout {
+    position: absolute;
+    bottom: 30px;
+    left: 120px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 1.5rem;
 }
 </style>

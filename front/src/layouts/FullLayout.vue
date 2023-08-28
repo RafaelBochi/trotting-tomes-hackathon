@@ -51,7 +51,7 @@ function toggleFavorites() {
   }
   else {
     showFavorites.value = !showFavorites.value;
-    toggleSettings();
+    showSettings.value = false;
     if(showCart.value) {
       toggleCart();
     }
@@ -93,9 +93,13 @@ window.addEventListener('resize', checkHeaderResponsive)
 function toggleMenu() {
   if(showMenuResponsive.value) {
     showMenuResponsive.value = false
+    document.body.style.overflowY = 'auto'
+    document.body.style.overflowX = 'hidden'
   }
   else {
     showMenuResponsive.value = !showMenuResponsive.value;
+    document.body.style.overflowY = 'hidden'
+    document.body.style.overflowX = 'hidden'
   }
 }
 
@@ -119,10 +123,10 @@ onMounted(() => {
 
 <template>
   <main>
-    <HeaderResponsive @toggle-cart="toggleCart" v-if="headerResponsive" @toggle-menu="toggleMenu"/>
+    <HeaderResponsive @toggle-cart="toggleCart" v-if="headerResponsive" @toggle-menu="toggleMenu"  @toggle-favorites="toggleFavorites"/>
     <Header @toggle-cart="toggleCart" @toggle-settings="toggleSettings" :links="links" v-else/>
 
-    <MenuResponsive v-if="showMenuResponsive" :class="closeMenuResponsive != false ? 'closeMenuResponsive' : ''" @toggle-menu="toggleMenu"/>
+    <MenuResponsive v-if="showMenuResponsive" :class="closeMenuResponsive != false ? 'closeMenuResponsive' : ''" @toggle-menu="toggleMenu" @logout="logout"/>
 
     <Cart v-if="showCart" @close="toggleCart" :class="closeCart != false ? 'closeCart' : ''" class="cart"/>
 

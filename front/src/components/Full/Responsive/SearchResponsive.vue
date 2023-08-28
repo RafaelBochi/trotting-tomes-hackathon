@@ -22,6 +22,7 @@ function clearInput() {
 
 function openBookPage(id) {
   router.push({ name: 'bookPage', params: { id: id } });
+  clearInput()
 }
 
 </script>
@@ -44,7 +45,7 @@ function openBookPage(id) {
 
   <div class="searchBooks" v-if="inputText != ``">
     <div v-for="book in searchBooks" :key="book.id" @click="openBookPage(book.id)">
-      <img :src="book.capa" alt="" />
+      <img :src="book.capa.url" alt="" />
       <div class="info">
         <h3>{{ book.title }}</h3>
         <p>R$ {{ book.price }}</p>
