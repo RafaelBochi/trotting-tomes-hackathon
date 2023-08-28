@@ -43,7 +43,7 @@ function deleteFavorite(id) {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   padding: 1%;
   animation: favorite 0.5s forwards;
-  padding: 0 20px;
+  padding: 10px 20px;
 }
 
 @keyframes favorite {

@@ -8,7 +8,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const activeRoute = ref();
-const links = ["inicio", "produtos", "sobre"];
+const links = ["inicio", "catalogo", "sobre"];
 const linkSizes = [];
 const activeLink = ref(0);
 const userStore = useUserStore();
@@ -61,14 +61,23 @@ window.addEventListener("resize", () => {
   setActiveLink(activeLink.value);
 });
 
+router.afterEach((to) => {
+  if(to.name == "sobre") {
+    activeRoute.value = "sobre"
+    return;
+  }
+
+  updateActiveRoute(to);
+  window.location.reload()
+
+});
+
 onMounted(() => {
   setActiveLink(activeLink.value);
   updateActiveRoute(route);
 });
 
-router.afterEach((to) => {
-  updateActiveRoute(to);
-});
+
 </script>
 
 <template>

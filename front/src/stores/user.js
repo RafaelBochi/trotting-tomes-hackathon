@@ -28,8 +28,7 @@ export const useUserStore = defineStore('user', {
           id: data.id,
           token: data.access
         }
-        router.go(-1)
-        // router.push('/')
+        router.push('/')
         await useFavoriteStore().getFavorites();
         await useCartStore().getCart()
         await useCartStore().getBooksCart()

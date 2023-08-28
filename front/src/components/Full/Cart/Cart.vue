@@ -81,7 +81,7 @@ onMounted(()=> {
   width: 400px;
   background-color: #fff;
   position: fixed;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 60px);
   right: 0;
   z-index: 10;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

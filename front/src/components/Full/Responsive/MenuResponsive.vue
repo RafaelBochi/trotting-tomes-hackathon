@@ -7,7 +7,7 @@ const userStore = useUserStore();
 const route = useRoute();
 
 const activeRoute = ref();
-const links = ["inicio", "produtos", "sobre"];
+const links = ["inicio", "catalogo", "sobre"];
 
 function setActiveLink(link) {
     activeRoute.value = link;

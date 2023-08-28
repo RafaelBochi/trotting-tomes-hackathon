@@ -15,8 +15,8 @@ const router = createRouter({
           exact: true
         },
         {
-          path: 'produtos',
-          name: 'produtos',
+          path: 'catalogo',
+          name: 'catalogo',
           component: () => import('../views/Full/ProductsView.vue'),
           exact: true
         },
