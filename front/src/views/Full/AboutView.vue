@@ -34,10 +34,17 @@ import Horse3d from "@/components/Full/About/Horse3d.vue";
       <div class="contatos">
       <div class="ContatoItem1">
         <font-awesome-icon :icon="['fas', 'envelope']" class="icone" bounce style="color: var(--primary-color);"
-          size="2xl" />
+          size="2xl"  />
         <p class="email">
           trottingtomes@gmail.com
         </p>
+      </div>
+
+      <div class="icones">
+        <img src="/icones/facebook.png" alt="" width="100px">
+        <img src="/icones/instagram.png" alt=""  width="80px">
+        <img src="/icones/twitter.png" alt=""  width="100px">
+        <img src="/icones/youtube.png" alt=""  width="100px">
       </div>
 
       <div class="ContatoItem2">
@@ -48,12 +55,6 @@ import Horse3d from "@/components/Full/About/Horse3d.vue";
       </div>
     </div>
 
-      <div class="icones">
-        <img src="/icones/facebook.png" alt="" width="100px">
-        <img src="/icones/instagram.png" alt=""  width="80px">
-        <img src="/icones/twitter.png" alt=""  width="100px">
-        <img src="/icones/youtube.png" alt=""  width="100px">
-      </div>
     </div>
   </main>
 </template>
@@ -110,22 +111,19 @@ span {
 }
 
 .Contato {
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 22px;
+  font-size: 23px;
   margin-top: 4%;
   align-items: center;
-  justify-content: space-around;
   box-shadow: 0px 1px 20px -9px rgba(52, 71, 52, 1);
   padding: 20px;
   width: 80%;
-  border-radius: 10px;
-  gap: 20px;
-  margin: 20px;
+  border-radius: 5px;
+  margin: 40px;
 }
 
 .Contato h3 {
   text-align: center;
+  text-decoration: underline;
   margin: 0 0 20px 0;
   width: 100%;
 }
@@ -134,34 +132,20 @@ span {
 .ContatoItem2 {
   display: flex;
   align-items: center;
-  font-size: 15px;
-  padding: 20px 0;
-  gap: 10px;
+  font-size: 22px;
+  padding: 15px ;
+  gap: 15px;
 }
 
 .icones {
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   width: 100%;
   flex-wrap: wrap;
 }
 
-.icone {
-  font-size: 60px;
-  margin-left: 3%;
-  margin-right: 3%;
-  margin-top: 10px;
-}
-
-.telefone {
-  margin-left: 2%;
-}
-
-.email {
-  margin-left: 2%;
-}
 
 .title {
   text-decoration: none !important;
