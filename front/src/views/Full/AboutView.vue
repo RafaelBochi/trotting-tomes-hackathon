@@ -12,17 +12,17 @@ import Horse3d from "@/components/Full/About/Horse3d.vue";
       <h1>Sobre a <span class="title">Trotting Tomes</span></h1>
         <p class="paragrafo">Na <span>Trotting Tomes</span>, não apenas vendemos livros - compartilhamos histórias,
           exploramos universos e alimentamos mentes curiosas. Somos mais do que uma loja virtual de livros; somos um
-          refúgio para os amantes da literatura.</p> <br>
+          refúgio para os amantes da literatura.</p> 
         <p class="paragrafo">Nossa paixão pela leitura nos impulsiona a selecionar cuidadosamente cada título, oferecendo
           uma variedade que abrange desde clássicos atemporais até descobertas contemporâneas. Acreditamos que os livros
-          têm o poder de enriquecer vidas, desencadear imaginações e provocar reflexões profundas.</p><br>
+          têm o poder de enriquecer vidas, desencadear imaginações e provocar reflexões profundas.</p>
         <p class="paragrafo">Comprometemo-nos a criar uma experiência de compra única, onde você pode explorar gêneros
           diversos, encontrar recomendações personalizadas e mergulhar em páginas que o transportarão para mundos
           desconhecidos. Nossa missão é conectar leitores com livros que toquem seus corações e desafiem suas
-          perspectivas.</p><br>
+          perspectivas.</p>
         <p class="paragrafo">Junte-se a nós nesta jornada literária. Descubra novos horizontes, abra portas para o
           conhecimento e embarque em aventuras inesquecíveis, tudo isso com a Trotting Tomes como sua guia confiável.</p>
-        <br>
+
         <p class="paragrafo">Seja bem-vindo(a) à nossa comunidade apaixonada por livros. Seja bem-vindo(a) à
           <span>Trotting Tomes</span>!</p>
 
@@ -71,18 +71,9 @@ main {
 .Informacoes {
   display: flex;
   align-items: center;
-  margin-top: 3%;
   justify-content: space-around;
-  width: 90%;
-  flex-wrap: wrap;
-}
-
-.Imagem {
-  
-  display: block;
-  transform: scaleX(-1);
-  margin: auto;
-
+  width: 80%;
+  margin: 40px;
 }
 
 .Conteudo {
@@ -91,13 +82,17 @@ main {
   align-items: flex-start;
   text-align: left;
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   font-size: 1.4rem;
 }
 
-h1 {
+.Conteudo h1 {
   font-size: 40px;
   margin-bottom: 30px;
+}
+
+.Conteudo p{
+  margin-bottom: 10px;
 }
 
 .paragrafo {
@@ -116,7 +111,7 @@ span {
   align-items: center;
   box-shadow: 0px 1px 20px -9px rgba(52, 71, 52, 1);
   padding: 20px;
-  width: 80%;
+  width: 90%;
   border-radius: 5px;
   margin: 40px;
 }
