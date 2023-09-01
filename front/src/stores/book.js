@@ -6,6 +6,9 @@ export const useBookStore = defineStore("book", {
     books: [],
     searchBooks: [],
   }),
+  getters: {
+    sortedBooks: (state) => (val) => state.books.sort(() => val - Math.random())
+  },
   actions: {
     async getBooks() {
       try {

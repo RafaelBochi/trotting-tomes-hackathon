@@ -28,7 +28,7 @@ const popUpLogin = computed(() => userStore.popUpLogin);
         <p>Novidades</p>
       </h2>
 
-      <SlideBooks :slideNum="1" :sort="[19, 7, 2, 10, 8, 1, 15, 0, 18, 4, 12, 5, 16, 14, 11, 20, 3, 13, 9, 17, 6]"/>
+      <SlideBooks :slideNum="1"/>
     </section>
 
     <section class="sectionBooks">
@@ -36,7 +36,7 @@ const popUpLogin = computed(() => userStore.popUpLogin);
         <p>50% OFF</p>
       </h2>
 
-      <SlideBooks :slideNum="2" :sort="[16, 2, 10, 1, 3, 9, 7, 14, 18, 0, 8, 4, 15, 11, 20, 13, 12, 5, 19, 6, 17]"/>
+      <SlideBooks :slideNum="2"/>
     </section>
 
     <section class="sectionBooks">
@@ -44,7 +44,7 @@ const popUpLogin = computed(() => userStore.popUpLogin);
         <p>Melhores avaliações</p>
       </h2>
 
-      <SlideBooks :slideNum="3" :sort="[2, 14, 17, 19, 12, 6, 5, 4, 9, 8, 1, 0, 18, 7, 15, 11, 20, 3, 16, 10, 13]"/>
+      <SlideBooks :slideNum="3"/>
     </section>
 
     <section class="sectionBooks">
@@ -52,7 +52,7 @@ const popUpLogin = computed(() => userStore.popUpLogin);
         <p>Trending</p>
       </h2>
 
-      <SlideBooks :slideNum="4" :sort="[15, 8, 4, 10, 13, 3, 1, 18, 19, 7, 0, 6, 14, 9, 12, 16, 2, 20, 5, 17, 11]"/>
+      <SlideBooks :slideNum="4"/>
     </section>
   </main>
 </template>
