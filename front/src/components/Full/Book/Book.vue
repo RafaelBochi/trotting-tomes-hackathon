@@ -99,34 +99,13 @@ onMounted(
         <img :src="book.capa.url" alt="" />
         <span class="info">
           <p class="title">{{ book.title }}</p>
-            <span class="stars starsBook">
-              <input type="radio" />
-              <label :class="mediaStars > 0 ? 'true' : ''"></label>
-
-              <input type="radio" />
-              <label :class="mediaStars > 1 ? 'true' : ''"></label>
-
-              <input type="radio" />
-              <label :class="mediaStars > 2 ? 'true' : ''"></label>
-
-              <input type="radio" />
-              <label :class="mediaStars > 3 ? 'true' : ''"></label>
-
-              <input type="radio" />
-              <label :class="mediaStars > 4 ? 'true' : ''"></label>
-
-              <p>
-                ({{ comentsBook.length }})
-              </p>
-            </span>
             <p class="price-sale" v-if="book.desconto > 0">
-              <p class="priceReal">R$ {{ (Number(book.price / (1-(book.desconto/100)))).toFixed(2) }}</p>
+              <p class="priceReal price">R$ {{ (Number(book.price / (1-(book.desconto/100)))).toFixed(2) }}</p>
               <p class="priceDescount">
                 R$ {{ book.price }}
               </p>
             </p>
             <p class="price" v-else>R${{ book.price }}</p>
-            <p class="vendas">{{ book.vendas }} vendidos</p>
         </span>
         <i></i>
       </div>
@@ -164,12 +143,12 @@ onMounted(
   overflow: hidden;
   border-radius: 5px;
   gap: 10px;
-  box-shadow: 10px 10px 15px -3px rgba(0, 0, 0, 0.185), 7px 4px 6px -4px rgb(0 0 0 / 0.1);
+  box-shadow: 5px 10px 15px -3px rgba(0, 0, 0, 0.185), -10px -5px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 .price {
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
   font-size: medium;
   padding: 5px;
   color: var(--lime-green);
