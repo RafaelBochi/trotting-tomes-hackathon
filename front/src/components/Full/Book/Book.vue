@@ -55,6 +55,7 @@ else {
 }
 }
 
+
 function addToCart() {
   console.log(userStore.loggedIn)
   if (userStore.loggedIn == true) {
@@ -107,7 +108,6 @@ onMounted(
         </span>
         <i></i>
       </div>
-      <div>
         <button @click="addToCart">
           <p>Adicionar</p>
           <font-awesome-icon
@@ -116,7 +116,6 @@ onMounted(
             size="sm"
           />
         </button>
-      </div>
       <span class="sale" v-if="book.desconto > 0">
         <img src="/desconto.webp" alt="">
         <div class="text">
@@ -132,13 +131,12 @@ onMounted(
 <style scoped>
 .produto {
   width: 300px;
-  height: 450px;
+  height: 375px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
   border-radius: 5px;
   gap: 10px;
   box-shadow: 5px 10px 15px -3px rgba(0, 0, 0, 0.185), -10px -5px 6px -4px rgb(0 0 0 / 0.1);
@@ -146,7 +144,7 @@ onMounted(
 
 .price {
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   font-size: medium;
   padding: 5px;
   color: var(--lime-green);
@@ -213,7 +211,7 @@ onMounted(
 .produto img {
   z-index: 2;
   position: relative;
-  top: -14%;
+  top: -5%;
   right: 5%;
   width: 200px;
   height: 280px;
@@ -225,7 +223,7 @@ onMounted(
   z-index: 2;
   position: absolute;
   height: 25%;
-  bottom: 0;
+  bottom: -45px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -273,18 +271,16 @@ onMounted(
   z-index: 2;
 }
 
-.price-sale {
-  padding-top: 5px;
-}
-
 .price-sale .priceReal {
   font-size: 1rem !important;
   text-decoration: line-through;
+  top: 30px;
 }
 
 .price-sale .priceDescount {
   font-size: 1.6rem !important;
   color: var(--lime-green);
+  top: 30px;
 }
 
 .produto .vendas {
@@ -295,6 +291,9 @@ onMounted(
 }
 
 button {
+  position: absolute;
+  top: 100%;
+  margin-top: 10px;
   padding: 4% 5%;
   background-color: var(--primary-color);
   border-radius: 2px;
@@ -322,7 +321,7 @@ button:hover {
 .sale {
   position: absolute;
   top: 20px;
-  left: 0px;
+  left: -5px;
 }
 
 .sale img {
