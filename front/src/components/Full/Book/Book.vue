@@ -144,7 +144,7 @@ onMounted(
 
 .price {
   position: absolute;
-  bottom: 20px;
+  bottom: 0px;
   font-size: medium;
   padding: 5px;
   color: var(--lime-green);
