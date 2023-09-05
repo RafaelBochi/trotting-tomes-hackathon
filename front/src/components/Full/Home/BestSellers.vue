@@ -40,8 +40,7 @@ function openBookPage(id) {
 }
 
 onMounted(async () => {
-  booksBestSellers.value = await bookStore.getBestSellers();
-
+  booksBestSellers.value = await bookStore.getBooksToSlides('bestSellers');
 })
 </script>
 

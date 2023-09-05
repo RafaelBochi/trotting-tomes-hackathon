@@ -158,6 +158,8 @@ def getBooksToSlides(request):
     if type == "trending":
         livros = Livro.objects.all().order_by('-vendas')[:20]
 
+    if type == "bestSellers":
+        livros = Livro.objects.all().order_by('-vendas')[:10]
 
     data = []
     for livro in livros:

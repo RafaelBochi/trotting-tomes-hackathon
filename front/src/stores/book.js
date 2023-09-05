@@ -42,18 +42,6 @@ export const useBookStore = defineStore("book", {
         console.log(e);
       }
     },
-    async getBestSellers() {
-      let bestSellers = this.books
-
-      function compararPorVendas(book1, book2) {
-        return book2.vendas - book1.vendas;
-      }
-    
-      bestSellers.sort(compararPorVendas);
-      bestSellers = bestSellers.slice(0, 10);
-      return bestSellers;
-      console.log(books);
-    },
     async getBooksToSlides(type) {
       console.log(type)
       try {
