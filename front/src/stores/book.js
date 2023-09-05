@@ -6,9 +6,6 @@ export const useBookStore = defineStore("book", {
     books: [],
     searchBooks: [],
   }),
-  getters: {
-    sortedBooks: (state) => (val) => state.books.sort(() => val - Math.random())
-  },
   actions: {
     async getBooks() {
       try {
@@ -56,6 +53,15 @@ export const useBookStore = defineStore("book", {
       bestSellers = bestSellers.slice(0, 10);
       return bestSellers;
       console.log(books);
+    },
+    async getBooksToSlides(type) {
+      console.log(type)
+      try {
+        const data = await bookService.getBooksToSlides(type);
+        return data;
+      } catch(e) {
+        console.log(e);
+      }
     }
   },
 });
