@@ -54,6 +54,7 @@ const pageChange = (page) => {
         align-items: center;
         justify-content: center;
         gap: 10px;
+        margin-top: 50px;
     }
     .pages {
         font-size: 1.7rem;

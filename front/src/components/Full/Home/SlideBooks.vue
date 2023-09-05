@@ -191,11 +191,13 @@ section {
   align-items: center;
   gap: 20px;
   scroll-behavior: smooth;
+  scrollbar-width: none;
 }
 
 .books::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
+
 
 .pages {
   display: flex;

@@ -99,7 +99,7 @@ onMounted(
         <span class="info">
           <p class="title">{{ book.title }}</p>
             <p class="price-sale" v-if="book.desconto > 0">
-              <p class="priceReal price">R$ {{ (Number(book.price / (1-(book.desconto/100)))).toFixed(2) }}</p>
+              <p class="priceReal">R$ {{ (Number(book.price / (1-(book.desconto/100)))).toFixed(2) }}</p>
               <p class="priceDescount">
                 R$ {{ book.price }}
               </p>
@@ -114,6 +114,7 @@ onMounted(
             :icon="['fas', 'cart-arrow-down']"
             style="color: #ffffff"
             size="sm"
+            class="icon"
           />
         </button>
       <span class="sale" v-if="book.desconto > 0">
@@ -131,7 +132,7 @@ onMounted(
 <style scoped>
 .produto {
   width: 300px;
-  height: 375px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,6 +141,7 @@ onMounted(
   border-radius: 5px;
   gap: 10px;
   box-shadow: 5px 10px 15px -3px rgba(0, 0, 0, 0.185), -10px -5px 6px -4px rgb(0 0 0 / 0.1);
+  margin: 20px;
 }
 
 .price {
@@ -195,7 +197,7 @@ onMounted(
   left: 0;
   top: 0;
   z-index: 1;
-  background-color: #cbced365;
+  background-color: #D4DCEB59;
   border-radius: 0 0 100% 0;
   width: 0;
   height: 0;
@@ -203,9 +205,9 @@ onMounted(
 }
 
 .produto div:nth-child(2):hover i {
-  width: 100%;
-  height: 100%;
-  border-radius: 0;
+  width: 300px;
+  height: 400px;
+  border-radius: 5px;
 }
 
 .produto img {
@@ -226,24 +228,30 @@ onMounted(
   bottom: -45px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   align-items: flex-start;
   justify-content: space-between;
   padding-bottom: 2%;
   width: 90%;
+  background-color: transparent;
 }
 
-.produto .info p:nth-child(1) {
-  padding-top: 10px;
+.produto .info .title {
   font-size: 1.6rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   width: 100%;
-  margin: 2% 1%;
+  padding-bottom: 20px;
+  overflow: hidden;
+  height: 60px;
+  margin: 10px 0;
 }
 
 .produto .info p:nth-child(2) {
   font-size: 1.5rem;
   font-weight: bolder;
 }
+
+
 
 .produto .info .starsBook {
   display: flex;
@@ -271,16 +279,22 @@ onMounted(
   z-index: 2;
 }
 
+.price-sale {
+  width: 50%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
 .price-sale .priceReal {
   font-size: 1rem !important;
   text-decoration: line-through;
-  top: 30px;
 }
 
 .price-sale .priceDescount {
   font-size: 1.6rem !important;
   color: var(--lime-green);
-  top: 30px;
 }
 
 .produto .vendas {
@@ -316,6 +330,11 @@ button p {
 
 button:hover {
   background-color: var(--primary-color-50);
+  color: var(--primary-color);
+}
+
+button:hover .icon {
+  color: var(--primary-color) !important;
 }
 
 .sale {
