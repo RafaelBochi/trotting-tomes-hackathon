@@ -3,6 +3,7 @@ import Item from './Item.vue';
 import { useUserStore } from '@/stores/user.js';
 import { useCartStore } from "@/stores/cart"
 import { computed, onMounted, ref } from 'vue';
+import { RouterLink, RouterView } from 'vue-router';
 
 const userStore = useUserStore();
 const cartStore = useCartStore();
@@ -15,8 +16,8 @@ function deleteBookCart(id) {
 
 function changeQuantity(id, item, book, quantidade) {
   console.log(id)
-  if(item.quantidade == 1 && quantidade == -1) return;
-  else if(item.quantidade == book.stock && quantidade == 1) return;
+  if (item.quantidade == 1 && quantidade == -1) return;
+  else if (item.quantidade == book.stock && quantidade == 1) return;
   cartStore.changeQuantity(id, item, book, quantidade);
 }
 
@@ -45,7 +46,7 @@ function getHeigthHeader() {
 
 window.addEventListener('resize', getHeigthHeader);
 
-onMounted(()=> {
+onMounted(() => {
   getHeigthHeader();
 })
 </script>
@@ -55,7 +56,8 @@ onMounted(()=> {
     <h2>Carrinho de Itens</h2>
 
     <div class="itens" v-if="booksCart.length > 0">
-        <item v-for="item in booksCart" :key="item.id" :item="item" @delete-book-cart="deleteBookCart" @change-quantity="changeQuantity"/>
+      <item v-for="item in booksCart" :key="item.id" :item="item" @delete-book-cart="deleteBookCart"
+        @change-quantity="changeQuantity" />
     </div>
 
     <h3 v-else>
@@ -63,12 +65,14 @@ onMounted(()=> {
     </h3>
 
     <span class="close" @click="$emit('close')">
-      <font-awesome-icon :icon="['fas', 'xmark']" size="xl"/>
+      <font-awesome-icon :icon="['fas', 'xmark']" size="xl" />
     </span>
 
     <div class="buyButton">
       <button>
-        <p>Comprar (R$ {{ cartStore.cart.total }})</p>
+        <router-link to="/comprar">
+          <button @click="">Comprar (R$ {{ cartStore.cart.total }})</button>
+        </router-link>
       </button>
     </div>
   </section>
@@ -90,7 +94,7 @@ onMounted(()=> {
 }
 
 @keyframes cart {
-  0%  {
+  0% {
     right: -30%;
   }
 
@@ -109,13 +113,13 @@ h2 {
 }
 
 .itens {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    height: 80%;
-    overflow-y: auto;
-    padding: 0% 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  height: 80%;
+  overflow-y: auto;
+  padding: 0% 2%;
 }
 
 .close {

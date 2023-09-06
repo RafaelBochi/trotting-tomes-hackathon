@@ -35,6 +35,11 @@ const router = createRouter({
           path: 'settings',
           name: 'settings',
           component: () => import('../views/Full/SettingsView.vue')
+        },
+        {
+          path: 'comprar',
+          name: 'comprar',
+          component: () => import('../views/Full/BuyView.vue')
         }
       ]
     },
