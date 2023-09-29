@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import Search from "./Search.vue";
 import { useUserStore } from "../../stores/user";
 import { useRoute } from "vue-router";
+import { useCartStore } from "@/stores/cart";
 
 const route = useRoute();
 const router = useRouter();
@@ -12,6 +13,9 @@ const links = ["inicio", "catalogo", "sobre"];
 const linkSizes = [];
 const activeLink = ref(0);
 const userStore = useUserStore();
+const cartStore = useCartStore();
+
+const sizeBooksCart = computed(()=> cartStore.booksCart.length);
 
 function animationBarStyle(index) {
   const width = linkSizes[activeLink.value] || 0;
@@ -132,6 +136,7 @@ onMounted(() => {
 
       <div class="carrinho" @click="$emit('toggleCart')" v-if="userStore.loggedIn == true">
         <font-awesome-icon :icon="['fas', 'shopping-cart']" size="2xl" style="color: var(--primary-color)" />
+        <p>{{ sizeBooksCart }}</p>
       </div>
       <div class="settings" @click="$emit('toggleSettings')" v-if="userStore.loggedIn == true">
         <font-awesome-icon :icon="['fas', 'gear']" size="2xl" style="color: var(--primary-color)" class="icon"/>
@@ -291,6 +296,22 @@ a {
   cursor: pointer;
   transition: 0.5s;
   padding-right: 10px;
+}
+
+.carrinho p {
+  position: absolute;
+  top: -10px;
+  right: 2px;
+  background-color: var(--primary-color);
+  color: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  text-align: center;
 }
 
 .settings .icon {

@@ -71,6 +71,10 @@ onMounted(() => {
     .item .info h3 {
         font-size: 1.5rem;
         font-weight: bolder;
+        width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .item .info p {
