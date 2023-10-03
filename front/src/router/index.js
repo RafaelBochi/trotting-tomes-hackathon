@@ -21,11 +21,6 @@ const router = createRouter({
           exact: true
         },
         {
-          path: 'sobre',
-          name: 'sobre',
-          component: () => import('../views/Full/AboutView.vue'),
-        },
-        {
           path: 'book/:id',
           name: 'bookPage',
           component: () => import('../views/Full/BookPageView.vue'),

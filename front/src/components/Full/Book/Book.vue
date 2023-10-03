@@ -26,7 +26,7 @@ const mediaStars = ref(0);
 
 onMounted(async () => {
   comentsBook.value = await othersStore.getComents(props.book.id);
-  if (comentsBook.value.length > 0) { 
+  if (comentsBook.value.length > 0) {
     for (let coment of comentsBook.value) {
       mediaStars.value += coment.stars
     }
@@ -36,23 +36,23 @@ onMounted(async () => {
 
 function addFavorite() {
   console.log(favorite.value)
-  if(userStore.loggedIn == true) {
-  if (favorite.value != true) {
-    favoriteStore.addFavorite(props.book);
-    favorite.value = true;
-    console.log('add')
+  if (userStore.loggedIn == true) {
+    if (favorite.value != true) {
+      favoriteStore.addFavorite(props.book);
+      favorite.value = true;
+      console.log('add')
+    }
+    else {
+      const id = favoriteStore.favorites.find(item => item.book.id == props.book.id).id;
+      console.log(id)
+      favoriteStore.deleteFavorite(id);
+      favorite.value = false;
+      console.log('delete')
+    }
   }
   else {
-    const id = favoriteStore.favorites.find(item => item.book.id == props.book.id).id;
-    console.log(id)
-    favoriteStore.deleteFavorite(id);
-    favorite.value = false;
-    console.log('delete')
+    userStore.popUpLogin = true;
   }
-}
-else {
-  userStore.popUpLogin = true;
-}
 }
 
 
@@ -86,37 +86,35 @@ onMounted(
   <span class="secBook">
     <div class="produto">
       <span class="favorite" @click="addFavorite">
-        <font-awesome-icon
-          v-if="favorite"
-          :icon="['fas', 'heart']"
-          style="color: var(--lime-green)"
-          class="icon"
-        />
+        <font-awesome-icon v-if="favorite" :icon="['fas', 'heart']" style="color: var(--lime-green)" class="icon" />
         <font-awesome-icon v-else :icon="['fas', 'heart']" />
       </span>
       <div @click="openBookPage">
         <img :src="book.capa.url" alt="" />
         <span class="info">
-          <p class="title">{{ book.title }}</p>
-            <p class="price-sale" v-if="book.desconto > 0">
-              <p class="priceReal">R$ {{ (Number(book.price / (1-(book.desconto/100)))).toFixed(2) }}</p>
-              <p class="priceDescount">
-                R$ {{ book.price }}
+          <div class="infoText">
+            <p class="title">{{ book.title }}</p>
+            <div class="genres">
+              <p v-for="genre, index in book.genre" class="genre">
+                
+              <p v-if="index !== 0">&</p>
+                {{ genre.name }}
               </p>
-            </p>
-            <p class="price" v-else>R${{ book.price }}</p>
+            </div>
+          </div>
+          <p class="price-sale" v-if="book.desconto > 0">
+          <p class="priceReal">R$ {{ (Number(book.price / (1 - (book.desconto / 100)))).toFixed(2) }}</p>
+          <p class="priceDescount">
+            R$ {{ book.price }}
+          </p>
+          </p>
+          <p class="price" v-else>R${{ book.price }}</p>
         </span>
-        <i></i>
       </div>
-        <button @click="addToCart">
-          <p>Adicionar</p>
-          <font-awesome-icon
-            :icon="['fas', 'cart-arrow-down']"
-            style="color: #ffffff"
-            size="sm"
-            class="icon"
-          />
-        </button>
+      <button @click="addToCart">
+        <p>Adicionar</p>
+        <font-awesome-icon :icon="['fas', 'cart-arrow-down']" style="color: #ffffff" size="sm" class="icon" />
+      </button>
       <span class="sale" v-if="book.desconto > 0">
         <img src="/desconto.webp" alt="">
         <div class="text">
@@ -125,8 +123,6 @@ onMounted(
       </span>
     </div>
   </span>
-
-
 </template>
 
 <style scoped>
@@ -145,12 +141,15 @@ onMounted(
 }
 
 .price {
-  position: absolute;
+  width: 30%;
   bottom: 0px;
-  font-size: medium;
+  font-size: 1.6rem;
   padding: 5px;
   color: var(--lime-green);
   border-radius: 3px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
 }
 
 
@@ -188,6 +187,7 @@ onMounted(
   flex-direction: column;
   gap: 10px;
   padding: 5%;
+  padding-top: 30px;
   background-color: transparent;
   cursor: pointer;
 }
@@ -223,68 +223,63 @@ onMounted(
 
 .produto .info {
   z-index: 2;
-  position: absolute;
   height: 25%;
-  bottom: -45px;
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  padding-bottom: 2%;
+  width: 100%;
+  background-color: transparent;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.produto .info .infoText {
+  width: 65%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
-  padding-bottom: 2%;
-  width: 90%;
-  background-color: transparent;
 }
 
-.produto .info .title {
+.produto .info .infoText .title {
   font-size: 1.6rem;
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 100%;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   overflow: hidden;
-  height: 60px;
-  margin: 10px 0;
 }
 
-.produto .info p:nth-child(2) {
-  font-size: 1.5rem;
-  font-weight: bolder;
-}
-
-
-
-.produto .info .starsBook {
-  display: flex;
-  align-items: end;
-  position: absolute;
-  bottom: 35%;
-  justify-content: center;
-}
-
-.stars > label::before {
-  top: 0 !important;
-  }
-
-.stars p {
-  font-size: 1.4rem;
-}
-
-.produto div:nth-child(3) {
-  position: absolute;
-  bottom: 3%;
+.produto .info .genres {
+  position: relative;
   width: 100%;
-  height: 10%;
-  padding: 4% 5% 1% 5%;
-  background-color: #fff;
-  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 5px;
+  padding: 0;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.produto .info .genres::-webkit-scrollbar {
+  width: 10px;
+  background: transparent;
+}
+
+.produto .info .genres p {
+  font-size: 1.2rem;
+  color: var(--third-color);
+  display: flex;
+  gap: 5px;
 }
 
 .price-sale {
-  width: 50%;
-  height: 100px;
+  width: 30%;
   display: flex;
   flex-direction: column;
-  padding-bottom: 20px;
+  align-items: flex-end;
 }
 
 .price-sale .priceReal {
@@ -362,6 +357,6 @@ button:hover .icon {
   font-weight: bolder;
   color: #fff;
   z-index: 2;
-  padding-bottom: 3px;
+  padding-bottom: 30px;
 }
 </style>

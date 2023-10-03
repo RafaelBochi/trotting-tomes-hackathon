@@ -2,6 +2,7 @@
 import { ref, onMounted, computed, onBeforeUpdate } from "vue";
 import { useRouter } from "vue-router";
 import Search from "./Search.vue";
+import PopUpCategories from "./PopUpCategories.vue";
 import { useUserStore } from "../../stores/user";
 import { useRoute } from "vue-router";
 import { useCartStore } from "@/stores/cart";
@@ -9,7 +10,7 @@ import { useCartStore } from "@/stores/cart";
 const route = useRoute();
 const router = useRouter();
 const activeRoute = ref();
-const links = ["inicio", "catalogo", "sobre"];
+const links = ["inicio", "catalogo"];
 const linkSizes = [];
 const activeLink = ref(0);
 const userStore = useUserStore();
@@ -76,6 +77,13 @@ router.afterEach((to) => {
 
 });
 
+const showPopUpCategories = ref(false)
+
+function toggleShowPopUpCategories() {
+  showPopUpCategories.value = !showPopUpCategories.value;
+
+}
+
 onMounted(() => {
   setActiveLink(activeLink.value);
   updateActiveRoute(route);
@@ -105,6 +113,14 @@ onMounted(() => {
           </p>
         </a>
       </router-link>
+      <a @click="toggleShowPopUpCategories" :class="showPopUpCategories ? 'active' : ''">
+        <p>
+          Categorias
+        </p>
+        <font-awesome-icon :icon="['fas', 'chevron-up']" v-if="showPopUpCategories" class="icon"/>
+        <font-awesome-icon :icon="['fas', 'chevron-down']" v-else class="icon"/>
+
+      </a>
       <div class="animation-bar" :style="animationBarStyle"></div>
     </div>
 
@@ -142,6 +158,8 @@ onMounted(() => {
         <font-awesome-icon :icon="['fas', 'gear']" size="2xl" style="color: var(--primary-color)" class="icon"/>
       </div>
     </div>
+
+    <PopUpCategories v-if="showPopUpCategories"/>
   </header>
 </template>
 
@@ -187,14 +205,24 @@ header {
   font-weight: bolder;
   transition: all 0.2s;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
+  gap: 10px;
+  cursor: pointer;
 }
 
 .active-link p {
   color: var(--primary-color);
+}
+
+.active p{
+  color: var(--primary-color) !important;
+}
+
+.active .icon{
+  color: var(--primary-color) !important;
 }
 
 .animation-bar {
@@ -316,10 +344,6 @@ a {
 
 .settings .icon {
   transition: 0.5s all;
-}
-
-.carrinho:hover {
-  transform: scale(1.2);
 }
 
 .settings:hover > .icon {

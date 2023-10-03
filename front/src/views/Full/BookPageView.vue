@@ -53,15 +53,15 @@ function goToComents() {
 
 router.afterEach(async (to) => {
   globalStore.showPreloader = true
-  setTimeout(async() => {
+  setTimeout(async () => {
     book.value = await bookStore.getBookId(props.id);
     globalStore.showPreloader = false;
   }, 1000)
-  
+
 });
 
 function plusQuantCart() {
-  if(quantCart.value == book.value.stock) {
+  if (quantCart.value == book.value.stock) {
     return;
   }
   quantCart.value++
@@ -80,16 +80,16 @@ function gerarPaginas() {
 onMounted(async () => {
   book.value = await bookStore.getBookId(props.id);
   comentsBook.value = await othersStore.getComents(book.value.id);
-  for( let coment of comentsBook.value) {
-        coment.date = coment.date.split("T")[0].split("-").reverse().join("/")
-    }
+  for (let coment of comentsBook.value) {
+    coment.date = coment.date.split("T")[0].split("-").reverse().join("/")
+  }
 
-    if (comentsBook.value.length > 0) {
-      for( let coment of Object.values(comentsBook.value)) {
+  if (comentsBook.value.length > 0) {
+    for (let coment of Object.values(comentsBook.value)) {
       mediaStars.value += coment.stars
     }
     mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
-    }
+  }
 })
 </script>
 
@@ -103,12 +103,20 @@ onMounted(async () => {
           {{ book.title }}
         </h2>
 
+        <div class="genres">
+          <p v-for="genre, index in book.genre" class="genre">
+
+          <p v-if="index !== 0">&</p>
+          {{ genre.name }}
+          </p>
+        </div>
+
         <div class="sale" v-if="book.desconto > 0">
           <p class="priceSale">
             R$ {{ book.price }}
           </p>
           <p class="priceReal">
-            R$ {{ (Number(book.price / (1-(book.desconto/100)))).toFixed(2) }}
+            R$ {{ (Number(book.price / (1 - (book.desconto / 100)))).toFixed(2) }}
           </p>
           <i class="bar"></i>
           <p class="descount">
@@ -120,25 +128,25 @@ onMounted(async () => {
 
         <div class="starsBook">
           <span class="stars" @click="goToComents">
-              <input type="radio" />
-              <label :class="mediaStars > 0 ? 'true' : ''"></label>
+            <input type="radio" />
+            <label :class="mediaStars > 0 ? 'true' : ''"></label>
 
-              <input type="radio" />
-              <label :class="mediaStars > 1 ? 'true' : ''"></label>
+            <input type="radio" />
+            <label :class="mediaStars > 1 ? 'true' : ''"></label>
 
-              <input type="radio" />
-              <label :class="mediaStars > 2 ? 'true' : ''"></label>
+            <input type="radio" />
+            <label :class="mediaStars > 2 ? 'true' : ''"></label>
 
-              <input type="radio" />
-              <label :class="mediaStars > 3 ? 'true' : ''"></label>
+            <input type="radio" />
+            <label :class="mediaStars > 3 ? 'true' : ''"></label>
 
-              <input type="radio" />
-              <label :class="mediaStars > 4 ?'true' : ''"></label>
-        </span>
+            <input type="radio" />
+            <label :class="mediaStars > 4 ? 'true' : ''"></label>
+          </span>
 
-        <p>
-          ({{ comentsBook.length }} avaliações)
-        </p>
+          <p>
+            ({{ comentsBook.length }} avaliações)
+          </p>
         </div>
 
         <p class="description">
@@ -160,8 +168,8 @@ onMounted(async () => {
           <span>
             <p>{{ quantCart }}</p>
             <i>
-              <font-awesome-icon :icon="['fas', 'caret-up']" size="xl" @click="plusQuantCart"/>
-              <font-awesome-icon :icon="['fas', 'caret-down']" size="xl" @click="minusQuantCart"/>
+              <font-awesome-icon :icon="['fas', 'caret-up']" size="xl" @click="plusQuantCart" />
+              <font-awesome-icon :icon="['fas', 'caret-down']" size="xl" @click="minusQuantCart" />
             </i>
           </span>
           <button @click="addToCart">Adicionar ao Carrinho</button>
@@ -200,7 +208,7 @@ onMounted(async () => {
       </div>
     </div>
 
-    <ComentsBook :book="book" :coments="comentsBook"/>
+    <ComentsBook :book="book" :coments="comentsBook" />
   </section>
 </template>
 
@@ -223,7 +231,7 @@ section {
   gap: 10%;
 }
 
-section > div {
+section>div {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -232,7 +240,7 @@ section > div {
   gap: 20px;
 }
 
-section > div img {
+section>div img {
   width: 30%;
   min-width: 300px;
 }
@@ -247,6 +255,19 @@ section > div img {
 .info h2 {
   font-size: 3rem;
   font-weight: 400;
+}
+
+.info .genres {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  font-size: 1.2rem;
+}
+
+.info .genres .genre {
+  display: flex;
+  gap: 10px;
 }
 
 .info .price {
@@ -299,7 +320,7 @@ section > div img {
   margin: 0 10px;
 }
 
-.info .actions span i > * {
+.info .actions span i>* {
   cursor: pointer;
 }
 
@@ -332,7 +353,7 @@ section > div img {
   font-size: 1.5rem;
 }
 
-.details > div {
+.details>div {
   display: flex;
   justify-content: space-between;
   width: 300px;
@@ -371,5 +392,4 @@ section > div img {
   background-color: var(--primary-color-50);
   margin: 0 5px;
 }
-
 </style>
