@@ -67,13 +67,9 @@ window.addEventListener("resize", () => {
 });
 
 router.afterEach((to) => {
-  if(to.name == "sobre") {
-    activeRoute.value = "sobre"
-    return;
-  }
 
   updateActiveRoute(to);
-  window.location.reload()
+  // window.location.reload()
 
 });
 
@@ -95,7 +91,7 @@ onMounted(() => {
 <template>
   <header>
     <div class="logo">
-      <router-link to="/home">
+      <router-link to="/inicio">
         <a href="">
           <p>
             <img src="/logo-principal-green.png" alt="" />

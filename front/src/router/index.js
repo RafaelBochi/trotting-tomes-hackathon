@@ -21,6 +21,13 @@ const router = createRouter({
           exact: true
         },
         {
+          path: 'busca/:search',
+          name: 'busca',
+          component: () => import('../views/Full/SearchView.vue'),
+          exact: true,
+          props: true
+        },
+        {
           path: 'book/:id',
           name: 'bookPage',
           component: () => import('../views/Full/BookPageView.vue'),

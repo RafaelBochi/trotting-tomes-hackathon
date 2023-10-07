@@ -12,6 +12,8 @@ from app.serializers import LivroSerializer
 
 from rest_framework.permissions import BasePermission
 from rest_framework.parsers import MultiPartParser, FormParser
+
+from unidecode import unidecode
 class LivroViewSet(ModelViewSet):
     queryset = Livro.objects.all()
     serializer_class = LivroSerializer
@@ -110,9 +112,28 @@ def getBooksOfFilters(request):
 @authentication_classes([])
 @permission_classes([])
 def searchBooks(request):
-    name = request.GET.get("name")
+    text = request.GET.get("text")
 
-    livros = Livro.objects.filter(title__icontains=name)
+    text = text.lower()
+
+    text = unidecode(text)
+
+    livros = []
+
+    for livro in Livro.objects.all():
+        if text in unidecode(livro.title.lower()):
+            livros.append(livro)
+
+    for livro in Livro.objects.all():
+        if text in unidecode(livro.author.name.lower()):
+            livros.append(livro)
+
+    for livro in Livro.objects.all():
+        for genre in livro.genre.all():
+            if text in unidecode(genre.name.lower()):
+                livros.append(livro)
+
+    livros = list(set(livros))
 
     if len(livros) == 0:
         return Response({"message": "Nenhum livro encontrado!"}, status=404)

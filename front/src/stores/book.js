@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
 import bookService from "@/api/book";
+import { useStorage } from '@vueuse/core'
 
 export const useBookStore = defineStore("book", {
   state: () => ({
     books: [],
-    searchBooks: [],
+    searchBooks: useStorage('searchBooks', []),
   }),
   actions: {
     async getBooks() {
@@ -18,7 +19,6 @@ export const useBookStore = defineStore("book", {
     async getBooksFilter(filters) {
       try {
         console.log(filters);
-
         const data = await bookService.getBooksFilter(filters);
         this.books = data;
       } catch (e) {
@@ -27,8 +27,11 @@ export const useBookStore = defineStore("book", {
     },
     async getSearchBooks(search) {
       try {
+        console.log(search)
+        this.searchBooks = [];
         const data = await bookService.getSearchBooks(search);
         this.searchBooks = data;
+        console.log(data)
       } catch (e) {
         console.log(e);
       }

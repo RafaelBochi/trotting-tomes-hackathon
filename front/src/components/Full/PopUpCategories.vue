@@ -1,17 +1,29 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useOthersStore } from '@/stores/others'
+import { useBookStore } from '@/stores/book'
+import router from "@/router";
 
 const othersStore = useOthersStore();
+const bookStore = useBookStore();
 
 const genres = computed(()=> othersStore.genres)
+
+async function goToGenre(genre) {
+    const search = {
+        text: String(genre.name),
+    };
+    console.log(search)
+    await bookStore.getSearchBooks(search)
+    router.push({name: 'busca', params: {search: genre.name}})
+}
 </script>
 
 <template>
     <section>
         <div v-for="genre in genres">
-            <p>
-                {{ genre.name }} ({{ genre.qntLivros }})
+            <p @click="goToGenre(genre)">
+                {{ genre.name }}
             </p>
         </div>
     </section>

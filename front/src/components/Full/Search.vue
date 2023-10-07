@@ -6,24 +6,23 @@ import router from '@/router'
 const bookStore = useBookStore();
 const inputText = ref("");
 
-const searchBooks = computed(() => bookStore.searchBooks);
-
-function getSearchBooks() {
+async function getSearchBooks() {
   console.log(inputText.value);
   const search = {
-    name: inputText.value,
+    text: String(inputText.value),
   };
-  bookStore.getSearchBooks(search);
+  await bookStore.getSearchBooks(search);
 }
 
 function clearInput() {
   inputText.value = "";
 }
 
-function openBookPage(id) {
-  router.push({ name: 'bookPage', params: { id: id } });
-  clearInput()
+ function goToSearchBooks() {
+   getSearchBooks();
+   router.push({name: 'busca', params: {search: inputText.value}})
 }
+
 
 </script>
 
@@ -34,24 +33,14 @@ function openBookPage(id) {
       <input
         type="text"
         placeholder="Busque aqui seu produto..."
-        @input="getSearchBooks"
         v-model="inputText"
+        @keydown.enter="goToSearchBooks"
       />
-      <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="searchIcon"/>
+      <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="searchIcon" @click="goToSearchBooks" />
       <i @click="clearInput" v-if="inputText != ''" class="closeIcon">
         <font-awesome-icon :icon="['fas', 'x']" size="sm" />
       </i>
     </div>
-
-  <div class="searchBooks" v-if="inputText != ``">
-    <div v-for="book in searchBooks" :key="book.id" @click="openBookPage(book.id)" class="book">
-      <img :src="book.capa.url" alt="" />
-      <div class="info">
-        <h3>{{ book.title }}</h3>
-        <p>R$ {{ book.price }}</p>
-      </div>
-    </div>
-  </div>
 </div>
 </section>
 </template>
