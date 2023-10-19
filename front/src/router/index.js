@@ -5,18 +5,18 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: { name: 'inicio' },
+      redirect: { name: 'início' },
       component: () => import('@/layouts/FullLayout.vue'),
       children: [
         {
           path: 'inicio',
-          name: 'inicio',
+          name: 'início',
           component: () => import('../views/Full/HomeView.vue'),
           exact: true
         },
         {
           path: 'catalogo',
-          name: 'catalogo',
+          name: 'catálogo',
           component: () => import('../views/Full/ProductsView.vue'),
           exact: true
         },
@@ -32,6 +32,12 @@ const router = createRouter({
           name: 'bookPage',
           component: () => import('../views/Full/BookPageView.vue'),
           props: true,
+        },
+        {
+          path: 'carrinho',
+          name: 'carrinho',
+          component: () => import('../views/Full/CartView.vue'),
+          exact: true
         },
         {
           path: 'settings',

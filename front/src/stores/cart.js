@@ -28,21 +28,22 @@ export const useCartStore = defineStore("cart", {
               console.log(error); // Lidar com exceções
             }
           },
-          async changeQuantity(id, item, book, quantidade){
+          async changeQuantity(id, item, book, quantidade, stock){
+            if(item.quantidade + quantidade > stock) return;
+            else if (item.quantidade + quantidade <= 0) return;
             try {
               const values = {
                 carrinho: this.cartId,
                 livro: book,
                 quantidade: item.quantidade + quantidade
-              }
+              };
               const data = await cartService.changeQuantity(values, id);
-              this.getBooksCart(this.cartId)
-              this.getCart()
+              this.getBooksCart(this.cartId);
+              this.getCart();
             } catch (error) {
               console.log(error); // Lidar com exceções
             }
-          }
-          ,
+          },
           async addBookCart(book, quantidade){
             try {
               const values = {

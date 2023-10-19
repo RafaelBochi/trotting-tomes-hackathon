@@ -19,23 +19,19 @@ const props = defineProps({
   },
 });
 
-const favorite = ref(false);
+const favorite = computed(()=> {
+  if (favoriteStore.favorites.find(item => item.book.id == props.book.id)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+});
 
 const comentsBook = ref([]);
 const mediaStars = ref(0);
 
-onMounted(async () => {
-  comentsBook.value = await othersStore.getComents(props.book.id);
-  if (comentsBook.value.length > 0) {
-    for (let coment of comentsBook.value) {
-      mediaStars.value += coment.stars
-    }
-    mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
-  }
-})
-
 function addFavorite() {
-  console.log(favorite.value)
   if (userStore.loggedIn == true) {
     if (favorite.value != true) {
       favoriteStore.addFavorite(props.book);
@@ -70,16 +66,16 @@ function openBookPage() {
   router.push({ name: 'bookPage', params: { id: props.book.id } });
 }
 
-onMounted(
-  () => {
-    if (favoriteStore.favorites.find(item => item.book.id == props.book.id)) {
-      favorite.value = true;
+onMounted(async () => {
+  comentsBook.value = await othersStore.getComents(props.book.id);
+  if (comentsBook.value.length > 0) {
+    for (let coment of comentsBook.value) {
+      mediaStars.value += coment.stars
     }
-    else {
-      favorite.value = false;
-    }
+    mediaStars.value = Math.ceil((mediaStars.value / comentsBook.value.length)).toFixed(1)
   }
-);
+})
+
 </script>
 
 <template>
@@ -323,14 +319,6 @@ button p {
   letter-spacing: 0.05rem;
 }
 
-button:hover {
-  background-color: var(--primary-color-50);
-  color: var(--primary-color);
-}
-
-button:hover .icon {
-  color: var(--primary-color) !important;
-}
 
 .sale {
   position: absolute;

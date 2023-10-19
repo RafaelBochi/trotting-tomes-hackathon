@@ -1,7 +1,6 @@
 <script setup>
 import Header from '@/components/Full/Header.vue';
-import HeaderResponsive from '@/components/Full/Responsive/HeaderResponsive.vue'
-import Cart from '@/components/Full/Cart/Cart.vue';
+import HeaderResponsive from '@/components/Full/Responsive/HeaderResponsive.vue';
 import Favorites from '@/components/Full/Favorites/Favorites.vue';
 import PopUpSettings from '../components/Full/PopUpSettings.vue';
 import PopUpLogin from '../components/Full/PopUpLogin.vue';
@@ -14,8 +13,6 @@ const router = useRouter();
 
 const userStore = useUserStore();
 
-const showCart = ref(false)
-const closeCart = ref(false)
 const showSettings = ref(false)
 const closeSettings = ref(false)
 const showFavorites = ref(false)
@@ -24,8 +21,6 @@ const showAccount = ref(false)
 const closeMenuResponsive = ref(false)
 const showMenuResponsive = ref(false)
 const showPopPupLogin = computed(() => userStore.popUpLogin)
-
-const links = ['home', 'products', 'about']
 
 
 function toggleSettings() {
@@ -52,26 +47,6 @@ function toggleFavorites() {
   else {
     showFavorites.value = !showFavorites.value;
     showSettings.value = false;
-    if(showCart.value) {
-      toggleCart();
-    }
-  }
-  
-}
-
-function toggleCart() {
-  if(showCart.value) {
-    closeCart.value = true
-    setTimeout(() => {
-      closeCart.value = false
-      showCart.value = !showCart.value
-    }, 500)
-  }
-  else {
-    if(showFavorites.value) {
-      toggleFavorites();
-    }
-    showCart.value = !showCart.value;
   }
   
 }
@@ -111,7 +86,6 @@ function logout() {
 
 router.afterEach(() => {
   showMenuResponsive.value = false;
-  showCart.value = false;
   showFavorites.value = false;
   showSettings.value = false;
 })
@@ -128,8 +102,6 @@ onMounted(() => {
 
     <MenuResponsive v-if="showMenuResponsive" :class="closeMenuResponsive != false ? 'closeMenuResponsive' : ''" @toggle-menu="toggleMenu" @logout="logout"/>
 
-    <Cart v-if="showCart" @close="toggleCart" :class="closeCart != false ? 'closeCart' : ''" class="cart"/>
-
     <Favorites v-if="showFavorites" @close="toggleFavorites" :class="closeFavorites != false ? 'closeFavorites' : ''" class="favorites"/>
 
     <RouterView class="view"/>
@@ -143,7 +115,7 @@ onMounted(() => {
 
 <style scoped>
 
-.closeFavorites, .closeCart, .closeMenuResponsive {
+.closeFavorites, .closeMenuResponsive {
   animation: closeSections .5s forwards;
 }
 

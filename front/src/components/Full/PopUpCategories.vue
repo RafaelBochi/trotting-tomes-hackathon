@@ -17,6 +17,7 @@ async function goToGenre(genre) {
     await bookStore.getSearchBooks(search)
     router.push({name: 'busca', params: {search: genre.name}})
 }
+
 </script>
 
 <template>
