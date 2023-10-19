@@ -29,7 +29,8 @@ export const useCartStore = defineStore("cart", {
             }
           },
           async changeQuantity(id, item, book, quantidade, stock){
-            if(item.quantidade + quantidade > stock) return;
+            console.log('a')
+            if(item.quantidade + quantidade > stock) return console.log('b');
             else if (item.quantidade + quantidade <= 0) return;
             try {
               const values = {

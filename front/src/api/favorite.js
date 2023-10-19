@@ -1,10 +1,14 @@
 import axios from "axios";
 import { useUserStore } from "@/stores/user";
+import { useGlobalStore } from "../stores/global";
 
 class FavoriteService {
     async addFavorite(values) {
         const userStore = useUserStore();
+        const globalStore = useGlobalStore();
         
+        globalStore.showMessageModal("Adicinado ao favoritos", "success");
+
         const config = {
             headers: { Authorization: `Bearer ${userStore.user.token}`,  
             'Content-Type': 'multipart/form-data',
