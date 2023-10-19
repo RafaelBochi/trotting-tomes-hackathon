@@ -103,7 +103,7 @@ onMounted(async () => {
           {{ book.title }}
         </h2>
 
-        <div class="genres">
+        <div class="genres">h
           <p v-for="genre, index in book.genre" class="genre">
 
           <p v-if="index !== 0">&</p>

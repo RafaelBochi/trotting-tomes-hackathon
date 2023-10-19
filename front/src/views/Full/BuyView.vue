@@ -1,6 +1,9 @@
 <script setup>
 
 import {ref} from 'vue'
+import transferencia from '../../components/Full/Buy/Transferencia.vue'
+import cartao from '../../components/Full/Buy/Cartao.vue'
+import pix from '../../components/Full/Buy/Pix.vue'
 
 const method = ref('')
 
@@ -10,28 +13,22 @@ const method = ref('')
   <main>
     <h2>Selecione o método de pagamento</h2>
     <div class="metodos">
-      <div class="metodo" @click="method = 'boleto'">
-        <font-awesome-icon :icon="['fas', 'barcode']" class="icon"/>
-        <p class="label">Boleto</p>
+      <div :class="method == 'transferencia' ? 'currentMethod' : 'method'" @click="method = 'transferencia'">
+        <font-awesome-icon :icon="['fas', 'money-bill-transfer']" class="icon"/>
+        <p class="label">Transferência Bancária</p>
       </div>
-      <div class="metodo" @click="method = 'cartao'">
+      <div :class="method == 'cartao' ? 'currentMethod' : 'method'" @click="method = 'cartao'">
         <font-awesome-icon :icon="['fas', 'credit-card']" class="icon"/>
         <p class="label">Cartão</p>
       </div>
-      <div class="metodo" @click="method = 'pix'">
+      <div :class="method == 'pix' ? 'currentMethod' : 'method'" @click="method = 'pix'">
         <font-awesome-icon :icon="['fab', 'pix']" class="icon"/>
         <p class="label">Pix</p>
       </div>
     </div>
-    <div class="info" v-if="method == 'boleto'">
-      boleto
-    </div>
-    <div class="info" v-if="method == 'cartao'">
-      cartão
-    </div>
-    <div class="info" v-if="method == 'pix'">
-      pix
-    </div>
+    <transferencia v-if="method == 'transferencia'"/>
+    <cartao v-if="method == 'cartao'" />
+    <pix v-if="method == 'pix'" />
   </main>
 </template>
 
@@ -71,7 +68,7 @@ input {
   accent-color: var(--primary-color);
 }
 
-.metodo {
+.method, .currentMethod {
   border: 1px solid black;
   margin-top: 5%;
   padding: 2%;
@@ -86,8 +83,9 @@ input {
   transition: all 0.2s ease-in-out;
 }
 
-.metodo:hover {
+.method:hover, .currentMethod{
   color: #00386d;
   background-color: #edf1f7;
+  transform: scale(1.025);
 }
 </style>
