@@ -25,7 +25,7 @@ export const useFavoriteStore = defineStore("favorite", {
               }
               const data = await favoriteService.addFavorite(values);
               this.getFavorites()
-              useBookStore().getBooks()
+              // useBookStore().getBooks()
             } catch (error) {
               console.log(error); // Lidar com exceções
             }
@@ -34,7 +34,6 @@ export const useFavoriteStore = defineStore("favorite", {
             try {
               const data = await favoriteService.deleteFavorite(id);
               this.getFavorites()
-              useBookStore().getBooks()
             } catch (error) {
               console.log(error); // Lidar com exceções
             }

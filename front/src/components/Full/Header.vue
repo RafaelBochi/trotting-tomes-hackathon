@@ -1,91 +1,65 @@
 <script setup>
-import { ref, onMounted, computed, onBeforeUpdate } from "vue";
-import { useRouter } from "vue-router";
+import { ref, computed, onMounted } from "vue";
 import Search from "./Search.vue";
 import PopUpCategories from "./PopUpCategories.vue";
 import { useUserStore } from "../../stores/user";
-import { useRoute } from "vue-router";
 import { useCartStore } from "@/stores/cart";
+import { useRouter } from "vue-router";
 
-const route = useRoute();
-const router = useRouter();
-const activeRoute = ref();
-const links = ["inicio", "catalogo"];
-const linkSizes = [];
-const activeLink = ref(0);
 const userStore = useUserStore();
 const cartStore = useCartStore();
 
-const sizeBooksCart = computed(()=> cartStore.booksCart.length);
+const sizeBooksCart = computed(() => cartStore.booksCart.length);
 
-function animationBarStyle(index) {
-  const width = linkSizes[activeLink.value] || 0;
-  const bar = document.querySelector(".animation-bar");
-  bar.style.width = width + 20 + "px";
-  bar.style.left = getLeftDifference(index) + "px";
-}
-
-function getLeftDifference(index) {
-  const link1 = document.querySelector(`#link${index}`).getBoundingClientRect();
-  if (index == 0) {
-    return link1.left - 10;
-  }
-  const link2 = document
-    .querySelector(`#link${index - 1}`)
-    .getBoundingClientRect();
-  const left1 = link1.left;
-  const left2 = link2.left;
-  const leftDifference = left1 - left2;
-  return left1 - 10;
-}
-
-function setActiveLink(index) {
-  activeLink.value = index;
-  const linkElement = document.querySelector(`#link${index}`);
-  if (linkElement) {
-    const rect = linkElement.getBoundingClientRect();
-    const width = rect.width; // Largura do elemento
-    const left = rect.left; // Posição horizontal em relação à viewport
-    linkSizes[index] = width;
-    animationBarStyle(index);
-  }
-}
-
-function updateActiveRoute(to) {
-  activeRoute.value = to.name;
-  if (!links.includes(activeRoute.value)) {
-    const bar = document.querySelector(".animation-bar");
-    bar.style.width = 0;
-  }
-  else {
-    setActiveLink(links.indexOf(activeRoute.value));
-  }
-}
-
-window.addEventListener("resize", () => {
-  setActiveLink(activeLink.value);
-});
-
-router.afterEach((to) => {
-
-  updateActiveRoute(to);
-  // window.location.reload()
-
-});
-
-const showPopUpCategories = ref(false)
+const showPopUpCategories = ref(false);
 
 function toggleShowPopUpCategories() {
   showPopUpCategories.value = !showPopUpCategories.value;
+}
 
+const router = useRouter();
+const links = [{ name: 'início', path: 'inicio' }, { name: 'catálogo', path: 'catalogo' }];
+const linksDiv = ref();
+const currentRoute = computed(() => router.currentRoute.value.path.split('/')[1]);
+const activeLink = ref(currentRoute.value);
+const headerBar = ref();
+
+function getActiveLinkProperties(index) {
+  console.log(index)
+  if(index == -1) return { activeLinkPostion: 0, activeLinkWidth: 0, index: -1 };
+  const activeLinkPostion = linksDiv.value[index].offsetLeft;
+  const activeLinkWidth = linksDiv.value[index].offsetWidth;
+  return { activeLinkPostion, activeLinkWidth, index };
+}
+
+function setHeaderBarProperties(position, width, index) {
+  if(index == -1) {
+    headerBar.value.style.left = `0px`;
+    headerBar.value.style.width = `0px`;
+    return;
+  };
+  headerBar.value.style.left = `${position - 10}px`;
+  headerBar.value.style.width = `${width + 20}px`;
+}
+
+function setActiveLink(path, index) {
+  activeLink.value = path;
+  setHeaderBarProperties(...Object.values(getActiveLinkProperties(index)));
 }
 
 onMounted(() => {
-  setActiveLink(activeLink.value);
-  updateActiveRoute(route);
+  setActiveLink(currentRoute.value, links.findIndex(link => link.path == currentRoute.value))
+})
+
+window.addEventListener("resize", () => {
+  setActiveLink(currentRoute.value, links.findIndex(link => link.path == currentRoute.value))
 });
 
-
+router.afterEach(() => {
+  showPopUpCategories.value = false;
+  console.log(links.findIndex(link => link.path == currentRoute.value))
+  setActiveLink(currentRoute.value, links.findIndex(link => link.path == currentRoute.value))
+})
 </script>
 
 <template>
@@ -101,11 +75,11 @@ onMounted(() => {
     </div>
 
     <div class="links">
-      <router-link v-for="(link, index) in links" :to="`/${link}`" :key="link"
-        :class="{ 'active-link': activeRoute == link }" :id="`link${index}`" @click="setActiveLink(index)">
-        <a href="">
+      <router-link v-for="(link, index) in links" :to="`/${link.path}`" :key="link"
+        :class="{ 'active-link': activeLink == link.path }" @click="setActiveLink(link.path, index)">
+        <a href="" ref="linksDiv">
           <p>
-            {{ link }}
+            {{ link.name }}
           </p>
         </a>
       </router-link>
@@ -113,11 +87,11 @@ onMounted(() => {
         <p>
           Categorias
         </p>
-        <font-awesome-icon :icon="['fas', 'chevron-up']" v-if="showPopUpCategories" class="icon"/>
-        <font-awesome-icon :icon="['fas', 'chevron-down']" v-else class="icon"/>
+        <font-awesome-icon :icon="['fas', 'chevron-up']" v-if="showPopUpCategories" class="icon" />
+        <font-awesome-icon :icon="['fas', 'chevron-down']" v-else class="icon" />
 
       </a>
-      <div class="animation-bar" :style="animationBarStyle"></div>
+      <div class="animation-bar" ref="headerBar"></div>
     </div>
 
     <div class="actions">
@@ -146,16 +120,19 @@ onMounted(() => {
         </div>
       </div>
 
-      <div class="carrinho" @click="$emit('toggleCart')" v-if="userStore.loggedIn == true">
-        <font-awesome-icon :icon="['fas', 'shopping-cart']" size="2xl" style="color: var(--primary-color)" />
-        <p>{{ sizeBooksCart }}</p>
-      </div>
+      <router-link to="/carrinho">
+        <div class="carrinho" @click="$emit('toggleCart')" v-if="userStore.loggedIn == true">
+          <font-awesome-icon :icon="['fas', 'shopping-cart']" size="2xl" style="color: var(--primary-color)" />
+          <p>{{ sizeBooksCart }}</p>
+        </div>
+      </router-link>
+
       <div class="settings" @click="$emit('toggleSettings')" v-if="userStore.loggedIn == true">
-        <font-awesome-icon :icon="['fas', 'gear']" size="2xl" style="color: var(--primary-color)" class="icon"/>
+        <font-awesome-icon :icon="['fas', 'gear']" size="2xl" style="color: var(--primary-color)" class="icon" />
       </div>
     </div>
 
-    <PopUpCategories v-if="showPopUpCategories"/>
+    <PopUpCategories v-if="showPopUpCategories" />
   </header>
 </template>
 
@@ -213,11 +190,11 @@ header {
   color: var(--primary-color);
 }
 
-.active p{
+.active p {
   color: var(--primary-color) !important;
 }
 
-.active .icon{
+.active .icon {
   color: var(--primary-color) !important;
 }
 
@@ -342,7 +319,7 @@ a {
   transition: 0.5s all;
 }
 
-.settings:hover > .icon {
+.settings:hover>.icon {
   transform: scale(1.2) rotate(180deg);
 }
 </style>

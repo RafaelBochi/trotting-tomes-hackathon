@@ -3,8 +3,9 @@ import { useUserStore } from "@/stores/user.js";
 import { useOthersStore } from "@/stores/others";
 import { useBookStore } from "@/stores/book";
 import { useGlobalStore } from "@/stores/global";
-import { useCartStore } from "../../stores/cart";
-import { onMounted, ref } from "vue";
+import { useCartStore } from "@/stores/cart";
+import { useFavoriteStore } from "@/stores/favorite";
+import { onMounted, ref, computed } from "vue";
 import ComentsBook from "@/components/Full/Book/ComentsBook.vue";
 import router from "@/router";
 
@@ -13,6 +14,7 @@ const othersStore = useOthersStore();
 const bookStore = useBookStore();
 const globalStore = useGlobalStore();
 const cartStore = useCartStore();
+const favoriteStore = useFavoriteStore();
 
 const props = defineProps({
   id: {
@@ -37,6 +39,15 @@ const book = ref({
   desconto: 0
 })
 
+const favorite = computed(()=> {
+  if (favoriteStore.favorites.find(item => item.book.id == props.id)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+});
+
 function addToCart() {
   if (userStore.loggedIn) {
     cartStore.addBookCart(book.value.id, quantCart.value)
@@ -57,7 +68,6 @@ router.afterEach(async (to) => {
     book.value = await bookStore.getBookId(props.id);
     globalStore.showPreloader = false;
   }, 1000)
-
 });
 
 function plusQuantCart() {
@@ -73,8 +83,24 @@ function minusQuantCart() {
   }
 }
 
-function gerarPaginas() {
-  return ((Math.random() + 200)).toFixed(0)
+function addFavorite() {
+  if (userStore.loggedIn == true) {
+    if (favorite.value != true) {
+      favoriteStore.addFavorite(book.value);
+      favorite.value = true;
+      console.log('add')
+    }
+    else {
+      const id = favoriteStore.favorites.find(item => item.book.id == props.id).id;
+      console.log(id)
+      favoriteStore.deleteFavorite(id);
+      favorite.value = false;
+      console.log('delete')
+    }
+  }
+  else {
+    userStore.popUpLogin = true;
+  }
 }
 
 onMounted(async () => {
@@ -173,6 +199,10 @@ onMounted(async () => {
             </i>
           </span>
           <button @click="addToCart">Adicionar ao Carrinho</button>
+          <span class="favorite" @click="addFavorite">
+            <font-awesome-icon v-if="favorite" :icon="['fas', 'heart']" style="color: var(--lime-green)" class="icon" />
+            <font-awesome-icon v-else :icon="['fas', 'heart']" />
+          </span>
           <p class="restantes">
             {{ book.stock }} restantes
           </p>
@@ -391,5 +421,15 @@ section>div img {
   height: 20px;
   background-color: var(--primary-color-50);
   margin: 0 5px;
+}
+
+.favorite .fa-heart {
+  transition: all 0.2s;
+  color: #bac2cf;
+  font-size: 20px;
+}
+
+.favorite:hover .fa-heart {
+  color: var(--lime-green);
 }
 </style>

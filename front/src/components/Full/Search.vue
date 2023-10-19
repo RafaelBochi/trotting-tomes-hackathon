@@ -1,10 +1,12 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useBookStore } from "@/stores/book";
-import router from '@/router'
+import { useRouter  } from "vue-router";
 
 const bookStore = useBookStore();
 const inputText = ref("");
+
+const router = useRouter();
 
 async function getSearchBooks() {
   console.log(inputText.value);
@@ -18,10 +20,14 @@ function clearInput() {
   inputText.value = "";
 }
 
- function goToSearchBooks() {
+function goToSearchBooks() {
    getSearchBooks();
    router.push({name: 'busca', params: {search: inputText.value}})
 }
+
+router.afterEach(() => {
+  clearInput();
+})
 
 
 </script>
