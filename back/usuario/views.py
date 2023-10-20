@@ -114,7 +114,7 @@ def enviar_email(destinatario, assunto, token, name):
     remetente = "trottingtomes@gmail.com"
     senha = "xektjmzuaveczuhh"
 
-    with open('/home/faelbochi/Documentos/ifc/trabalhos/hackathon/back/usuario/email/token_change_password.html', 'r') as file:
+    with open('/home/faelbochi/Documentos/ifc/trotting-tomes-hackathon/back/usuario/email/token_change_password.html', 'r') as file:
         conteudo_html = file.read()
 
     conteudo_html = conteudo_html.replace('{name}', name)
