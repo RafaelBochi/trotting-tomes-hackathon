@@ -14,11 +14,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import { faEyeSlash, faEye, faLock, faUser ,faCartShopping, faCartArrowDown, faHeart, faChevronLeft, faChevronRight, faFilter, faChevronDown, faChevronUp, faArrowRight, faXmarkCircle, faCaretUp, faCaretDown, faArrowLeft, faStar, faGear, faArrowRightFromBracket, faXmark, faCamera, faEnvelope, faX, faMagnifyingGlass, faBars, faTrash, faPlus, faMinus, faPhone, faCircleExclamation, faCreditCard, faBarcode, faMoneyBillTransfer} from '@fortawesome/free-solid-svg-icons'
+import { faEyeSlash, faEye, faLock, faUser ,faCartShopping, faCartArrowDown, faHeart, faChevronLeft, faChevronRight, faFilter, faChevronDown, faChevronUp, faArrowRight, faXmarkCircle, faCaretUp, faCaretDown, faArrowLeft, faStar, faGear, faArrowRightFromBracket, faXmark, faCamera, faEnvelope, faX, faMagnifyingGlass, faBars, faTrash, faPlus, faMinus, faPhone, faCircleExclamation, faCreditCard, faBarcode, faMoneyBillTransfer, faCartPlus} from '@fortawesome/free-solid-svg-icons'
 
 import { faFacebook, faInstagram, faTwitter, faYoutube, faPix} from '@fortawesome/free-brands-svg-icons'
 /* add icons to the library */
-library.add(faEyeSlash, faEye, faLock, faUser,  faCartShopping, faCartArrowDown, faHeart, faChevronLeft, faChevronRight, faFilter, faChevronDown, faChevronUp, faArrowRight, faXmarkCircle, faCaretUp, faCaretDown, faArrowLeft, faStar, faGear, faArrowRightFromBracket, faXmark, faCamera, faEnvelope, faX, faMagnifyingGlass, faBars, faTrash, faPlus, faMinus, faFacebook, faInstagram, faTwitter, faYoutube, faPhone, faCircleExclamation, faCreditCard, faBarcode, faPix, faMoneyBillTransfer)
+library.add(faEyeSlash, faEye, faLock, faUser,  faCartShopping, faCartArrowDown, faHeart, faChevronLeft, faChevronRight, faFilter, faChevronDown, faChevronUp, faArrowRight, faXmarkCircle, faCaretUp, faCaretDown, faArrowLeft, faStar, faGear, faArrowRightFromBracket, faXmark, faCamera, faEnvelope, faX, faMagnifyingGlass, faBars, faTrash, faPlus, faMinus, faFacebook, faInstagram, faTwitter, faYoutube, faPhone, faCircleExclamation, faCreditCard, faBarcode, faPix, faMoneyBillTransfer, faCartPlus)
 
 
 import VueAwesomePaginate from "vue-awesome-paginate";

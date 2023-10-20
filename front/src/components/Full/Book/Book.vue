@@ -91,11 +91,9 @@ onMounted(async () => {
           <div class="infoText">
             <p class="title">{{ book.title }}</p>
             <div class="genres">
-              <p v-for="genre, index in book.genre" class="genre">
-                
-              <p v-if="index !== 0">&</p>
-                {{ genre.name }}
-              </p>
+                <p v-for="(genre, index) in book.genre" class="genre" :key="index">
+                    {{ genre.name }} <i v-if="index < book.genre.length - 1">/</i>
+                </p>
             </div>
           </div>
           <p class="price-sale" v-if="book.desconto > 0">
