@@ -63,7 +63,7 @@ function goToBookPage() {
             </p>
 
             <div class="genres">
-                <p v-for="(genre, index) in book.genre" class="genre">
+                <p v-for="(genre, index) in book.genre" class="genre" :key="index">
                     {{ genre.name }} <i v-if="index < book.genre.length - 1">/</i>
                 </p>
             </div>

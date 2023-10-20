@@ -8,8 +8,6 @@ SECRET_KEY = 'django-insecure-tkrz*f((b%fb+-#26153kcm6kbx=6=+ed37mwnsbcg9_ut+84^
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1'] 
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,12 +52,12 @@ SPECTACULAR_SETTINGS = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -143,8 +141,17 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=365)
 }   
 
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '191.52.59.115', '*'] 
+
 CORS_ALLOW_ALL_ORIGINS = True
 
+CORS_ALLOW_HEADERS = '*'
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:5173',
+    'http://191.52.59.115:5173'
+)
 
 # settings.py
 

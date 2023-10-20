@@ -12,6 +12,12 @@ export const useBookStore = defineStore("book", {
       try {
         const data = await bookService.getBooks();
         this.books = data;
+        let priceFormat = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+        for (let book of this.books) {
+          book.price = priceFormat.format(book.price);
+          console.log(book.price)
+        }
+        console.log(this.books)
       } catch (e) {
         console.log(e);
       }
