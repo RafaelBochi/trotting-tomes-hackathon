@@ -116,6 +116,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
+main {
+  height: 100%;
+}
 
 .closeFavorites, .closeMenuResponsive {
   animation: closeSections .5s forwards;

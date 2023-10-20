@@ -5,7 +5,7 @@ import transferencia from '../../components/Full/Buy/Transferencia.vue'
 import cartao from '../../components/Full/Buy/Cartao.vue'
 import pix from '../../components/Full/Buy/Pix.vue'
 
-const method = ref('')
+const method = ref('transferencia')
 
 </script>
 
@@ -33,9 +33,9 @@ const method = ref('')
 </template>
 
 <style scoped>
+
 main {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

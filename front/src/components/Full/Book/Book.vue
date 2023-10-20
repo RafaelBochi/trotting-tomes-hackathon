@@ -66,6 +66,11 @@ function openBookPage() {
   router.push({ name: 'bookPage', params: { id: props.book.id } });
 }
 
+function format(book) {
+  let formated = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+  return formated.format(book)
+}
+
 onMounted(async () => {
   comentsBook.value = await othersStore.getComents(props.book.id);
   if (comentsBook.value.length > 0) {
@@ -97,12 +102,12 @@ onMounted(async () => {
             </div>
           </div>
           <p class="price-sale" v-if="book.desconto > 0">
-          <p class="priceReal">R$ {{ (Number(book.price / (1 - (book.desconto / 100)))).toFixed(2) }}</p>
+          <p class="priceReal">{{ format((Number(book.price / (1 - (book.desconto / 100)))).toFixed(2)) }}</p>
           <p class="priceDescount">
-            R$ {{ book.price }}
+            {{ format(book.price) }}
           </p>
           </p>
-          <p class="price" v-else>R${{ book.price }}</p>
+          <p class="price" v-else>{{ format(book.price) }}</p>
           <div class="starsBook">
           <span class="stars" @click="goToComents">
             <input type="radio" />

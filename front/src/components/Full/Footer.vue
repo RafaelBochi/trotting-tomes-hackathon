@@ -5,7 +5,7 @@
 <template>
     <footer>
         <h2>
-            Trotting Tomes.
+            Trotting Tomes
         </h2>
 
         <div class="info">
