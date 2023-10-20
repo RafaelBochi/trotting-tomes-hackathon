@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useCartStore } from '@/stores/cart.js';
 import { useRouter } from 'vue-router';
 
@@ -13,7 +13,7 @@ const props = defineProps({
     },
 });
 
-const item = ref(props.item);
+const item = computed(()=> props.item);
 
 function goToBookPage() {
     router.push({ name: 'bookPage', params: { id: props.item.livro.id } });

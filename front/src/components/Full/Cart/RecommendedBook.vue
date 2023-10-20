@@ -81,7 +81,7 @@ function goToBookPage() {
             </p>
 
             <div class="actions">
-                <button @click="cartStore.addBookCart(book.id, 1)">
+                <button @click="cartStore.addBookCart(book.id, 1), $emit('changeRecommendedBooks', book.id)">
                     <p>
                         Adicionar ao carrinho
                     </p>
@@ -115,6 +115,7 @@ function goToBookPage() {
     flex-direction: column;
     gap: 5px;
     width: 100%;
+    position: relative;
 }
 
 .books .info .title {
@@ -158,9 +159,12 @@ function goToBookPage() {
 }
 
 .books .info .actions {
+    position: absolute;
+    bottom: 10%;
     display: flex;
     flex-direction: row;
     gap: 10px;
+    width: 100%;
     align-items: center;
 }
 

@@ -2,17 +2,25 @@
 import { ref, computed, onMounted } from "vue";
 import { useCartStore } from "@/stores/cart.js";
 import { useBookStore } from "@/stores/book.js";
-import { useFavoriteStore } from "@/stores/favorite.js";
 import Book from "../../components/Full/Cart/Book.vue";
 import RecommendedBook from "../../components/Full/Cart/RecommendedBook.vue";
-import router from "../../router";
 
 const cartStore = useCartStore();
 const bookStore = useBookStore();
-const favoriteStore = useFavoriteStore();
 
 const booksCart = computed(() => cartStore.booksCart);
-const recommendedBooks = computed(() => bookStore.books.sort(() => Math.random() - 0.5).slice(0, 5));
+const recommendedBooks = ref(bookStore.books.sort(() => Math.random() - 0.5).slice(0, 5));
+
+function changeRecommendedBook(id) {
+    const sliceBook = recommendedBooks.value.findIndex(item => item.id == id);
+    const newBook = bookStore.books.sort(() => Math.random() - 0.5).slice(0, 1);
+    // let newBook;
+    // do {
+    //     newBook = bookStore.books.sort(() => Math.random() - 0.5).slice(0, 1)[0];
+    // } while (recommendedBooks.value.some(item => item.id == newBook.id))
+    recommendedBooks.value.splice(sliceBook, 1, newBook[0]);
+
+}
 </script>
 
 <template>
@@ -21,7 +29,10 @@ const recommendedBooks = computed(() => bookStore.books.sort(() => Math.random()
             Carrinho de Compras
         </h1>
 
-        <section class="itens">
+        <h3 v-if="booksCart.length == 0">
+            Seu carrinho está vazio...
+        </h3>
+        <section class="itens" v-else>
             <Book v-for="item in booksCart" :key="item.id" :item="item" />
         </section>
 
@@ -41,7 +52,7 @@ const recommendedBooks = computed(() => bookStore.books.sort(() => Math.random()
                 <h2>
                     Recomendados para você
                 </h2>
-                <RecommendedBook v-for="book in recommendedBooks" :key="book.id" :book="book" />
+                <RecommendedBook v-for="book in recommendedBooks" :key="book.id" :book="book" @changeRecommendedBooks="changeRecommendedBook"/>
             </div>
 
         </section>
@@ -69,14 +80,16 @@ h1 {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+    gap: 15%;
     row-gap: 50px;
     width: 70%;
+    align-content: baseline;
 }
 
-
+h3 {
+    width: 70%;
+    font-size: 1.5rem;
+}
 
 .details {
     width: 25%;
