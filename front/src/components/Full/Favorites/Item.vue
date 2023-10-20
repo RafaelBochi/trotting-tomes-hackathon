@@ -161,7 +161,7 @@ onMounted(async () => {
     display: flex;
     align-items: center;
     position: relative;
-    top: 8px;
+    top: 3px;
 }
 
 .stars p {

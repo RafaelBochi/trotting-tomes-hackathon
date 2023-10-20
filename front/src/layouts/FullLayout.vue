@@ -8,6 +8,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useUserStore } from '../stores/user';
 import MenuResponsive from '../components/Full/Responsive/MenuResponsive.vue';
 import { useRouter } from 'vue-router';
+import Footer from '@/components/Full/Footer.vue';
 
 const router = useRouter();
 
@@ -110,6 +111,7 @@ onMounted(() => {
 
     <PopUpLogin v-if="showPopPupLogin"/>
     
+    <Footer/>
   </main>
 </template>
 

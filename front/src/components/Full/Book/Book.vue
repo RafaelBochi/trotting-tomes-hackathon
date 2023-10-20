@@ -103,6 +103,28 @@ onMounted(async () => {
           </p>
           </p>
           <p class="price" v-else>R${{ book.price }}</p>
+          <div class="starsBook">
+          <span class="stars" @click="goToComents">
+            <input type="radio" />
+            <label :class="mediaStars > 0 ? 'true' : ''"></label>
+
+            <input type="radio" />
+            <label :class="mediaStars > 1 ? 'true' : ''"></label>
+
+            <input type="radio" />
+            <label :class="mediaStars > 2 ? 'true' : ''"></label>
+
+            <input type="radio" />
+            <label :class="mediaStars > 3 ? 'true' : ''"></label>
+
+            <input type="radio" />
+            <label :class="mediaStars > 4 ? 'true' : ''"></label>
+          </span>
+
+          <p>
+            ({{ comentsBook.length }})
+          </p>
+        </div>
         </span>
       </div>
       <button @click="addToCart">
@@ -186,23 +208,6 @@ onMounted(async () => {
   cursor: pointer;
 }
 
-.produto div:nth-child(2) i {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 1;
-  background-color: #D4DCEB59;
-  border-radius: 0 0 100% 0;
-  width: 0;
-  height: 0;
-  transition: all 0.2s;
-}
-
-.produto div:nth-child(2):hover i {
-  width: 300px;
-  height: 400px;
-  border-radius: 5px;
-}
 
 .produto img {
   z-index: 2;
@@ -216,6 +221,7 @@ onMounted(async () => {
 }
 
 .produto .info {
+  position: relative;
   z-index: 2;
   height: 25%;
   display: flex;
@@ -258,8 +264,7 @@ onMounted(async () => {
 }
 
 .produto .info .genres::-webkit-scrollbar {
-  width: 10px;
-  background: transparent;
+  display: none;
 }
 
 .produto .info .genres p {
@@ -344,5 +349,47 @@ button p {
   color: #fff;
   z-index: 2;
   padding-bottom: 30px;
+}
+
+.starsBook {
+  display: flex;
+  position: absolute;
+  bottom: -20%;
+}
+
+.stars {
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 8px;
+}
+
+.starsBook p {
+    position: relative;
+    top: 7px;
+    left: 4px;
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.521);
+}
+
+.stars input {
+    display: none;
+    
+}
+
+.stars>label {
+    width: 18px;
+    height: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    color: rgb(255, 140, 0);
+}
+
+.stars>label::before {
+    content: "\2606";
+}
+
+.stars>.true::before {
+    content: "\2605";
 }
 </style>
