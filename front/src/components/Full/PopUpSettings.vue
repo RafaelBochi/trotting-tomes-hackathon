@@ -7,11 +7,6 @@ const router = useRouter();
 
 <template>
     <section>
-        <div class="account" @click="router.push('/settings')">
-            <p>Perfil</p>
-            <font-awesome-icon :icon="['fas', 'user']" style="color: var(--lime-green);" size="xl"/>
-        </div>
-
         <div class="favorites" @click="$emit('toggleFavorites')">
             <p>
                 Favoritos
@@ -66,8 +61,9 @@ const router = useRouter();
 
     .favorites {
         position: relative;
-        padding-bottom: 15px;
         border-bottom: 2px solid #000;
+        padding: 4% 0;
+        padding-bottom: 10px;
     }
 
     .logout {
