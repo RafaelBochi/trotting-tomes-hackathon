@@ -2,9 +2,10 @@
 import SearchResponsive from './SearchResponsive.vue';
 import { ref } from 'vue';
 import { useUserStore } from '../../../stores/user';
+import { useRouter } from 'vue-router';
 
 const userStore = useUserStore()
-
+const router = useRouter();
 const windowWidth = ref(window.innerWidth);
 
 const showLogoMini = ref(false);
@@ -26,7 +27,7 @@ window.addEventListener('resize', ()=> {
 <template>
     <header>
         <div class="logo">
-      <router-link to="/home">
+      <router-link to="/">
         <a href="">
           <p>
             <img src="/logo-mini.png" alt="" class="imgMini" v-if="showLogoMini"/>
@@ -53,7 +54,7 @@ window.addEventListener('resize', ()=> {
           </button>
         </router-link>
       </div>
-        <div class="carrinho" @click="$emit('toggleCart')" v-if="userStore.loggedIn">
+        <div class="carrinho" @click="router.push('/carrinho')" v-if="userStore.loggedIn">
         <font-awesome-icon
           :icon="['fas', 'shopping-cart']"
           size="2xl"

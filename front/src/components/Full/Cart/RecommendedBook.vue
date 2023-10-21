@@ -52,6 +52,15 @@ function addFavorite() {
 function goToBookPage() {
     router.push({ name: 'bookPage', params: { id: props.book.id } });
 }
+
+function format(book) {
+  let formated = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+  return formated.format(book)
+}
+
+onMounted(()=> {
+    console.log(props.book)
+})
 </script>
 
 <template>
@@ -70,14 +79,14 @@ function goToBookPage() {
 
             <p class="priceSale" v-if="book.desconto > 0">
             <p class="realPrice">
-                R$ {{ (Number(book.price / (1 - (book.desconto / 100)))).toFixed(2) }}
+                {{ format((Number(book.price / (1 - (Number(book.desconto) / 100)))).toFixed(2)) }}
             </p>
             <p class="discountPrice">
-                R$ {{ book.price }}
+                {{ format(book.price) }}
             </p>
             </p>
             <p class="price" v-else>
-                R$ {{ book.price }}
+                {{ format(book.price) }}
             </p>
 
             <div class="actions">
@@ -102,6 +111,7 @@ function goToBookPage() {
     display: flex;
     flex-direction: row;
     gap: 20px;
+    min-width: 280px;
 }
 
 .books img {
@@ -121,18 +131,26 @@ function goToBookPage() {
 .books .info .title {
     font-size: 1.4rem;
     font-weight: bold;
+    width: 200px;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    overflow: hidden;
 }
 
 .books .info .genres {
     display: flex;
     flex-direction: row;
     gap: 5px;
+    flex-wrap: nowrap;
 }
 
 .books .info .genres .genre {
     font-size: 1.2rem;
     font-weight: bold;
     color: var(--third-color);
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .books .info .priceSale {
@@ -178,6 +196,7 @@ function goToBookPage() {
     border-radius: 5px;
     padding: 0 4%;
     cursor: pointer;
+    min-width: 180px;
 }
 
 .books .info .actions span {

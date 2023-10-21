@@ -7,6 +7,8 @@ const favoriteStore = useFavoriteStore();
 
 const favorites = computed(() => favoriteStore.favorites);
 
+
+
 function deleteFavorite(id) {
   favoriteStore.deleteFavorite(id);
 } 

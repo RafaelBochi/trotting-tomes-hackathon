@@ -25,15 +25,20 @@ const totalPages = computed(() => {
 
 const changePage = (page) => {
   currentPage.value = page;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 </script>
 
 <template>
   <main>
-      <Filter />
+      <Filter @page-change="changePage"/>
 
-      <div class="books">
+      <div class="books" v-if="displayedItems.length > 0">
         <Book v-for="book in displayedItems" :key="book.id" :book="book" />
+      </div>
+
+      <div class="emptyBooks" v-else>
+        <h1>Nenhum livro encontrado</h1>
       </div>
 
       <Pagination
@@ -62,6 +67,14 @@ main {
     align-items: center;
     justify-content: center;
     gap: 50px;
+    margin-top: 40px;
+}
+
+.emptyBooks {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 40px;
 }
 </style>

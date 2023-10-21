@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, defineEmits } from "vue";
 import { useOthersStore } from "@/stores/others.js";
 import { useBookStore } from "@/stores/book.js";
 
@@ -14,13 +14,11 @@ const searchBooks = computed(() => storeBooks.books.length);
 const showFilters = ref(false);
 const closeFilters = ref(false)
 const showOrders = ref(false);
-const showGenres = ref(false);
-const showAuthors = ref(false);
+
+const price = ref(200)
 
 const toggleFilters = () => {
   showOrders.value = false;
-  showGenres.value = false;
-  showAuthors.value = false;
 
   if(showFilters.value) {
     closeFilters.value = true;
@@ -45,52 +43,29 @@ function getOrders() {
   }
 }
 
-const checkedGenres = ref([]);
-
-function getGenres() {
-  checkedGenres.value = genres.value
-    .filter((genre) => checkedGenres.value.includes(genre.id))
-    .map((genre) => genre.id);
-}
-
-const checkedAuthors = ref([]);
-
-function getAuthors() {
-  checkedAuthors.value = authors.value
-    .filter((author) => checkedAuthors.value.includes(author.id))
-    .map((author) => author.id);
-}
-
-const toggleGenres = () => {
-  showGenres.value = !showGenres.value;
-};
 
 const toggleOrders = () => {
   showOrders.value = !showOrders.value;
 };
 
-const toggleAuthors = () => {
-  showAuthors.value = !showAuthors.value;
-};
+const emit = defineEmits(['page-change']);
+
 
 function getBookFilters() {
   getOrders();
-  getGenres();
-  getAuthors();
 
   const filters = {
     order: selectedOrder.value,
-    genres: checkedGenres.value,
-    authors: checkedAuthors.value,
+    maxPrice: price.value
   };
   storeBooks.getBooksFilter(filters);
-  console.log(filters);
+  emit('page-change', 1);
+  console.log(price.value);
 }
 
 function cleanFilters() {
-  checkedGenres.value = [];
-  checkedAuthors.value = [];
   selectedOrder.value = "";
+  price.value = 200;
   const radioButtons = document.getElementsByName("order");
   for (let radios of radioButtons) {
     if (radios.checked) {
@@ -163,72 +138,18 @@ function cleanFilters() {
         </div>
       </div>
 
-      <div class="genres">
-        <div @click="toggleGenres">
-          <p>Gêneros:</p>
-
-          <font-awesome-icon
-            v-if="showGenres"
-            :icon="['fas', 'chevron-up']"
-            class="icon"
-            size="2xl"
-          />
-          <font-awesome-icon
-            v-else
-            :icon="['fas', 'chevron-down']"
-            class="icon"
-            size="2xl"
-          />
-        </div>
-        <div v-if="showGenres">
-          <span v-for="genre in genres" :key="genre.id">
-            <input
-              type="checkbox"
-              :id="`checkbox_genre${genre.id}`"
-              v-model="checkedGenres"
-              :value="genre.id"
-              @change="getBookFilters"
-            />
-            <label :for="`checkbox_genre${genre.id}`"></label>
-            <p>{{ genre.name }}</p>
-          </span>
-        </div>
-      </div>
-
-      <div class="authors">
-        <div @click="toggleAuthors">
-          <p>Autores:</p>
-
-          <font-awesome-icon
-            v-if="showAuthors"
-            :icon="['fas', 'chevron-up']"
-            class="icon"
-            size="2xl"
-          />
-          <font-awesome-icon
-            v-else
-            :icon="['fas', 'chevron-down']"
-            class="icon"
-            size="2xl"
-          />
-        </div>
-        <div v-if="showAuthors">
-          <span v-for="author in authors" :key="author.id">
-            <input
-              type="checkbox"
-              :id="`checkbox_author${author.id}`"
-              v-model="checkedAuthors"
-              :value="author.id"
-              @change="getBookFilters"
-            />
-            <label :for="`checkbox_author${author.id}`"></label>
-            <p>{{ author.name }}</p>
-          </span>
-        </div>
+      <div class="price">
+        <h3>
+          Preço Maximo
+        </h3>
+        <p>
+          R$ {{ Number(price).toFixed(2) }}
+        </p>
+        <input type="range" min="0" max="200" v-model="price" @change="getBookFilters">
       </div>
     </div>
       <span class="searchButton">
-        <button @click="toggleFilters">
+        <button @click="toggleFilters, getBookFilters">
           <p>Filtrar ({{ searchBooks }})</p>
           <font-awesome-icon :icon="['fas', 'arrow-right']" />
         </button>
@@ -402,46 +323,34 @@ section {
   text-transform: uppercase;
 }
 
-.orders > div,
-.genres > div,
-.authors > div {
+.orders > div{
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.orders > div > span,
-.genres > div > span,
-.authors > div > span {
+.orders > div > span {
   display: flex;
   align-items: center;
   gap: 3px;
   font-size: 1.4rem;
 }
 
-.orders div:nth-child(2) span,
-.genres div:nth-child(2) span,
-.authors div:nth-child(2) span {
+.orders div:nth-child(2) span{
   width: 45%;
   display: flex;
   gap: 5px;
 }
 
-.orders div:nth-child(2) span p,
-.genres div:nth-child(2) span p,
-.authors div:nth-child(2) span p {
+.orders div:nth-child(2) span p {
   white-space: nowrap;
 }
 
-.orders input,
-.genres input,
-.authors input {
+.orders input {
   display: none;
 }
 
-.orders input + label,
-.genres input + label,
-.authors input + label {
+.orders input + label{
   /* Estilizar a aparência do quadrado */
   width: 20px;
   height: 20px;
@@ -450,14 +359,24 @@ section {
   cursor: pointer;
 }
 
-.orders input:checked + label,
-.genres input:checked + label,
-.authors input:checked + label {
+.orders input:checked + label{
   /* Mudar a cor quando selecionado */
   background-color: var(
     --lime-green
   ); /* Substitua pelo valor da cor desejada */
 }
+
+.price h3 {
+  color: #000;
+  font-weight: bold;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+}
+
+.price p {
+  font-size: 1.4rem;
+}
+
 
 .searchButton {
   position: absolute;

@@ -49,7 +49,7 @@ const popUpLogin = computed(() => userStore.popUpLogin);
 
     <section class="sectionBooks">
       <h2>
-        <p>Trending</p>
+        <p>Populares</p>
       </h2>
 
       <SlideBooks :slideNum="4" :type="'trending'"/>

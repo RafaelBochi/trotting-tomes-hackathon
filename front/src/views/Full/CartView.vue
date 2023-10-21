@@ -83,6 +83,7 @@ h1 {
     gap: 15%;
     row-gap: 50px;
     width: 70%;
+    height: 100%;
     align-content: baseline;
 }
 
@@ -107,6 +108,7 @@ h3 {
 .details .buy p {
     font-size: 1.5rem;
     font-weight: bold;
+    text-wrap: nowrap;
 }
 
 .details .buy button {
@@ -119,6 +121,7 @@ h3 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    min-width: 180px;
 }
 
 .recommended {

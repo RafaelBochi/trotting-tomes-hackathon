@@ -103,6 +103,11 @@ function addFavorite() {
   }
 }
 
+function format(book) {
+  let formated = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+  return formated.format(book)
+}
+
 onMounted(async () => {
   book.value = await bookStore.getBookId(props.id);
   comentsBook.value = await othersStore.getComents(book.value.id);
@@ -129,7 +134,7 @@ onMounted(async () => {
           {{ book.title }}
         </h2>
 
-        <div class="genres">h
+        <div class="genres">
           <p v-for="genre, index in book.genre" class="genre">
 
           <p v-if="index !== 0">&</p>
@@ -139,17 +144,17 @@ onMounted(async () => {
 
         <div class="sale" v-if="book.desconto > 0">
           <p class="priceSale">
-            R$ {{ book.price }}
+            {{ format(book.price) }}
           </p>
           <p class="priceReal">
-            R$ {{ (Number(book.price / (1 - (book.desconto / 100)))).toFixed(2) }}
+            {{ format((Number(book.price / (1 - (book.desconto / 100)))).toFixed(2)) }}
           </p>
           <i class="bar"></i>
           <p class="descount">
             {{ Number(book.desconto).toFixed(0) }}% OFF
           </p>
         </div>
-        <p class="price" v-else>R$ {{ book.price }}</p>
+        <p class="price" v-else>{{ format(book.price) }}</p>
 
 
         <div class="starsBook">

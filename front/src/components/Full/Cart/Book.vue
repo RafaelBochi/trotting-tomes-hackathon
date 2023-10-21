@@ -15,6 +15,11 @@ const props = defineProps({
 
 const item = computed(()=> props.item);
 
+function format(book) {
+  let formated = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+  return formated.format(book)
+}
+
 function goToBookPage() {
     router.push({ name: 'bookPage', params: { id: props.item.livro.id } });
 }
@@ -37,14 +42,14 @@ function goToBookPage() {
 
             <p class="priceSale" v-if="item.livro.desconto > 0">
             <p class="realPrice">
-                R$ {{ (Number(item.livro.price / (1 - (item.livro.desconto / 100)))).toFixed(2) }}
+                {{ format((Number(item.livro.price / (1 - (item.livro.desconto / 100)))).toFixed(2)) }}
             </p>
             <p class="discountPrice">
-                R$ {{ item.livro.price }}
+                {{ format(item.livro.price) }}
             </p>
             </p>
             <p class="price" v-else>
-                R$ {{ item.livro.price }}
+                {{ format(item.livro.price) }}
             </p>
         </div>
 

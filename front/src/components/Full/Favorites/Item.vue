@@ -22,6 +22,11 @@ const comentsBook = ref([]);
 
 const mediaStars = ref(0)
 
+function format(book) {
+  let formated = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+  return formated.format(book)
+}
+
 onMounted(async () => {
     comentsBook.value = await othersStore.getComents(props.item.book.id);
 
@@ -47,7 +52,7 @@ onMounted(async () => {
                     {{ genre.name }} <i v-if="index < item.book.genre.length - 1">/</i>
                 </p>
             </div>
-            <p>R$ {{ item.book.price }}</p>
+            <p>{{ format(item.book.price) }}</p>
             <span class="stars">
                 <input type="radio" />
                 <label :class="mediaStars > 0 ? 'true' : ''"></label>

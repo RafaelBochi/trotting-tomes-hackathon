@@ -48,33 +48,15 @@ class LivroViewSet(ModelViewSet):
 @permission_classes([])
 def getBooksOfFilters(request):
     order = request.GET.get("order")
-    genres_id = request.GET.getlist("genres[]")
-    authors_id = request.GET.getlist("authors[]")
-    print(authors_id)
+    max_price = request.GET.get("maxPrice")
 
-    if len(genres_id) > 0:
-        livros = Livro.objects.filter(genre__in=genres_id).distinct()
-    
-    if len(authors_id) > 0 and len(genres_id) > 0:
-        livros = Livro.objects.filter(genre__in=genres_id).distinct()
+    livros = Livro.objects.all()
 
-        authors_to_exclude = []
-        for livro in livros:
-            if str(livro.author.id) not in authors_id:
-                authors_to_exclude.append(livro.author.id)
-
-        livros = livros.exclude(author__in=authors_to_exclude)
-
-    if len(authors_id) > 0 and len(genres_id) == 0:
-        livros = Livro.objects.filter(author__in=authors_id).distinct()
-
-    if len(genres_id) == 0 and len(authors_id) == 0:
-        livros = Livro.objects.all()
+    if max_price:
+        livros = livros.filter(price__lte=max_price)
 
     if len(livros) == 0:
         return Response({"message": "Nenhum livro encontrado!"}, status=404)
-    
-    print(order)
 
     if order == "1":
         livros = sorted(livros, key=lambda livro: livro.vendas, reverse=True)

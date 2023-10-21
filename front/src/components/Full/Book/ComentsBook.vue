@@ -176,7 +176,7 @@ onMounted(()=> {
         </div>
       </div>
     </div>
-    <h2 v-else>Nenhum comentario.</h2>
+    <h2 class="commentEmpty" v-else>Nenhum comentario.</h2>
   </div>
 </template>
 
@@ -194,7 +194,6 @@ onMounted(()=> {
   box-shadow: 0px 1px 20px -9px rgba(52, 71, 52, 1);
   height: 100%;
   min-height: 500px;
-  flex-wrap: wrap;
 }
 
 
@@ -253,7 +252,7 @@ onMounted(()=> {
   align-items: start;
   width: 80%;
   overflow-y: auto;
-  height: 60%;
+  height: 100%;
   gap: 20px;
   padding: 1%;
   min-width: 320px;
@@ -301,13 +300,11 @@ onMounted(()=> {
 
 .filters {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   gap: 10px;
   padding: 1%;
-  overflow-x: auto;
-  align-items: center;
-  overflow-y: hidden;
+  align-items: start;
   height: 40px;
   min-width: 300px;
   margin: auto;
@@ -361,8 +358,8 @@ onMounted(()=> {
   cursor: pointer;
 }
 
-h2 {
-  width: 30%;
+.commentEmpty {
+  width: 80%;
   text-align: center;
 }
 </style>
